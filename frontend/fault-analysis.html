@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fault Analysis | PRJ_232</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="nav-brand">
+            <div class="brand-mark">PRJ</div>
+
+            <div>
+                <strong>PRJ_232</strong>
+                <span>Substation AI</span>
+            </div>
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="index.html">Home</a>
+
+            <a href="maintenance.html">
+            Maintenance
+        </a>
+
+            <a href="fault-analysis.html" class="active">
+            Fault Analysis
+        </a>
+
+            <a href="knowledge-base.html">
+            Knowledge Base
+        </a>
+
+            <a href="about.html">
+            About
+        </a>
+
+        </div>
+
+
+        <div class="nav-status">
+
+            <span class="status-dot"></span> AI ONLINE
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="fault-page">
+
+        <section class="fault-hero">
+
+            <div class="section-label">
+                ML FAULT CLASSIFICATION
+            </div>
+
+            <h1>
+                Electrical Fault<br>
+                <span>Analysis</span>
+            </h1>
+
+            <p>
+                Enter three-phase voltage and current measurements to classify the electrical fault using the trained Random Forest model.
+            </p>
+
+        </section>
+
+
+        <!-- ================= ANALYSIS SECTION ================= -->
+
+        <section class="fault-analysis-section">
+
+            <div class="fault-grid">
+
+
+                <!-- ================= INPUT PANEL ================= -->
+
+                <div class="fault-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <span class="card-label">
+                            INPUT MEASUREMENTS
+                        </span>
+
+                            <h2>
+                                Three-Phase Electrical Data
+                            </h2>
+
+                        </div>
+
+                        <div class="model-badge">
+                            RANDOM FOREST
+                        </div>
+
+                    </div>
+
+
+                    <form id="faultForm">
+
+
+                        <!-- CURRENT -->
+
+                        <div class="input-section">
+
+                            <div class="input-section-title">
+                                Phase Current
+                            </div>
+
+
+                            <div class="input-grid">
+
+                                <div class="input-group">
+
+                                    <label for="Ia">
+                                    Ia
+                                    <span>(A)</span>
+                                </label>
+
+                                    <input type="number" id="Ia" step="any" placeholder="Phase A current" required>
+
+                                </div>
+
+
+                                <div class="input-group">
+
+                                    <label for="Ib">
+                                    Ib
+                                    <span>(A)</span>
+                                </label>
+
+                                    <input type="number" id="Ib" step="any" placeholder="Phase B current" required>
+
+                                </div>
+
+
+                                <div class="input-group">
+
+                                    <label for="Ic">
+                                    Ic
+                                    <span>(A)</span>
+                                </label>
+
+                                    <input type="number" id="Ic" step="any" placeholder="Phase C current" required>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- VOLTAGE -->
+
+                        <div class="input-section">
+
+                            <div class="input-section-title">
+                                Phase Voltage
+                            </div>
+
+
+                            <div class="input-grid">
+
+                                <div class="input-group">
+
+                                    <label for="Va">
+                                    Va
+                                    <span>(kV)</span>
+                                </label>
+
+                                    <input type="number" id="Va" step="any" placeholder="Phase A voltage" required>
+
+                                </div>
+
+
+                                <div class="input-group">
+
+                                    <label for="Vb">
+                                    Vb
+                                    <span>(kV)</span>
+                                </label>
+
+                                    <input type="number" id="Vb" step="any" placeholder="Phase B voltage" required>
+
+                                </div>
+
+
+                                <div class="input-group">
+
+                                    <label for="Vc">
+                                    Vc
+                                    <span>(kV)</span>
+                                </label>
+
+                                    <input type="number" id="Vc" step="any" placeholder="Phase C voltage" required>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <button type="submit" class="fault-analyze-button">
+
+                        <span>
+                            Analyze Fault
+                        </span>
+
+                        <span class="button-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+                    </form>
+
+                </div>
+
+
+                <!-- ================= RESULT PANEL ================= -->
+
+                <div class="fault-card result-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <span class="card-label">
+                            MODEL OUTPUT
+                        </span>
+
+                            <h2>
+                                Fault Classification
+                            </h2>
+
+                        </div>
+
+                        <div class="live-badge">
+                            LIVE
+                        </div>
+
+                    </div>
+
+
+                    <div id="faultResult" class="fault-result">
+
+                        <div class="result-placeholder">
+
+                            <div class="placeholder-icon">
+                                ⚡
+                            </div>
+
+                            <h3>
+                                Awaiting measurements
+                            </h3>
+
+                            <p>
+                                Enter the six electrical measurements and run the trained model.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FAULT CLASSES ================= -->
+
+        <section class="fault-classes-section">
+
+            <div class="section-label">
+                CLASSIFICATION TARGETS
+            </div>
+
+            <h2>
+                Six Fault Classes
+            </h2>
+
+            <div class="fault-class-grid">
+
+
+                <div class="fault-class-card">
+
+                    <span class="fault-code">
+                    LG
+                </span>
+
+                    <strong>
+                    Line-to-Ground
+                </strong>
+
+                    <p>
+                        Single phase to ground fault.
+                    </p>
+
+                </div>
+
+
+                <div class="fault-class-card">
+
+                    <span class="fault-code">
+                    LL
+                </span>
+
+                    <strong>
+                    Line-to-Line
+                </strong>
+
+                    <p>
+                        Fault between two phases.
+                    </p>
+
+                </div>
+
+
+                <div class="fault-class-card">
+
+                    <span class="fault-code">
+                    LLG
+                </span>
+
+                    <strong>
+                    Double Line-to-Ground
+                </strong>
+
+                    <p>
+                        Two phases connected to ground.
+                    </p>
+
+                </div>
+
+
+                <div class="fault-class-card">
+
+                    <span class="fault-code">
+                    LLL
+                </span>
+
+                    <strong>
+                    Three-Phase
+                </strong>
+
+                    <p>
+                        Fault involving all three phases.
+                    </p>
+
+                </div>
+
+
+                <div class="fault-class-card">
+
+                    <span class="fault-code">
+                    LLLG
+                </span>
+
+                    <strong>
+                    Three-Phase Ground
+                </strong>
+
+                    <p>
+                        Three phases connected to ground.
+                    </p>
+
+                </div>
+
+
+                <div class="fault-class-card normal-class">
+
+                    <span class="fault-code">
+                    NORMAL
+                </span>
+
+                    <strong>
+                    Normal Condition
+                </strong>
+
+                    <p>
+                        No detected fault condition.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= MODEL INFO ================= -->
+
+        <section class="model-info-section">
+
+            <div class="model-info-card">
+
+                <div>
+
+                    <span class="card-label">
+                    TRAINED MACHINE LEARNING MODEL
+                </span>
+
+                    <h2>
+                        Random Forest Classifier
+                    </h2>
+
+                    <p>
+                        The classifier was trained using three-phase voltage and current measurements and evaluated against Logistic Regression and XGBoost.
+                    </p>
+
+                </div>
+
+
+                <div class="model-stats">
+
+                    <div>
+
+                        <strong>
+                        6
+                    </strong>
+
+                        <span>
+                        Fault Classes
+                    </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                        6
+                    </strong>
+
+                        <span>
+                        Input Features
+                    </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                        RF
+                    </strong>
+
+                        <span>
+                        Selected Model
+                    </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div>
+
+            <strong>
+            PRJ_232
+        </strong>
+
+            <span>
+            AI-Powered Maintenance Chatbot
+            for Electrical Substations
+        </span>
+
+        </div>
+
+
+        <div>
+            SDG 9 • Industry, Innovation & Infrastructure
+        </div>
+
+    </footer>
+
+
+    <script src="js/fault-analysis.js"></script>
+
+</body>
+
+</html>

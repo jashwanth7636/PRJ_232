@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Maintenance AI | PRJ_232</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         NAVBAR
+         ===================================================== -->
+
+    <nav class="navbar">
+
+        <div class="nav-brand">
+
+            <div class="brand-icon">
+                ⚡
+            </div>
+
+            <div class="brand-text">
+                <strong>PRJ_232</strong>
+                <span>SUBSTATION AI</span>
+            </div>
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="index.html">Home</a>
+
+            <a href="maintenance.html" class="active">
+                Maintenance
+            </a>
+
+            <a href="fault-analysis.html">
+                Fault Analysis
+            </a>
+
+            <a href="knowledge-base.html">
+                Knowledge Base
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+        </div>
+
+
+        <div class="nav-right">
+
+            <div class="local-ai-status">
+                <span class="status-dot"></span> Local AI
+            </div>
+
+            <button class="menu-button">
+                ☰
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         MAINTENANCE HERO
+         ===================================================== -->
+
+    <main>
+
+        <section class="maintenance-hero">
+
+            <div class="maintenance-hero-content">
+
+                <div class="maintenance-badge">
+                    <span class="status-dot"></span> LOCAL AI • ENGINEERING ASSISTANT
+                </div>
+
+                <h1>
+                    Maintenance
+                    <span>Intelligence</span>
+                </h1>
+
+                <p>
+                    Ask questions about electrical substations, transformers, circuit breakers, inspections, testing procedures and maintenance safety.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MAIN MAINTENANCE AREA
+             ================================================= -->
+
+        <section class="maintenance-section">
+
+            <div class="maintenance-container">
+
+
+                <!-- =============================================
+                     CHAT PANEL
+                     ============================================= -->
+
+                <div class="maintenance-chat">
+
+                    <div class="chat-header">
+
+                        <div>
+
+                            <div class="section-eyebrow">
+                                MAINTENANCE ASSISTANT
+                            </div>
+
+                            <h2>
+                                Ask the Engineering Assistant
+                            </h2>
+
+                            <p>
+                                Powered by local document retrieval and Llama 3.2.
+                            </p>
+
+                        </div>
+
+
+                        <div class="ai-status">
+
+                            <span class="status-dot"></span>
+
+                            <span>
+                                ONLINE
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Chat Messages -->
+
+                    <div class="chat-messages">
+
+                        <!-- Initial assistant message -->
+
+                        <div class="chat-message assistant-message">
+
+                            <div class="message-avatar">
+                                ⚡
+                            </div>
+
+                            <div class="message-content">
+
+                                <div class="message-name">
+                                    PRJ_232 AI
+                                </div>
+
+                                <p>
+                                    Hello! I can help you with electrical substation maintenance, inspection procedures, testing, circuit breakers, transformers and safety requirements.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Example user message -->
+
+                        <div class="chat-message user-message">
+
+                            <div class="message-content">
+
+                                <div class="message-name">
+                                    You
+                                </div>
+
+                                <p>
+                                    What should be checked during circuit breaker maintenance?
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Example assistant response -->
+
+                        <div class="chat-message assistant-message">
+
+                            <div class="message-avatar">
+                                ⚡
+                            </div>
+
+                            <div class="message-content">
+
+                                <div class="message-name">
+                                    PRJ_232 AI
+                                </div>
+
+                                <p>
+                                    I can identify relevant maintenance procedures from the available technical documentation and provide the applicable inspection and safety information.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         CHAT INPUT
+                         ========================================= -->
+
+                    <div class="chat-input-area">
+
+                        <input type="text" placeholder="Ask a maintenance question..." autocomplete="off">
+
+                        <button type="button" aria-label="Send question">
+                            →
+                        </button>
+
+                    </div>
+
+
+                    <!-- Quick Questions -->
+
+                    <div class="quick-questions">
+
+                        <span>
+                            Quick questions
+                        </span>
+
+                        <button type="button" data-question="What are the safety precautions for circuit breaker maintenance?">
+                            Circuit breaker safety
+                        </button>
+
+                        <button type="button" data-question="What maintenance checks are required for a transformer?">
+                            Transformer maintenance
+                        </button>
+
+                        <button type="button" data-question="What should be checked during substation inspection?">
+                            Substation inspection
+                        </button>
+
+                        <button type="button" data-question="What are the common circuit breaker maintenance tests?">
+                            Maintenance tests
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =============================================
+                     KNOWLEDGE SOURCES
+                     ============================================= -->
+
+                <div class="maintenance-sources">
+
+                    <div class="sources-header">
+
+                        <div>
+
+                            <div class="section-eyebrow">
+                                KNOWLEDGE BASE
+                            </div>
+
+                            <h2>
+                                Maintenance Sources
+                            </h2>
+
+                            <p>
+                                Answers are grounded in the technical manuals processed by PRJ_232.
+                            </p>
+
+                        </div>
+
+                        <span class="source-count">
+                            03 MANUALS
+                        </span>
+
+                    </div>
+
+
+                    <div class="source-grid">
+
+
+                        <!-- Circuit Breaker -->
+
+                        <div class="source-card">
+
+                            <div class="source-icon">
+                                ▣
+                            </div>
+
+                            <div class="source-content">
+
+                                <h3>
+                                    Circuit Breaker
+                                </h3>
+
+                                <p>
+                                    Maintenance Guide
+                                </p>
+
+                                <span>
+                                    204 pages
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Substation -->
+
+                        <div class="source-card">
+
+                            <div class="source-icon">
+                                ▣
+                            </div>
+
+                            <div class="source-content">
+
+                                <h3>
+                                    Electrical Substation
+                                </h3>
+
+                                <p>
+                                    Maintenance Information
+                                </p>
+
+                                <span>
+                                    88 pages
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Transformer -->
+
+                        <div class="source-card">
+
+                            <div class="source-icon">
+                                ▣
+                            </div>
+
+                            <div class="source-content">
+
+                                <h3>
+                                    Transformer
+                                </h3>
+
+                                <p>
+                                    Maintenance Manual
+                                </p>
+
+                                <span>
+                                    159 pages
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =============================================
+                     LOCAL AI STATUS
+                     ============================================= -->
+
+                <div class="local-ai-card">
+
+                    <div class="local-ai-icon">
+                        ⚡
+                    </div>
+
+                    <div class="local-ai-content">
+
+                        <div class="section-eyebrow">
+                            LOCAL PROCESSING
+                        </div>
+
+                        <h3>
+                            AI Processing Runs Locally
+                        </h3>
+
+                        <p>
+                            PRJ_232 uses a locally running language model together with the project maintenance knowledge base. External AI API keys are not required for the maintenance chatbot.
+                        </p>
+
+                    </div>
+
+                    <div class="local-ai-model">
+
+                        <span class="status-dot"></span>
+
+                        <div>
+                            <strong>
+                                Llama 3.2
+                            </strong>
+
+                            <small>
+                                3B • Ollama
+                            </small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer class="footer">
+
+        <div>
+            PRJ_232
+        </div>
+
+        <div>
+            AI-Powered Maintenance Chatbot for Electrical Substations
+        </div>
+
+        <div>
+            Local AI System
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         MAINTENANCE AI JAVASCRIPT
+         ===================================================== -->
+
+    <script src="js/maintenance.js"></script>
+
+</body>
+
+</html>

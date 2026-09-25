@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        PRJ_232 | About
+    </title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+    <!-- Background -->
+
+    <div class="background-grid"></div>
+
+    <div class="glow glow-one"></div>
+
+    <div class="glow glow-two"></div>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <header class="navbar">
+
+        <a href="index.html" class="logo-area">
+
+            <div class="logo-icon">
+                ⚡
+            </div>
+
+            <div class="logo-text">
+
+                <strong>
+                    PRJ_232
+                </strong>
+
+                <span>
+                    SUBSTATION AI
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="maintenance.html">
+                Maintenance
+            </a>
+
+            <a href="fault-analysis.html">
+                Fault Analysis
+            </a>
+
+            <a href="knowledge-base.html">
+                Knowledge Base
+            </a>
+
+            <a href="about.html" class="active">
+                About
+            </a>
+
+        </nav>
+
+
+        <div class="nav-actions">
+
+            <div class="ai-status">
+
+                <span class="status-dot"></span> Local AI
+
+            </div>
+
+
+            <button class="menu-button">
+                ☰
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="about-page">
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="about-hero">
+
+            <div class="hero-badge">
+
+                <span>●</span> PRJ_232 • ARTIFICIAL INTELLIGENCE & ML
+
+            </div>
+
+
+            <h1>
+
+                About
+                <span>PRJ_232</span>
+
+            </h1>
+
+
+            <p>
+
+                AI-Powered Maintenance Chatbot for Electrical Substations.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PROJECT OVERVIEW
+        ================================================== -->
+
+        <section class="about-overview">
+
+            <div class="overview-main">
+
+                <span class="eyebrow">
+                    PROJECT OVERVIEW
+                </span>
+
+                <h2>
+                    Intelligent Assistance for Electrical Maintenance
+                </h2>
+
+                <p>
+
+                    PRJ_232 is an AI-powered maintenance assistant designed to support electrical substation maintenance activities. The system combines a trained machine learning fault classifier with a local maintenance knowledge base and a locally running language model.
+
+                </p>
+
+                <p>
+
+                    The objective is to provide a single interface where users can analyze electrical measurements and obtain maintenance information from technical documentation.
+
+                </p>
+
+            </div>
+
+
+            <div class="overview-side">
+
+                <div class="overview-stat">
+
+                    <strong>
+                        PRJ_232
+                    </strong>
+
+                    <span>
+                        PROJECT ID
+                    </span>
+
+                </div>
+
+
+                <div class="overview-stat">
+
+                    <strong>
+                        AI / ML
+                    </strong>
+
+                    <span>
+                        DOMAIN
+                    </span>
+
+                </div>
+
+
+                <div class="overview-stat">
+
+                    <strong>
+                        SDG 9
+                    </strong>
+
+                    <span>
+                        INDUSTRY & INFRASTRUCTURE
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SYSTEM COMPONENTS
+        ================================================== -->
+
+        <section class="about-components">
+
+            <div class="about-section-heading">
+
+                <span class="eyebrow">
+                    SYSTEM ARCHITECTURE
+                </span>
+
+                <h2>
+                    Core Components
+                </h2>
+
+            </div>
+
+
+            <div class="component-grid">
+
+
+                <!-- ML -->
+
+                <div class="component-card">
+
+                    <div class="component-number">
+                        01
+                    </div>
+
+                    <div class="component-icon">
+                        ⚡
+                    </div>
+
+                    <span class="component-label">
+                        MACHINE LEARNING
+                    </span>
+
+                    <h3>
+                        Fault Classification
+                    </h3>
+
+                    <p>
+
+                        A trained Random Forest classifier analyzes six electrical measurements and predicts the corresponding fault category.
+
+                    </p>
+
+
+                    <div class="component-tech">
+
+                        Ia • Ib • Ic • Va • Vb • Vc
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- RAG -->
+
+                <div class="component-card">
+
+                    <div class="component-number">
+                        02
+                    </div>
+
+                    <div class="component-icon">
+                        ⌕
+                    </div>
+
+                    <span class="component-label">
+                        INFORMATION RETRIEVAL
+                    </span>
+
+                    <h3>
+                        Maintenance Knowledge
+                    </h3>
+
+                    <p>
+
+                        Technical manuals are converted into searchable document chunks. Relevant passages are retrieved for maintenance questions.
+
+                    </p>
+
+
+                    <div class="component-tech">
+
+                        TF-IDF • Document Retrieval
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- LLM -->
+
+                <div class="component-card">
+
+                    <div class="component-number">
+                        03
+                    </div>
+
+                    <div class="component-icon">
+                        ✦
+                    </div>
+
+                    <span class="component-label">
+                        LOCAL LANGUAGE MODEL
+                    </span>
+
+                    <h3>
+                        Conversational AI
+                    </h3>
+
+                    <p>
+
+                        Llama 3.2 3B runs locally and generates responses using retrieved maintenance information as context.
+
+                    </p>
+
+
+                    <div class="component-tech">
+
+                        Ollama • Llama 3.2 3B
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             TECHNOLOGY STACK
+        ================================================== -->
+
+        <section class="technology-section">
+
+            <div class="technology-heading">
+
+                <span class="eyebrow">
+                    DEVELOPMENT STACK
+                </span>
+
+                <h2>
+                    Technologies Used
+                </h2>
+
+            </div>
+
+
+            <div class="technology-grid">
+
+                <div class="technology-item">
+                    <strong>Python</strong>
+                    <span>Core development</span>
+                </div>
+
+
+                <div class="technology-item">
+                    <strong>FastAPI</strong>
+                    <span>Backend API</span>
+                </div>
+
+
+                <div class="technology-item">
+                    <strong>Scikit-learn</strong>
+                    <span>Machine learning</span>
+                </div>
+
+
+                <div class="technology-item">
+                    <strong>XGBoost</strong>
+                    <span>Model comparison</span>
+                </div>
+
+
+                <div class="technology-item">
+                    <strong>TF-IDF</strong>
+                    <span>Document retrieval</span>
+                </div>
+
+
+                <div class="technology-item">
+                    <strong>Ollama</strong>
+                    <span>Local AI runtime</span>
+                </div>
+
+
+                <div class="technology-item">
+                    <strong>Llama 3.2</strong>
+                    <span>Local language model</span>
+                </div>
+
+
+                <div class="technology-item">
+                    <strong>HTML / CSS / JS</strong>
+                    <span>Web interface</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             WORKFLOW
+        ================================================== -->
+
+        <section class="about-workflow">
+
+            <div class="workflow-heading">
+
+                <span class="eyebrow">
+                    SYSTEM WORKFLOW
+                </span>
+
+                <h2>
+                    How PRJ_232 Works
+                </h2>
+
+            </div>
+
+
+            <div class="workflow">
+
+                <div class="workflow-step">
+
+                    <span>
+                        01
+                    </span>
+
+                    <strong>
+                        User Input
+                    </strong>
+
+                    <p>
+                        Question or electrical measurements
+                    </p>
+
+                </div>
+
+
+                <div class="workflow-arrow">
+                    →
+                </div>
+
+
+                <div class="workflow-step">
+
+                    <span>
+                        02
+                    </span>
+
+                    <strong>
+                        AI Processing
+                    </strong>
+
+                    <p>
+                        ML prediction or document retrieval
+                    </p>
+
+                </div>
+
+
+                <div class="workflow-arrow">
+                    →
+                </div>
+
+
+                <div class="workflow-step">
+
+                    <span>
+                        03
+                    </span>
+
+                    <strong>
+                        Local AI
+                    </strong>
+
+                    <p>
+                        Grounded conversational response
+                    </p>
+
+                </div>
+
+
+                <div class="workflow-arrow">
+                    →
+                </div>
+
+
+                <div class="workflow-step">
+
+                    <span>
+                        04
+                    </span>
+
+                    <strong>
+                        Result
+                    </strong>
+
+                    <p>
+                        Fault classification or maintenance answer
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <span>
+            PRJ_232
+        </span>
+
+        <span>
+            AI-Powered Maintenance Chatbot
+        </span>
+
+        <span>
+            Local AI System
+        </span>
+
+    </footer>
+
+
+</body>
+
+</html>
