@@ -4,50 +4,432 @@
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>
-        PRJ_232 | About
-    </title>
+    <title>About | PRJ_232</title>
 
     <link rel="stylesheet" href="css/style.css">
+
+
+    <style>
+        /* =========================================================
+           ABOUT PAGE
+           ========================================================= */
+        
+        .about-page {
+            width: min(1200px, calc(100% - 60px));
+            margin: 0 auto;
+            padding: 120px 0 70px;
+            box-sizing: border-box;
+        }
+        /* =========================================================
+           HERO
+           ========================================================= */
+        
+        .about-hero {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 60px;
+            text-align: center;
+        }
+        
+        .about-hero .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+        
+        .about-hero h1 {
+            margin: 0;
+            color: #ffffff;
+            font-size: clamp(42px, 6vw, 72px);
+            line-height: 1.04;
+            letter-spacing: -0.045em;
+        }
+        
+        .about-hero p {
+            max-width: 760px;
+            margin: 25px auto 0;
+            color: #9b9ba3;
+            font-size: 15px;
+            line-height: 1.75;
+        }
+        /* =========================================================
+           PROJECT INFORMATION
+           ========================================================= */
+        
+        .about-project-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+        
+        .about-info-card {
+            min-width: 0;
+            padding: 28px;
+            background: rgba(16, 16, 18, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-sizing: border-box;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        
+        .about-info-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(185, 255, 92, 0.20);
+        }
+        
+        .about-section-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #85858d;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+        }
+        
+        .about-info-card h2 {
+            margin: 0 0 15px;
+            color: #ffffff;
+            font-size: 20px;
+            line-height: 1.35;
+        }
+        
+        .about-info-card p {
+            margin: 0;
+            color: #898991;
+            font-size: 13px;
+            line-height: 1.75;
+        }
+        /* =========================================================
+           ARCHITECTURE
+           ========================================================= */
+        
+        .about-section {
+            width: 100%;
+            margin-top: 22px;
+        }
+        
+        .about-large-card {
+            width: 100%;
+            padding: 32px;
+            background: rgba(16, 16, 18, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 22px;
+            box-sizing: border-box;
+        }
+        
+        .about-large-card>h2 {
+            margin: 0 0 30px;
+            color: #ffffff;
+            font-size: 24px;
+        }
+        /* =========================================================
+           ARCHITECTURE FLOW
+           ========================================================= */
+        
+        .architecture-flow-fixed {
+            width: 100%;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .architecture-step-fixed {
+            min-width: 0;
+            min-height: 190px;
+            padding: 22px;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 16px;
+            box-sizing: border-box;
+        }
+        
+        .architecture-number-fixed {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            border-radius: 10px;
+            background: rgba(185, 255, 92, 0.08);
+            border: 1px solid rgba(185, 255, 92, 0.14);
+            color: #b9ff5c;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        
+        .architecture-step-fixed h3 {
+            margin: 0 0 10px;
+            color: #ffffff;
+            font-size: 15px;
+            line-height: 1.35;
+        }
+        
+        .architecture-step-fixed p {
+            margin: 0;
+            color: #85858d;
+            font-size: 12px;
+            line-height: 1.65;
+        }
+        
+        .architecture-arrow-fixed {
+            color: #b9ff5c;
+            font-size: 20px;
+            text-align: center;
+        }
+        /* =========================================================
+           COMPONENTS
+           ========================================================= */
+        
+        .about-components {
+            width: 100%;
+            margin-top: 22px;
+        }
+        
+        .component-list {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+        
+        .component-item {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            padding: 18px 20px;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+        }
+        
+        .component-item strong {
+            color: #ffffff;
+            font-size: 13px;
+        }
+        
+        .component-item span {
+            color: #85858d;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        /* =========================================================
+           ACTION
+           ========================================================= */
+        
+        .about-action {
+            width: 100%;
+            margin-top: 22px;
+            padding: 45px 30px;
+            text-align: center;
+            background: radial-gradient( circle at center, rgba(185, 255, 92, 0.055), transparent 65%);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 22px;
+            box-sizing: border-box;
+        }
+        
+        .about-action h2 {
+            margin: 0 0 10px;
+            color: #ffffff;
+            font-size: 25px;
+        }
+        
+        .about-action p {
+            max-width: 680px;
+            margin: 0 auto 25px;
+            color: #85858d;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        
+        .about-action-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .about-primary-button,
+        .about-secondary-button {
+            min-height: 50px;
+            padding: 0 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border-radius: 13px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            box-sizing: border-box;
+        }
+        
+        .about-primary-button {
+            background: #b9ff5c;
+            color: #080808;
+        }
+        
+        .about-primary-button:hover {
+            filter: brightness(1.05);
+            transform: translateY(-1px);
+        }
+        
+        .about-secondary-button {
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            color: #d0d0d5;
+        }
+        
+        .about-secondary-button:hover {
+            border-color: rgba(185, 255, 92, 0.25);
+            color: #b9ff5c;
+        }
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+        
+        .about-footer {
+            width: min(1200px, calc(100% - 60px));
+            margin: 55px auto 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .about-footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .about-footer-brand strong {
+            color: #ffffff;
+            font-size: 13px;
+        }
+        
+        .about-footer-brand span {
+            color: #606068;
+            font-size: 11px;
+        }
+        
+        .about-footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+        
+        .about-footer-links a {
+            color: #777780;
+            font-size: 12px;
+            text-decoration: none;
+        }
+        
+        .about-footer-links a:hover {
+            color: #b9ff5c;
+        }
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+        
+        @media (max-width: 1050px) {
+            .about-project-grid {
+                grid-template-columns: 1fr;
+            }
+            .architecture-flow-fixed {
+                grid-template-columns: 1fr auto 1fr;
+                gap: 15px;
+            }
+            .architecture-flow-fixed .architecture-step-fixed:nth-of-type(3) {
+                grid-column: 1;
+            }
+        }
+        
+        @media (max-width: 800px) {
+            .about-page {
+                width: calc(100% - 36px);
+                padding-top: 100px;
+            }
+            .architecture-flow-fixed {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .architecture-arrow-fixed {
+                transform: rotate(90deg);
+                padding: 2px 0;
+            }
+            .component-list {
+                grid-template-columns: 1fr;
+            }
+            .about-footer {
+                width: calc(100% - 36px);
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .about-hero h1 {
+                font-size: 39px;
+            }
+            .about-hero p {
+                font-size: 13px;
+            }
+            .about-large-card,
+            .about-info-card {
+                padding: 22px;
+            }
+            .about-action {
+                padding: 35px 20px;
+            }
+            .about-action-buttons {
+                flex-direction: column;
+            }
+            .about-primary-button,
+            .about-secondary-button {
+                width: 100%;
+            }
+        }
+    </style>
 
 </head>
 
 
 <body>
 
-    <!-- Background -->
 
-    <div class="background-grid"></div>
-
-    <div class="glow glow-one"></div>
-
-    <div class="glow glow-two"></div>
-
-
-    <!-- =====================================================
-         NAVBAR
-    ====================================================== -->
+    <!-- =========================================================
+     NAVBAR
+     ========================================================= -->
 
     <header class="navbar">
 
-        <a href="index.html" class="logo-area">
+        <a href="index.html" class="brand">
 
-            <div class="logo-icon">
+            <div class="brand-icon">
                 ⚡
             </div>
 
-            <div class="logo-text">
+
+            <div class="brand-text">
 
                 <strong>
-                    PRJ_232
-                </strong>
+                PRJ_232
+            </strong>
 
                 <span>
-                    SUBSTATION AI
-                </span>
+                SUBSTATION AI
+            </span>
 
             </div>
 
@@ -56,41 +438,45 @@
 
         <nav class="nav-links">
 
-            <a href="index.html">
-                Home
-            </a>
+            <a href="index.html" class="nav-link">
+            Home
+        </a>
 
-            <a href="maintenance.html">
-                Maintenance
-            </a>
+            <a href="maintenance.html" class="nav-link">
+            Maintenance
+        </a>
 
-            <a href="fault-analysis.html">
-                Fault Analysis
-            </a>
+            <a href="fault-analysis.html" class="nav-link">
+            Fault Analysis
+        </a>
 
-            <a href="knowledge-base.html">
-                Knowledge Base
-            </a>
+            <a href="knowledge-base.html" class="nav-link">
+            Knowledge Base
+        </a>
 
-            <a href="about.html" class="active">
-                About
-            </a>
+            <a href="about.html" class="nav-link active">
+            About
+        </a>
 
         </nav>
 
 
-        <div class="nav-actions">
+        <div class="nav-right">
 
-            <div class="ai-status">
+            <div class="status-pill">
 
-                <span class="status-dot"></span> Local AI
+                <span class="status-dot"></span>
+
+                <span>
+                PRJ_232
+            </span>
 
             </div>
 
 
-            <button class="menu-button">
-                ☰
-            </button>
+            <button class="menu-button" type="button" aria-label="Open navigation menu">
+            ☰
+        </button>
 
         </div>
 
@@ -98,37 +484,37 @@
 
 
 
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
+    <!-- =========================================================
+     MAIN
+     ========================================================= -->
 
     <main class="about-page">
 
 
-        <!-- =================================================
-             HERO
-        ================================================== -->
+        <!-- =====================================================
+         HERO
+         ===================================================== -->
 
         <section class="about-hero">
 
             <div class="hero-badge">
 
-                <span>●</span> PRJ_232 • ARTIFICIAL INTELLIGENCE & ML
+                <span class="status-dot"></span> PROJECT INFORMATION
 
             </div>
 
 
             <h1>
 
-                About
-                <span>PRJ_232</span>
+                AI-Powered Maintenance
+                <br> Chatbot for Electrical Substations
 
             </h1>
 
 
             <p>
 
-                AI-Powered Maintenance Chatbot for Electrical Substations.
+                A machine-learning and AI-assisted system designed to support electrical substation fault classification and maintenance information retrieval.
 
             </p>
 
@@ -136,213 +522,78 @@
 
 
 
-        <!-- =================================================
-             PROJECT OVERVIEW
-        ================================================== -->
+        <!-- =====================================================
+         PROJECT INFORMATION
+         ===================================================== -->
 
-        <section class="about-overview">
+        <section class="about-project-grid">
 
-            <div class="overview-main">
 
-                <span class="eyebrow">
-                    PROJECT OVERVIEW
-                </span>
+            <!-- PROJECT -->
+
+            <div class="about-info-card">
+
+                <span class="about-section-label">
+                PROJECT
+            </span>
+
 
                 <h2>
-                    Intelligent Assistance for Electrical Maintenance
+                    PRJ_232
                 </h2>
+
 
                 <p>
 
-                    PRJ_232 is an AI-powered maintenance assistant designed to support electrical substation maintenance activities. The system combines a trained machine learning fault classifier with a local maintenance knowledge base and a locally running language model.
+                    The project combines a trained electrical fault classification model with technical document retrieval and a conversational AI layer.
 
                 </p>
+
+            </div>
+
+
+
+            <!-- DOMAIN -->
+
+            <div class="about-info-card">
+
+                <span class="about-section-label">
+                DOMAIN
+            </span>
+
+
+                <h2>
+                    Artificial Intelligence / Machine Learning
+                </h2>
+
 
                 <p>
 
-                    The objective is to provide a single interface where users can analyze electrical measurements and obtain maintenance information from technical documentation.
+                    The system applies supervised machine learning to electrical measurements and combines the prediction component with technical maintenance information.
 
                 </p>
 
             </div>
 
 
-            <div class="overview-side">
 
-                <div class="overview-stat">
+            <!-- SDG -->
 
-                    <strong>
-                        PRJ_232
-                    </strong>
+            <div class="about-info-card">
 
-                    <span>
-                        PROJECT ID
-                    </span>
+                <span class="about-section-label">
+                SDG
+            </span>
 
-                </div>
-
-
-                <div class="overview-stat">
-
-                    <strong>
-                        AI / ML
-                    </strong>
-
-                    <span>
-                        DOMAIN
-                    </span>
-
-                </div>
-
-
-                <div class="overview-stat">
-
-                    <strong>
-                        SDG 9
-                    </strong>
-
-                    <span>
-                        INDUSTRY & INFRASTRUCTURE
-                    </span>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             SYSTEM COMPONENTS
-        ================================================== -->
-
-        <section class="about-components">
-
-            <div class="about-section-heading">
-
-                <span class="eyebrow">
-                    SYSTEM ARCHITECTURE
-                </span>
 
                 <h2>
-                    Core Components
+                    SDG 9
                 </h2>
 
-            </div>
 
-
-            <div class="component-grid">
-
-
-                <!-- ML -->
-
-                <div class="component-card">
-
-                    <div class="component-number">
-                        01
-                    </div>
-
-                    <div class="component-icon">
-                        ⚡
-                    </div>
-
-                    <span class="component-label">
-                        MACHINE LEARNING
-                    </span>
-
-                    <h3>
-                        Fault Classification
-                    </h3>
-
-                    <p>
-
-                        A trained Random Forest classifier analyzes six electrical measurements and predicts the corresponding fault category.
-
-                    </p>
-
-
-                    <div class="component-tech">
-
-                        Ia • Ib • Ic • Va • Vb • Vc
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- RAG -->
-
-                <div class="component-card">
-
-                    <div class="component-number">
-                        02
-                    </div>
-
-                    <div class="component-icon">
-                        ⌕
-                    </div>
-
-                    <span class="component-label">
-                        INFORMATION RETRIEVAL
-                    </span>
-
-                    <h3>
-                        Maintenance Knowledge
-                    </h3>
-
-                    <p>
-
-                        Technical manuals are converted into searchable document chunks. Relevant passages are retrieved for maintenance questions.
-
-                    </p>
-
-
-                    <div class="component-tech">
-
-                        TF-IDF • Document Retrieval
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- LLM -->
-
-                <div class="component-card">
-
-                    <div class="component-number">
-                        03
-                    </div>
-
-                    <div class="component-icon">
-                        ✦
-                    </div>
-
-                    <span class="component-label">
-                        LOCAL LANGUAGE MODEL
-                    </span>
-
-                    <h3>
-                        Conversational AI
-                    </h3>
-
-                    <p>
-
-                        Llama 3.2 3B runs locally and generates responses using retrieved maintenance information as context.
-
-                    </p>
-
-
-                    <div class="component-tech">
-
-                        Ollama • Llama 3.2 3B
-
-                    </div>
-
-                </div>
+                <p>
+                    Industry, Innovation and Infrastructure.
+                </p>
 
             </div>
 
@@ -350,182 +601,263 @@
 
 
 
-        <!-- =================================================
-             TECHNOLOGY STACK
-        ================================================== -->
+        <!-- =====================================================
+         SYSTEM ARCHITECTURE
+         ===================================================== -->
 
-        <section class="technology-section">
+        <section class="about-section">
 
-            <div class="technology-heading">
+            <div class="about-large-card">
 
-                <span class="eyebrow">
-                    DEVELOPMENT STACK
-                </span>
+                <span class="about-section-label">
+                SYSTEM ARCHITECTURE
+            </span>
 
-                <h2>
-                    Technologies Used
-                </h2>
-
-            </div>
-
-
-            <div class="technology-grid">
-
-                <div class="technology-item">
-                    <strong>Python</strong>
-                    <span>Core development</span>
-                </div>
-
-
-                <div class="technology-item">
-                    <strong>FastAPI</strong>
-                    <span>Backend API</span>
-                </div>
-
-
-                <div class="technology-item">
-                    <strong>Scikit-learn</strong>
-                    <span>Machine learning</span>
-                </div>
-
-
-                <div class="technology-item">
-                    <strong>XGBoost</strong>
-                    <span>Model comparison</span>
-                </div>
-
-
-                <div class="technology-item">
-                    <strong>TF-IDF</strong>
-                    <span>Document retrieval</span>
-                </div>
-
-
-                <div class="technology-item">
-                    <strong>Ollama</strong>
-                    <span>Local AI runtime</span>
-                </div>
-
-
-                <div class="technology-item">
-                    <strong>Llama 3.2</strong>
-                    <span>Local language model</span>
-                </div>
-
-
-                <div class="technology-item">
-                    <strong>HTML / CSS / JS</strong>
-                    <span>Web interface</span>
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             WORKFLOW
-        ================================================== -->
-
-        <section class="about-workflow">
-
-            <div class="workflow-heading">
-
-                <span class="eyebrow">
-                    SYSTEM WORKFLOW
-                </span>
 
                 <h2>
                     How PRJ_232 Works
                 </h2>
 
+
+                <div class="architecture-flow-fixed">
+
+
+                    <!-- STEP 1 -->
+
+                    <div class="architecture-step-fixed">
+
+                        <div class="architecture-number-fixed">
+                            01
+                        </div>
+
+
+                        <h3>
+                            Electrical Measurements
+                        </h3>
+
+
+                        <p>
+
+                            Three-phase voltage and current measurements are provided to the system.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="architecture-arrow-fixed">
+                        →
+                    </div>
+
+
+
+                    <!-- STEP 2 -->
+
+                    <div class="architecture-step-fixed">
+
+                        <div class="architecture-number-fixed">
+                            02
+                        </div>
+
+
+                        <h3>
+                            Trained ML Model
+                        </h3>
+
+
+                        <p>
+
+                            A Random Forest classifier predicts one of the supported electrical fault classes.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="architecture-arrow-fixed">
+                        →
+                    </div>
+
+
+
+                    <!-- STEP 3 -->
+
+                    <div class="architecture-step-fixed">
+
+                        <div class="architecture-number-fixed">
+                            03
+                        </div>
+
+
+                        <h3>
+                            Knowledge Retrieval
+                        </h3>
+
+
+                        <p>
+
+                            Relevant technical information is retrieved from the maintenance document collection.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="architecture-arrow-fixed">
+                        →
+                    </div>
+
+
+
+                    <!-- STEP 4 -->
+
+                    <div class="architecture-step-fixed">
+
+                        <div class="architecture-number-fixed">
+                            04
+                        </div>
+
+
+                        <h3>
+                            AI Assistant
+                        </h3>
+
+
+                        <p>
+
+                            The retrieved engineering context is used to generate conversational maintenance assistance.
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
             </div>
 
+        </section>
 
-            <div class="workflow">
 
-                <div class="workflow-step">
 
-                    <span>
-                        01
-                    </span>
+        <!-- =====================================================
+         COMPONENTS
+         ===================================================== -->
 
-                    <strong>
-                        User Input
+        <section class="about-components">
+
+            <div class="about-large-card">
+
+                <span class="about-section-label">
+                KEY COMPONENTS
+            </span>
+
+
+                <h2>
+                    System Components
+                </h2>
+
+
+                <div class="component-list">
+
+
+                    <div class="component-item">
+
+                        <strong>
+                        Trained Fault Classifier
                     </strong>
 
-                    <p>
-                        Question or electrical measurements
-                    </p>
+                        <span>
+                        Random Forest machine-learning model
+                    </span>
+
+                    </div>
+
+
+                    <div class="component-item">
+
+                        <strong>
+                        Technical Document Retrieval
+                    </strong>
+
+                        <span>
+                        TF-IDF based retrieval from maintenance manuals
+                    </span>
+
+                    </div>
+
+
+                    <div class="component-item">
+
+                        <strong>
+                        Conversational AI
+                    </strong>
+
+                        <span>
+                        Natural-language engineering assistance
+                    </span>
+
+                    </div>
+
+
+                    <div class="component-item">
+
+                        <strong>
+                        Web Interface
+                    </strong>
+
+                        <span>
+                        FastAPI backend with responsive web frontend
+                    </span>
+
+                    </div>
+
 
                 </div>
 
+            </div>
 
-                <div class="workflow-arrow">
+        </section>
+
+
+
+        <!-- =====================================================
+         ACTION
+         ===================================================== -->
+
+        <section class="about-action">
+
+            <h2>
+                Explore PRJ_232
+            </h2>
+
+
+            <p>
+
+                Start with electrical fault analysis or ask the maintenance assistant an engineering question.
+
+            </p>
+
+
+            <div class="about-action-buttons">
+
+
+                <a href="fault-analysis.html" class="about-primary-button">
+
+                Fault Analysis
+
+                <span>
                     →
-                </div>
+                </span>
+
+            </a>
 
 
-                <div class="workflow-step">
+                <a href="maintenance.html" class="about-secondary-button">
 
-                    <span>
-                        02
-                    </span>
+                Maintenance Assistant
 
-                    <strong>
-                        AI Processing
-                    </strong>
-
-                    <p>
-                        ML prediction or document retrieval
-                    </p>
-
-                </div>
-
-
-                <div class="workflow-arrow">
-                    →
-                </div>
-
-
-                <div class="workflow-step">
-
-                    <span>
-                        03
-                    </span>
-
-                    <strong>
-                        Local AI
-                    </strong>
-
-                    <p>
-                        Grounded conversational response
-                    </p>
-
-                </div>
-
-
-                <div class="workflow-arrow">
-                    →
-                </div>
-
-
-                <div class="workflow-step">
-
-                    <span>
-                        04
-                    </span>
-
-                    <strong>
-                        Result
-                    </strong>
-
-                    <p>
-                        Fault classification or maintenance answer
-                    </p>
-
-                </div>
+            </a>
 
             </div>
 
@@ -535,25 +867,78 @@
 
 
 
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
+    <!-- =========================================================
+     FOOTER
+     ========================================================= -->
 
-    <footer>
+    <footer class="footer about-footer">
 
-        <span>
+
+        <div class="footer-brand about-footer-brand">
+
+            <strong>
             PRJ_232
+        </strong>
+
+
+            <span>
+            AI-Powered Maintenance Chatbot for Electrical Substations
         </span>
 
-        <span>
-            AI-Powered Maintenance Chatbot
-        </span>
+        </div>
 
-        <span>
-            Local AI System
-        </span>
+
+        <div class="footer-links about-footer-links">
+
+            <a href="index.html">
+            Home
+        </a>
+
+            <a href="maintenance.html">
+            Maintenance
+        </a>
+
+            <a href="fault-analysis.html">
+            Fault Analysis
+        </a>
+
+            <a href="knowledge-base.html">
+            Knowledge Base
+        </a>
+
+            <a href="about.html">
+            About
+        </a>
+
+        </div>
 
     </footer>
+
+
+
+    <!-- =========================================================
+     MOBILE MENU
+     ========================================================= -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            const menuButton = document.querySelector(".menu-button");
+            const navLinks = document.querySelector(".nav-links");
+
+
+            if (menuButton && navLinks) {
+
+                menuButton.addEventListener("click", function() {
+
+                    navLinks.classList.toggle("mobile-open");
+
+                });
+
+            }
+
+        });
+    </script>
 
 
 </body>

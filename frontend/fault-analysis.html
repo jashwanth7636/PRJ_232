@@ -2,39 +2,1131 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Fault Analysis | PRJ_232</title>
 
     <link rel="stylesheet" href="css/style.css">
+
+
+    <!-- =========================================================
+         FAULT ANALYSIS PAGE STYLES
+         These styles intentionally override broken/global layout
+         without changing fault-analysis.js.
+         ========================================================= -->
+
+    <style>
+        /* =====================================================
+           PAGE RESET
+           ===================================================== */
+        
+        .fault-page {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 30px 70px;
+            box-sizing: border-box;
+        }
+        /* =====================================================
+           HERO
+           ===================================================== */
+        
+        .fault-page-hero {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 60px;
+            text-align: center;
+        }
+        
+        .fault-page-hero .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+        
+        .fault-page-hero h1 {
+            margin: 0;
+            color: #ffffff;
+            font-size: clamp(46px, 6vw, 76px);
+            line-height: 1.02;
+            letter-spacing: -0.045em;
+        }
+        
+        .fault-page-hero p {
+            max-width: 720px;
+            margin: 25px auto 0;
+            color: #9b9ba3;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        /* =====================================================
+           ANALYSIS LAYOUT
+           ===================================================== */
+        
+        .fault-analysis-layout {
+            width: 100%;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 22px;
+            align-items: stretch;
+        }
+        /* =====================================================
+           CARDS
+           ===================================================== */
+        
+        .analysis-card {
+            min-width: 0;
+            padding: 30px;
+            background: rgba(16, 16, 18, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 22px;
+            box-sizing: border-box;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.28);
+        }
+        
+        .card-heading {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .section-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #85858d;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+        }
+        
+        .card-heading h2 {
+            margin: 0;
+            color: #ffffff;
+            font-size: 22px;
+            line-height: 1.2;
+        }
+        /* =====================================================
+           MEASUREMENT GROUP
+           ===================================================== */
+        
+        .measurement-group {
+            margin-bottom: 30px;
+        }
+        
+        .measurement-group h3 {
+            margin: 0 0 14px;
+            color: #c8c8ce;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        /* =====================================================
+           MEASUREMENT GRID
+           ===================================================== */
+        
+        .measurement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+        /* =====================================================
+           INPUT
+           ===================================================== */
+        
+        .measurement-input {
+            position: relative;
+            min-width: 0;
+        }
+        
+        .measurement-input label {
+            display: block;
+            margin-bottom: 8px;
+            color: #9c9ca4;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .measurement-input input {
+            width: 100%;
+            height: 48px;
+            padding: 0 40px 0 13px;
+            box-sizing: border-box;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 11px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.035);
+            color: #ffffff;
+            font-size: 13px;
+        }
+        
+        .measurement-input input::placeholder {
+            color: #55555d;
+        }
+        
+        .measurement-input input:focus {
+            border-color: rgba(185, 255, 92, 0.45);
+            background: rgba(185, 255, 92, 0.025);
+        }
+        
+        .measurement-input span {
+            position: absolute;
+            right: 12px;
+            bottom: 14px;
+            color: #6f6f77;
+            font-size: 11px;
+        }
+        /* =====================================================
+           ANALYZE BUTTON
+           ===================================================== */
+        
+        .analyze-button {
+            width: 100%;
+            min-height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 13px;
+            background: #b9ff5c;
+            color: #070707;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+        
+        .analyze-button:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.05);
+        }
+        
+        .analyze-button:active {
+            transform: translateY(0);
+        }
+        /* =====================================================
+           ANALYSIS NOTE
+           ===================================================== */
+        
+        .analysis-note {
+            margin-top: 18px;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #777780;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+        
+        .analysis-note strong {
+            color: #b2b2b9;
+        }
+        /* =====================================================
+           RESULT CARD
+           ===================================================== */
+        
+        .result-card {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .fault-result {
+            min-height: 155px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        
+        .result-placeholder {
+            text-align: center;
+            padding: 25px;
+        }
+        
+        .result-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: rgba(185, 255, 92, 0.08);
+            color: #b9ff5c;
+            font-size: 20px;
+        }
+        
+        .result-placeholder h3 {
+            margin: 0 0 8px;
+            color: #eeeeef;
+            font-size: 16px;
+        }
+        
+        .result-placeholder p {
+            margin: 0;
+            color: #777780;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        /* =====================================================
+           PROBABILITIES
+           ===================================================== */
+        
+        .probability-section {
+            margin-top: auto;
+        }
+        
+        .probability-header {
+            margin-bottom: 15px;
+            color: #85858d;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+        }
+        
+        .probability-row {
+            display: grid;
+            grid-template-columns: 45px minmax(0, 1fr) 48px;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 13px;
+        }
+        
+        .probability-label {
+            color: #bdbdc4;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .probability-bar {
+            width: 100%;
+            height: 7px;
+            overflow: hidden;
+            border-radius: 99px;
+            background: rgba(255, 255, 255, 0.07);
+        }
+        
+        .probability-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 99px;
+            background: #b9ff5c;
+            transition: width 0.5s ease;
+        }
+        
+        .probability-value {
+            color: #898991;
+            font-size: 11px;
+            text-align: right;
+        }
+        /* =====================================================
+           FAULT INFORMATION
+           ===================================================== */
+        
+        .fault-info {
+            width: 100%;
+            margin-top: 22px;
+        }
+        
+        .info-card {
+            padding: 30px;
+            background: rgba(16, 16, 18, 0.78);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 22px;
+            box-sizing: border-box;
+        }
+        
+        .info-card h2 {
+            margin: 0 0 25px;
+            color: #ffffff;
+            font-size: 20px;
+        }
+        
+        .fault-class-grid {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 12px;
+        }
+        
+        .fault-class-grid>div {
+            min-width: 0;
+            padding: 18px 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.025);
+        }
+        
+        .fault-class-grid strong {
+            display: block;
+            margin-bottom: 7px;
+            color: #b9ff5c;
+            font-size: 15px;
+        }
+        
+        .fault-class-grid span {
+            display: block;
+            color: #777780;
+            font-size: 10px;
+            line-height: 1.4;
+        }
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+        
+        .fault-footer {
+            width: min(1200px, calc(100% - 60px));
+            margin: 55px auto 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .fault-footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .fault-footer-brand strong {
+            color: #ffffff;
+            font-size: 13px;
+        }
+        
+        .fault-footer-brand span {
+            color: #606068;
+            font-size: 11px;
+        }
+        
+        .fault-footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+        
+        .fault-footer-links a {
+            color: #777780;
+            font-size: 12px;
+            text-decoration: none;
+        }
+        
+        .fault-footer-links a:hover {
+            color: #b9ff5c;
+        }
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+        
+        @media (max-width: 1000px) {
+            .fault-analysis-layout {
+                grid-template-columns: 1fr;
+            }
+            .fault-class-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .fault-page {
+                padding: 100px 18px 50px;
+            }
+            .fault-page-hero h1 {
+                font-size: 43px;
+            }
+            .measurement-grid {
+                grid-template-columns: 1fr;
+            }
+            .fault-class-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .fault-footer {
+                width: calc(100% - 36px);
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .fault-page-hero p {
+                font-size: 13px;
+            }
+            .analysis-card,
+            .info-card {
+                padding: 20px;
+            }
+            .fault-class-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+
 </head>
+
 
 <body>
 
-    <!-- ================= NAVBAR ================= -->
 
-    <nav class="navbar">
+    <!-- =========================================================
+     NAVBAR
+     ========================================================= -->
 
-        <div class="nav-brand">
-            <div class="brand-mark">PRJ</div>
+    <header class="navbar">
 
-            <div>
-                <strong>PRJ_232</strong>
-                <span>Substation AI</span>
+        <a href="index.html" class="brand">
+
+            <div class="brand-icon">
+                ⚡
             </div>
+
+            <div class="brand-text">
+
+                <strong>
+                PRJ_232
+            </strong>
+
+                <span>
+                SUBSTATION AI
+            </span>
+
+            </div>
+
+        </a>
+
+
+        <nav class="nav-links">
+
+            <a href="index.html" class="nav-link">
+            Home
+        </a>
+
+            <a href="maintenance.html" class="nav-link">
+            Maintenance
+        </a>
+
+            <a href="fault-analysis.html" class="nav-link active">
+            Fault Analysis
+        </a>
+
+            <a href="knowledge-base.html" class="nav-link">
+            Knowledge Base
+        </a>
+
+            <a href="about.html" class="nav-link">
+            About
+        </a>
+
+        </nav>
+
+
+        <div class="nav-right">
+
+            <div class="status-pill">
+
+                <span class="status-dot"></span>
+
+                <span>
+                ML Model
+            </span>
+
+            </div>
+
+
+            <button class="menu-button" type="button" aria-label="Open navigation menu">
+            ☰
+        </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================================================
+     MAIN
+     ========================================================= -->
+
+    <main class="fault-page">
+
+
+        <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+        <section class="fault-page-hero">
+
+            <div class="hero-badge">
+
+                <span class="status-dot"></span> TRAINED MACHINE LEARNING MODEL
+
+            </div>
+
+
+            <h1>
+
+                Electrical Fault
+                <br> Analysis
+
+            </h1>
+
+
+            <p>
+
+                Enter three-phase current and voltage measurements to classify the electrical condition using the trained Random Forest model.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- =====================================================
+         ANALYSIS
+         ===================================================== -->
+
+        <section class="fault-analysis-layout">
+
+
+            <!-- =================================================
+             INPUT CARD
+             ================================================= -->
+
+            <div class="analysis-card">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                        MEASUREMENTS
+                    </span>
+
+                        <h2>
+                            Electrical Parameters
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CURRENT -->
+
+                <div class="measurement-group">
+
+                    <h3>
+                        Three-Phase Current
+                    </h3>
+
+
+                    <div class="measurement-grid">
+
+
+                        <div class="measurement-input">
+
+                            <label for="Ia">
+                            Ia
+                        </label>
+
+                            <input id="Ia" type="number" step="any" placeholder="Phase A current">
+
+                            <span>
+                            A
+                        </span>
+
+                        </div>
+
+
+                        <div class="measurement-input">
+
+                            <label for="Ib">
+                            Ib
+                        </label>
+
+                            <input id="Ib" type="number" step="any" placeholder="Phase B current">
+
+                            <span>
+                            A
+                        </span>
+
+                        </div>
+
+
+                        <div class="measurement-input">
+
+                            <label for="Ic">
+                            Ic
+                        </label>
+
+                            <input id="Ic" type="number" step="any" placeholder="Phase C current">
+
+                            <span>
+                            A
+                        </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- VOLTAGE -->
+
+                <div class="measurement-group">
+
+                    <h3>
+                        Three-Phase Voltage
+                    </h3>
+
+
+                    <div class="measurement-grid">
+
+
+                        <div class="measurement-input">
+
+                            <label for="Va">
+                            Va
+                        </label>
+
+                            <input id="Va" type="number" step="any" placeholder="Phase A voltage">
+
+                            <span>
+                            kV
+                        </span>
+
+                        </div>
+
+
+                        <div class="measurement-input">
+
+                            <label for="Vb">
+                            Vb
+                        </label>
+
+                            <input id="Vb" type="number" step="any" placeholder="Phase B voltage">
+
+                            <span>
+                            kV
+                        </span>
+
+                        </div>
+
+
+                        <div class="measurement-input">
+
+                            <label for="Vc">
+                            Vc
+                        </label>
+
+                            <input id="Vc" type="number" step="any" placeholder="Phase C voltage">
+
+                            <span>
+                            kV
+                        </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ANALYZE -->
+
+                <button type="button" id="analyze-btn" class="primary-button analyze-button">
+
+                Analyze Fault
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+
+                <div class="analysis-note">
+
+                    <strong>
+                    Model:
+                </strong> Random Forest classifier
+
+                    <br>
+
+                    <strong>
+                    Classes:
+                </strong> LG, LL, LLG, LLL, LLLG, Normal
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+             RESULT CARD
+             ================================================= -->
+
+            <div class="analysis-card result-card">
+
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                        MODEL OUTPUT
+                    </span>
+
+                        <h2>
+                            Fault Classification
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- RESULT -->
+
+                <div id="fault-result" class="fault-result">
+
+                    <div class="result-placeholder">
+
+                        <div class="result-icon">
+                            ⚡
+                        </div>
+
+
+                        <h3>
+                            Awaiting measurements
+                        </h3>
+
+
+                        <p>
+                            Enter the six electrical measurements and run the analysis.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                 PROBABILITIES
+
+                 IDs/classes retained for fault-analysis.js.
+                 ================================================= -->
+
+                <div class="probability-section">
+
+                    <div class="probability-header">
+
+                        <span>
+                        CLASS PROBABILITIES
+                    </span>
+
+                    </div>
+
+
+                    <div id="probabilities">
+
+
+                        <!-- LG -->
+
+                        <div class="probability-row">
+
+                            <div class="probability-label">
+                                LG
+                            </div>
+
+                            <div class="probability-bar">
+
+                                <div class="probability-fill" style="width: 0%"></div>
+
+                            </div>
+
+                            <div class="probability-value">
+                                0%
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- LL -->
+
+                        <div class="probability-row">
+
+                            <div class="probability-label">
+                                LL
+                            </div>
+
+                            <div class="probability-bar">
+
+                                <div class="probability-fill" style="width: 0%"></div>
+
+                            </div>
+
+                            <div class="probability-value">
+                                0%
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- LLG -->
+
+                        <div class="probability-row">
+
+                            <div class="probability-label">
+                                LLG
+                            </div>
+
+                            <div class="probability-bar">
+
+                                <div class="probability-fill" style="width: 0%"></div>
+
+                            </div>
+
+                            <div class="probability-value">
+                                0%
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- LLL -->
+
+                        <div class="probability-row">
+
+                            <div class="probability-label">
+                                LLL
+                            </div>
+
+                            <div class="probability-bar">
+
+                                <div class="probability-fill" style="width: 0%"></div>
+
+                            </div>
+
+                            <div class="probability-value">
+                                0%
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- LLLG -->
+
+                        <div class="probability-row">
+
+                            <div class="probability-label">
+                                LLLG
+                            </div>
+
+                            <div class="probability-bar">
+
+                                <div class="probability-fill" style="width: 0%"></div>
+
+                            </div>
+
+                            <div class="probability-value">
+                                0%
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- NORMAL -->
+
+                        <div class="probability-row">
+
+                            <div class="probability-label">
+                                Normal
+                            </div>
+
+                            <div class="probability-bar">
+
+                                <div class="probability-fill" style="width: 0%"></div>
+
+                            </div>
+
+                            <div class="probability-value">
+                                0%
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+         SUPPORTED FAULTS
+         ===================================================== -->
+
+        <section class="fault-info">
+
+            <div class="info-card">
+
+                <span class="section-label">
+                CLASSIFICATION CLASSES
+            </span>
+
+
+                <h2>
+                    Supported Fault Classes
+                </h2>
+
+
+                <div class="fault-class-grid">
+
+
+                    <div>
+
+                        <strong>
+                        LG
+                    </strong>
+
+                        <span>
+                        Line-to-Ground
+                    </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                        LL
+                    </strong>
+
+                        <span>
+                        Line-to-Line
+                    </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                        LLG
+                    </strong>
+
+                        <span>
+                        Double Line-to-Ground
+                    </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                        LLL
+                    </strong>
+
+                        <span>
+                        Three-Phase Fault
+                    </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                        LLLG
+                    </strong>
+
+                        <span>
+                        Three-Phase-to-Ground
+                    </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                        Normal
+                    </strong>
+
+                        <span>
+                        Normal Condition
+                    </span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+    <footer class="footer fault-footer">
+
+
+        <div class="footer-brand fault-footer-brand">
+
+            <strong>
+            PRJ_232
+        </strong>
+
+            <span>
+            AI-Powered Maintenance Chatbot for Electrical Substations
+        </span>
+
         </div>
 
 
-        <div class="nav-links">
+        <div class="footer-links fault-footer-links">
 
-            <a href="index.html">Home</a>
+            <a href="index.html">
+            Home
+        </a>
 
             <a href="maintenance.html">
             Maintenance
         </a>
 
-            <a href="fault-analysis.html" class="active">
+            <a href="fault-analysis.html">
             Fault Analysis
         </a>
 
@@ -48,465 +1140,41 @@
 
         </div>
 
-
-        <div class="nav-status">
-
-            <span class="status-dot"></span> AI ONLINE
-
-        </div>
-
-    </nav>
-
-
-    <!-- ================= MAIN ================= -->
-
-    <main class="fault-page">
-
-        <section class="fault-hero">
-
-            <div class="section-label">
-                ML FAULT CLASSIFICATION
-            </div>
-
-            <h1>
-                Electrical Fault<br>
-                <span>Analysis</span>
-            </h1>
-
-            <p>
-                Enter three-phase voltage and current measurements to classify the electrical fault using the trained Random Forest model.
-            </p>
-
-        </section>
-
-
-        <!-- ================= ANALYSIS SECTION ================= -->
-
-        <section class="fault-analysis-section">
-
-            <div class="fault-grid">
-
-
-                <!-- ================= INPUT PANEL ================= -->
-
-                <div class="fault-card">
-
-                    <div class="card-header">
-
-                        <div>
-
-                            <span class="card-label">
-                            INPUT MEASUREMENTS
-                        </span>
-
-                            <h2>
-                                Three-Phase Electrical Data
-                            </h2>
-
-                        </div>
-
-                        <div class="model-badge">
-                            RANDOM FOREST
-                        </div>
-
-                    </div>
-
-
-                    <form id="faultForm">
-
-
-                        <!-- CURRENT -->
-
-                        <div class="input-section">
-
-                            <div class="input-section-title">
-                                Phase Current
-                            </div>
-
-
-                            <div class="input-grid">
-
-                                <div class="input-group">
-
-                                    <label for="Ia">
-                                    Ia
-                                    <span>(A)</span>
-                                </label>
-
-                                    <input type="number" id="Ia" step="any" placeholder="Phase A current" required>
-
-                                </div>
-
-
-                                <div class="input-group">
-
-                                    <label for="Ib">
-                                    Ib
-                                    <span>(A)</span>
-                                </label>
-
-                                    <input type="number" id="Ib" step="any" placeholder="Phase B current" required>
-
-                                </div>
-
-
-                                <div class="input-group">
-
-                                    <label for="Ic">
-                                    Ic
-                                    <span>(A)</span>
-                                </label>
-
-                                    <input type="number" id="Ic" step="any" placeholder="Phase C current" required>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- VOLTAGE -->
-
-                        <div class="input-section">
-
-                            <div class="input-section-title">
-                                Phase Voltage
-                            </div>
-
-
-                            <div class="input-grid">
-
-                                <div class="input-group">
-
-                                    <label for="Va">
-                                    Va
-                                    <span>(kV)</span>
-                                </label>
-
-                                    <input type="number" id="Va" step="any" placeholder="Phase A voltage" required>
-
-                                </div>
-
-
-                                <div class="input-group">
-
-                                    <label for="Vb">
-                                    Vb
-                                    <span>(kV)</span>
-                                </label>
-
-                                    <input type="number" id="Vb" step="any" placeholder="Phase B voltage" required>
-
-                                </div>
-
-
-                                <div class="input-group">
-
-                                    <label for="Vc">
-                                    Vc
-                                    <span>(kV)</span>
-                                </label>
-
-                                    <input type="number" id="Vc" step="any" placeholder="Phase C voltage" required>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <button type="submit" class="fault-analyze-button">
-
-                        <span>
-                            Analyze Fault
-                        </span>
-
-                        <span class="button-arrow">
-                            →
-                        </span>
-
-                    </button>
-
-
-                    </form>
-
-                </div>
-
-
-                <!-- ================= RESULT PANEL ================= -->
-
-                <div class="fault-card result-card">
-
-                    <div class="card-header">
-
-                        <div>
-
-                            <span class="card-label">
-                            MODEL OUTPUT
-                        </span>
-
-                            <h2>
-                                Fault Classification
-                            </h2>
-
-                        </div>
-
-                        <div class="live-badge">
-                            LIVE
-                        </div>
-
-                    </div>
-
-
-                    <div id="faultResult" class="fault-result">
-
-                        <div class="result-placeholder">
-
-                            <div class="placeholder-icon">
-                                ⚡
-                            </div>
-
-                            <h3>
-                                Awaiting measurements
-                            </h3>
-
-                            <p>
-                                Enter the six electrical measurements and run the trained model.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= FAULT CLASSES ================= -->
-
-        <section class="fault-classes-section">
-
-            <div class="section-label">
-                CLASSIFICATION TARGETS
-            </div>
-
-            <h2>
-                Six Fault Classes
-            </h2>
-
-            <div class="fault-class-grid">
-
-
-                <div class="fault-class-card">
-
-                    <span class="fault-code">
-                    LG
-                </span>
-
-                    <strong>
-                    Line-to-Ground
-                </strong>
-
-                    <p>
-                        Single phase to ground fault.
-                    </p>
-
-                </div>
-
-
-                <div class="fault-class-card">
-
-                    <span class="fault-code">
-                    LL
-                </span>
-
-                    <strong>
-                    Line-to-Line
-                </strong>
-
-                    <p>
-                        Fault between two phases.
-                    </p>
-
-                </div>
-
-
-                <div class="fault-class-card">
-
-                    <span class="fault-code">
-                    LLG
-                </span>
-
-                    <strong>
-                    Double Line-to-Ground
-                </strong>
-
-                    <p>
-                        Two phases connected to ground.
-                    </p>
-
-                </div>
-
-
-                <div class="fault-class-card">
-
-                    <span class="fault-code">
-                    LLL
-                </span>
-
-                    <strong>
-                    Three-Phase
-                </strong>
-
-                    <p>
-                        Fault involving all three phases.
-                    </p>
-
-                </div>
-
-
-                <div class="fault-class-card">
-
-                    <span class="fault-code">
-                    LLLG
-                </span>
-
-                    <strong>
-                    Three-Phase Ground
-                </strong>
-
-                    <p>
-                        Three phases connected to ground.
-                    </p>
-
-                </div>
-
-
-                <div class="fault-class-card normal-class">
-
-                    <span class="fault-code">
-                    NORMAL
-                </span>
-
-                    <strong>
-                    Normal Condition
-                </strong>
-
-                    <p>
-                        No detected fault condition.
-                    </p>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= MODEL INFO ================= -->
-
-        <section class="model-info-section">
-
-            <div class="model-info-card">
-
-                <div>
-
-                    <span class="card-label">
-                    TRAINED MACHINE LEARNING MODEL
-                </span>
-
-                    <h2>
-                        Random Forest Classifier
-                    </h2>
-
-                    <p>
-                        The classifier was trained using three-phase voltage and current measurements and evaluated against Logistic Regression and XGBoost.
-                    </p>
-
-                </div>
-
-
-                <div class="model-stats">
-
-                    <div>
-
-                        <strong>
-                        6
-                    </strong>
-
-                        <span>
-                        Fault Classes
-                    </span>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>
-                        6
-                    </strong>
-
-                        <span>
-                        Input Features
-                    </span>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>
-                        RF
-                    </strong>
-
-                        <span>
-                        Selected Model
-                    </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- ================= FOOTER ================= -->
-
-    <footer class="footer">
-
-        <div>
-
-            <strong>
-            PRJ_232
-        </strong>
-
-            <span>
-            AI-Powered Maintenance Chatbot
-            for Electrical Substations
-        </span>
-
-        </div>
-
-
-        <div>
-            SDG 9 • Industry, Innovation & Infrastructure
-        </div>
-
     </footer>
 
 
+
+    <!-- =========================================================
+     EXISTING FAULT ANALYSIS JAVASCRIPT
+     ========================================================= -->
+
     <script src="js/fault-analysis.js"></script>
+
+
+
+    <!-- =========================================================
+     MOBILE MENU
+     ========================================================= -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            const menuButton = document.querySelector(".menu-button");
+            const navLinks = document.querySelector(".nav-links");
+
+            if (menuButton && navLinks) {
+
+                menuButton.addEventListener("click", function() {
+
+                    navLinks.classList.toggle("mobile-open");
+
+                });
+
+            }
+
+        });
+    </script>
+
 
 </body>
 

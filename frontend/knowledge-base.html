@@ -4,49 +4,375 @@
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>
-        PRJ_232 | Knowledge Base
-    </title>
+    <title>Knowledge Base | PRJ_232</title>
 
     <link rel="stylesheet" href="css/style.css">
+
+
+    <style>
+        /* =========================================================
+           KNOWLEDGE BASE PAGE
+           ========================================================= */
+        
+        .knowledge-page {
+            width: min(1200px, calc(100% - 60px));
+            margin: 0 auto;
+            padding: 120px 0 70px;
+            box-sizing: border-box;
+        }
+        /* =========================================================
+           HERO
+           ========================================================= */
+        
+        .knowledge-hero {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 60px;
+            text-align: center;
+        }
+        
+        .knowledge-hero .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+        
+        .knowledge-hero h1 {
+            margin: 0;
+            color: #ffffff;
+            font-size: clamp(44px, 6vw, 74px);
+            line-height: 1.03;
+            letter-spacing: -0.045em;
+        }
+        
+        .knowledge-hero p {
+            max-width: 750px;
+            margin: 25px auto 0;
+            color: #9b9ba3;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        /* =========================================================
+           DOCUMENT GRID
+           ========================================================= */
+        
+        .knowledge-document-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+        /* =========================================================
+           DOCUMENT CARD
+           ========================================================= */
+        
+        .knowledge-document-card {
+            min-width: 0;
+            padding: 26px;
+            background: rgba(16, 16, 18, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-sizing: border-box;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+        
+        .knowledge-document-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(185, 255, 92, 0.22);
+            background: rgba(22, 22, 24, 0.9);
+        }
+        
+        .knowledge-document-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 22px;
+            border-radius: 14px;
+            background: rgba(185, 255, 92, 0.08);
+            border: 1px solid rgba(185, 255, 92, 0.12);
+            color: #b9ff5c;
+            font-size: 20px;
+        }
+        
+        .knowledge-document-type {
+            display: block;
+            margin-bottom: 9px;
+            color: #777780;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+        }
+        
+        .knowledge-document-content h2 {
+            margin: 0 0 14px;
+            color: #ffffff;
+            font-size: 19px;
+            line-height: 1.35;
+        }
+        
+        .knowledge-document-content p {
+            margin: 0 0 22px;
+            color: #898991;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+        
+        .knowledge-document-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #85858d;
+            font-size: 11px;
+        }
+        /* =========================================================
+           RETRIEVAL CARD
+           ========================================================= */
+        
+        .knowledge-retrieval {
+            width: 100%;
+            margin-top: 22px;
+        }
+        
+        .knowledge-retrieval-card {
+            padding: 32px;
+            background: rgba(16, 16, 18, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 22px;
+            box-sizing: border-box;
+        }
+        
+        .knowledge-section-label {
+            display: block;
+            margin-bottom: 9px;
+            color: #85858d;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+        }
+        
+        .knowledge-retrieval-card h2 {
+            margin: 0 0 15px;
+            color: #ffffff;
+            font-size: 24px;
+            line-height: 1.25;
+        }
+        
+        .knowledge-retrieval-card>p {
+            max-width: 850px;
+            margin: 0;
+            color: #8d8d95;
+            font-size: 14px;
+            line-height: 1.75;
+        }
+        /* =========================================================
+           KNOWLEDGE FLOW
+           ========================================================= */
+        
+        .knowledge-flow {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 28px;
+        }
+        
+        .knowledge-flow-step {
+            padding: 18px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        
+        .knowledge-flow-step strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #b9ff5c;
+            font-size: 13px;
+        }
+        
+        .knowledge-flow-step span {
+            display: block;
+            color: #888890;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        /* =========================================================
+           ACTION
+           ========================================================= */
+        
+        .knowledge-action {
+            width: 100%;
+            margin-top: 22px;
+            padding: 45px 30px;
+            text-align: center;
+            background: radial-gradient( circle at center, rgba(185, 255, 92, 0.055), transparent 65%);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 22px;
+            box-sizing: border-box;
+        }
+        
+        .knowledge-action h2 {
+            margin: 0 0 10px;
+            color: #ffffff;
+            font-size: 25px;
+        }
+        
+        .knowledge-action p {
+            max-width: 650px;
+            margin: 0 auto 25px;
+            color: #85858d;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        
+        .knowledge-action-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 50px;
+            padding: 0 22px;
+            border-radius: 13px;
+            background: #b9ff5c;
+            color: #080808;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+        
+        .knowledge-action-button:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.05);
+        }
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+        
+        .knowledge-footer {
+            width: min(1200px, calc(100% - 60px));
+            margin: 55px auto 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .knowledge-footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .knowledge-footer-brand strong {
+            color: #ffffff;
+            font-size: 13px;
+        }
+        
+        .knowledge-footer-brand span {
+            color: #606068;
+            font-size: 11px;
+        }
+        
+        .knowledge-footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+        
+        .knowledge-footer-links a {
+            color: #777780;
+            font-size: 12px;
+            text-decoration: none;
+        }
+        
+        .knowledge-footer-links a:hover {
+            color: #b9ff5c;
+        }
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+        
+        @media (max-width: 950px) {
+            .knowledge-document-grid {
+                grid-template-columns: 1fr;
+            }
+            .knowledge-flow {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .knowledge-page {
+                width: calc(100% - 36px);
+                padding-top: 100px;
+            }
+            .knowledge-hero h1 {
+                font-size: 43px;
+            }
+            .knowledge-hero p {
+                font-size: 13px;
+            }
+            .knowledge-retrieval-card {
+                padding: 22px;
+            }
+            .knowledge-flow {
+                grid-template-columns: 1fr;
+            }
+            .knowledge-action {
+                padding: 35px 20px;
+            }
+            .knowledge-footer {
+                width: calc(100% - 36px);
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        
+        @media (max-width: 500px) {
+            .knowledge-document-card {
+                padding: 21px;
+            }
+            .knowledge-hero h1 {
+                font-size: 38px;
+            }
+        }
+    </style>
 
 </head>
 
 
 <body>
 
-    <div class="background-grid"></div>
 
-    <div class="glow glow-one"></div>
-
-    <div class="glow glow-two"></div>
-
-
-
-    <!-- =====================================================
-         NAVBAR
-    ====================================================== -->
+    <!-- =========================================================
+     NAVBAR
+     ========================================================= -->
 
     <header class="navbar">
 
-        <a href="index.html" class="logo-area">
+        <a href="index.html" class="brand">
 
-            <div class="logo-icon">
+            <div class="brand-icon">
                 ⚡
             </div>
 
-            <div class="logo-text">
+            <div class="brand-text">
 
                 <strong>
-                    PRJ_232
-                </strong>
+                PRJ_232
+            </strong>
 
                 <span>
-                    SUBSTATION AI
-                </span>
+                SUBSTATION AI
+            </span>
 
             </div>
 
@@ -55,41 +381,45 @@
 
         <nav class="nav-links">
 
-            <a href="index.html">
-                Home
-            </a>
+            <a href="index.html" class="nav-link">
+            Home
+        </a>
 
-            <a href="maintenance.html">
-                Maintenance
-            </a>
+            <a href="maintenance.html" class="nav-link">
+            Maintenance
+        </a>
 
-            <a href="fault-analysis.html">
-                Fault Analysis
-            </a>
+            <a href="fault-analysis.html" class="nav-link">
+            Fault Analysis
+        </a>
 
-            <a href="knowledge-base.html" class="active">
-                Knowledge Base
-            </a>
+            <a href="knowledge-base.html" class="nav-link active">
+            Knowledge Base
+        </a>
 
-            <a href="#">
-                About
-            </a>
+            <a href="about.html" class="nav-link">
+            About
+        </a>
 
         </nav>
 
 
-        <div class="nav-actions">
+        <div class="nav-right">
 
-            <div class="ai-status">
+            <div class="status-pill">
 
-                <span class="status-dot"></span> Local AI
+                <span class="status-dot"></span>
+
+                <span>
+                Knowledge Base
+            </span>
 
             </div>
 
 
-            <button class="menu-button">
-                ☰
-            </button>
+            <button class="menu-button" type="button" aria-label="Open navigation menu">
+            ☰
+        </button>
 
         </div>
 
@@ -97,37 +427,37 @@
 
 
 
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
+    <!-- =========================================================
+     MAIN
+     ========================================================= -->
 
     <main class="knowledge-page">
 
 
-        <!-- =================================================
-             HERO
-        ================================================== -->
+        <!-- =====================================================
+         HERO
+         ===================================================== -->
 
         <section class="knowledge-hero">
 
             <div class="hero-badge">
 
-                <span>●</span> DOCUMENT INTELLIGENCE • LOCAL KNOWLEDGE
+                <span class="status-dot"></span> TECHNICAL KNOWLEDGE BASE
 
             </div>
 
 
             <h1>
 
-                Maintenance
-                <span>Knowledge Base</span>
+                Electrical Maintenance
+                <br> Knowledge Base
 
             </h1>
 
 
             <p>
 
-                Technical maintenance manuals processed into a searchable knowledge base for the PRJ_232 maintenance assistant.
+                Technical information used by the PRJ_232 maintenance assistant for document-grounded engineering responses.
 
             </p>
 
@@ -135,362 +465,128 @@
 
 
 
-        <!-- =================================================
-             STATS
-        ================================================== -->
+        <!-- =====================================================
+         DOCUMENTS
+         ===================================================== -->
 
-        <section class="knowledge-stats">
-
-            <div class="knowledge-stat">
-
-                <span class="stat-number">
-                    03
-                </span>
-
-                <span class="stat-label">
-                    TECHNICAL MANUALS
-                </span>
-
-            </div>
+        <section class="knowledge-document-grid">
 
 
-            <div class="knowledge-stat">
+            <!-- CIRCUIT BREAKER -->
 
-                <span class="stat-number">
-                    451
-                </span>
+            <div class="knowledge-document-card">
 
-                <span class="stat-label">
-                    SOURCE PAGES
-                </span>
-
-            </div>
-
-
-            <div class="knowledge-stat">
-
-                <span class="stat-number">
-                    885
-                </span>
-
-                <span class="stat-label">
-                    DOCUMENT CHUNKS
-                </span>
-
-            </div>
-
-
-            <div class="knowledge-stat">
-
-                <span class="stat-number">
-                    884
-                </span>
-
-                <span class="stat-label">
-                    SEARCHABLE CHUNKS
-                </span>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             SEARCH
-        ================================================== -->
-
-        <section class="knowledge-search">
-
-            <div class="search-heading">
-
-                <div>
-
-                    <span class="eyebrow">
-                        KNOWLEDGE SEARCH
-                    </span>
-
-                    <h2>
-                        Search Maintenance Information
-                    </h2>
-
-                </div>
-
-            </div>
-
-
-            <div class="knowledge-search-box">
-
-                <span class="search-icon">
-                    ⌕
-                </span>
-
-
-                <input type="text" placeholder="Search manuals, maintenance procedures, testing, safety...">
-
-
-                <button>
-                    Search
-                </button>
-
-            </div>
-
-
-            <div class="search-tags">
-
-                <button>
-                    Circuit Breaker
-                </button>
-
-                <button>
-                    Transformer
-                </button>
-
-                <button>
-                    Safety
-                </button>
-
-                <button>
-                    Inspection
-                </button>
-
-                <button>
-                    Testing
-                </button>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             DOCUMENTS
-        ================================================== -->
-
-        <section class="documents-section">
-
-            <div class="documents-heading">
-
-                <div>
-
-                    <span class="eyebrow">
-                        SOURCE DOCUMENTS
-                    </span>
-
-                    <h2>
-                        Technical Manuals
-                    </h2>
-
+                <div class="knowledge-document-icon">
+                    ⚡
                 </div>
 
 
-                <span class="document-count">
-                    03 DOCUMENTS
+                <div class="knowledge-document-content">
+
+                    <span class="knowledge-document-type">
+                    TECHNICAL MANUAL
                 </span>
 
-            </div>
 
-
-
-            <div class="document-grid">
-
-
-                <!-- =========================================
-                     CIRCUIT BREAKER
-                ========================================== -->
-
-                <article class="document-card">
-
-                    <div class="document-top">
-
-                        <div class="document-icon">
-                            📄
-                        </div>
-
-
-                        <span class="document-status">
-
-                            <span class="status-dot"></span> INDEXED
-
-                        </span>
-
-                    </div>
-
-
-                    <span class="document-type">
-                        MAINTENANCE GUIDE
-                    </span>
-
-
-                    <h3>
+                    <h2>
                         Circuit Breaker Maintenance Guide
-                    </h3>
+                    </h2>
 
 
                     <p>
 
-                        Maintenance and field testing information for circuit breakers, including inspection, testing and safety procedures.
+                        Technical information covering circuit breaker maintenance, inspection, testing, safety precautions and troubleshooting.
 
                     </p>
 
 
-                    <div class="document-meta">
+                    <div class="knowledge-document-status">
 
-                        <span>
-                            204 pages
-                        </span>
-
-                        <span>
-                            426 chunks
-                        </span>
+                        <span class="status-dot"></span> Indexed
 
                     </div>
 
+                </div>
 
-                    <button class="document-button">
-
-                        View Information
-
-                        <span>
-                            →
-                        </span>
-
-                    </button>
-
-                </article>
+            </div>
 
 
 
-                <!-- =========================================
-                     SUBSTATION
-                ========================================== -->
+            <!-- SUBSTATION -->
 
-                <article class="document-card">
+            <div class="knowledge-document-card">
 
-                    <div class="document-top">
-
-                        <div class="document-icon">
-                            📄
-                        </div>
+                <div class="knowledge-document-icon">
+                    ◈
+                </div>
 
 
-                        <span class="document-status">
+                <div class="knowledge-document-content">
 
-                            <span class="status-dot"></span> INDEXED
-
-                        </span>
-
-                    </div>
+                    <span class="knowledge-document-type">
+                    TECHNICAL MANUAL
+                </span>
 
 
-                    <span class="document-type">
-                        SUBSTATION MANUAL
-                    </span>
-
-
-                    <h3>
+                    <h2>
                         Electrical Substation Maintenance Information
-                    </h3>
+                    </h2>
 
 
                     <p>
 
-                        Technical information covering electrical substation equipment, inspection and maintenance practices.
+                        Reference information covering electrical substation maintenance and associated equipment and procedures.
 
                     </p>
 
 
-                    <div class="document-meta">
+                    <div class="knowledge-document-status">
 
-                        <span>
-                            88 pages
-                        </span>
-
-                        <span>
-                            200 chunks
-                        </span>
+                        <span class="status-dot"></span> Indexed
 
                     </div>
 
+                </div>
 
-                    <button class="document-button">
-
-                        View Information
-
-                        <span>
-                            →
-                        </span>
-
-                    </button>
-
-                </article>
+            </div>
 
 
 
-                <!-- =========================================
-                     TRANSFORMER
-                ========================================== -->
+            <!-- TRANSFORMER -->
 
-                <article class="document-card">
+            <div class="knowledge-document-card">
 
-                    <div class="document-top">
-
-                        <div class="document-icon">
-                            📄
-                        </div>
+                <div class="knowledge-document-icon">
+                    ▣
+                </div>
 
 
-                        <span class="document-status">
+                <div class="knowledge-document-content">
 
-                            <span class="status-dot"></span> INDEXED
-
-                        </span>
-
-                    </div>
+                    <span class="knowledge-document-type">
+                    TECHNICAL MANUAL
+                </span>
 
 
-                    <span class="document-type">
-                        TRANSFORMER MANUAL
-                    </span>
-
-
-                    <h3>
-                        ETC Manual for Flat Wall & Corrugated Transformer
-                    </h3>
+                    <h2>
+                        Transformer Maintenance Manual
+                    </h2>
 
 
                     <p>
 
-                        Transformer maintenance information covering equipment inspection and relevant maintenance procedures.
+                        Technical reference covering transformer maintenance, inspection and related equipment information.
 
                     </p>
 
 
-                    <div class="document-meta">
+                    <div class="knowledge-document-status">
 
-                        <span>
-                            159 pages
-                        </span>
-
-                        <span>
-                            259 chunks
-                        </span>
+                        <span class="status-dot"></span> Indexed
 
                     </div>
 
-
-                    <button class="document-button">
-
-                        View Information
-
-                        <span>
-                            →
-                        </span>
-
-                    </button>
-
-                </article>
+                </div>
 
             </div>
 
@@ -498,115 +594,121 @@
 
 
 
-        <!-- =================================================
-             RETRIEVAL PIPELINE
-        ================================================== -->
+        <!-- =====================================================
+         RETRIEVAL
+         ===================================================== -->
 
-        <section class="retrieval-section">
+        <section class="knowledge-retrieval">
 
-            <div class="retrieval-heading">
+            <div class="knowledge-retrieval-card">
 
-                <span class="eyebrow">
-                    DOCUMENT PROCESSING
-                </span>
+                <span class="knowledge-section-label">
+                DOCUMENT RETRIEVAL
+            </span>
+
 
                 <h2>
-                    Knowledge Retrieval Pipeline
+                    How the knowledge base works
                 </h2>
 
+
                 <p>
-                    Technical documents are processed into searchable chunks before being supplied as context to the local AI assistant.
+
+                    The project extracts text from the technical manuals, divides the content into searchable sections and uses TF-IDF similarity retrieval to identify relevant information for maintenance questions.
+
                 </p>
 
-            </div>
+
+                <div class="knowledge-flow">
 
 
-            <div class="retrieval-flow">
+                    <div class="knowledge-flow-step">
 
-
-                <div class="pipeline-step">
-
-                    <div class="pipeline-number">
+                        <strong>
                         01
-                    </div>
-
-                    <strong>
-                        PDF Manuals
                     </strong>
 
-                    <span>
-                        Technical source documents
+                        <span>
+                        Technical PDFs
                     </span>
 
-                </div>
+                    </div>
 
 
-                <div class="pipeline-arrow">
-                    →
-                </div>
+                    <div class="knowledge-flow-step">
 
-
-                <div class="pipeline-step">
-
-                    <div class="pipeline-number">
+                        <strong>
                         02
-                    </div>
+                    </strong>
 
-                    <strong>
+                        <span>
                         Text Extraction
-                    </strong>
-
-                    <span>
-                        Extract readable content
                     </span>
 
-                </div>
+                    </div>
 
 
-                <div class="pipeline-arrow">
-                    →
-                </div>
+                    <div class="knowledge-flow-step">
 
-
-                <div class="pipeline-step">
-
-                    <div class="pipeline-number">
+                        <strong>
                         03
-                    </div>
-
-                    <strong>
-                        Chunking
                     </strong>
 
-                    <span>
-                        885 knowledge chunks
+                        <span>
+                        Document Chunks
                     </span>
 
-                </div>
+                    </div>
 
 
-                <div class="pipeline-arrow">
-                    →
-                </div>
+                    <div class="knowledge-flow-step">
 
-
-                <div class="pipeline-step">
-
-                    <div class="pipeline-number">
+                        <strong>
                         04
-                    </div>
-
-                    <strong>
-                        TF-IDF Search
                     </strong>
 
-                    <span>
-                        Retrieve relevant information
+                        <span>
+                        Relevant Context
                     </span>
+
+                    </div>
+
 
                 </div>
 
             </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+         ACTION
+         ===================================================== -->
+
+        <section class="knowledge-action">
+
+            <h2>
+                Ask the Maintenance Assistant
+            </h2>
+
+
+            <p>
+
+                Use the technical knowledge base through the conversational maintenance assistant.
+
+            </p>
+
+
+            <a href="maintenance.html" class="knowledge-action-button">
+
+            Open Maintenance Assistant
+
+            <span>
+                →
+            </span>
+
+        </a>
 
         </section>
 
@@ -614,25 +716,77 @@
 
 
 
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
+    <!-- =========================================================
+     FOOTER
+     ========================================================= -->
 
-    <footer>
+    <footer class="footer knowledge-footer">
 
-        <span>
+
+        <div class="footer-brand knowledge-footer-brand">
+
+            <strong>
             PRJ_232
+        </strong>
+
+
+            <span>
+            AI-Powered Maintenance Chatbot for Electrical Substations
         </span>
 
-        <span>
-            Technical Knowledge Base
-        </span>
+        </div>
 
-        <span>
-            Local AI System
-        </span>
+
+        <div class="footer-links knowledge-footer-links">
+
+            <a href="index.html">
+            Home
+        </a>
+
+            <a href="maintenance.html">
+            Maintenance
+        </a>
+
+            <a href="fault-analysis.html">
+            Fault Analysis
+        </a>
+
+            <a href="knowledge-base.html">
+            Knowledge Base
+        </a>
+
+            <a href="about.html">
+            About
+        </a>
+
+        </div>
 
     </footer>
+
+
+
+    <!-- =========================================================
+     MOBILE MENU
+     ========================================================= -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            const menuButton = document.querySelector(".menu-button");
+            const navLinks = document.querySelector(".nav-links");
+
+            if (menuButton && navLinks) {
+
+                menuButton.addEventListener("click", function() {
+
+                    navLinks.classList.toggle("mobile-open");
+
+                });
+
+            }
+
+        });
+    </script>
 
 
 </body>

@@ -1,76 +1,430 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
 
+<head>
+
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>PRJ_232 | Substation AI</title>
 
     <link rel="stylesheet" href="css/style.css">
+
+
+    <!-- =========================================================
+         HOMEPAGE STYLES
+         ========================================================= -->
+
+    <style>
+        /* =====================================================
+           HOMEPAGE CONTAINER
+           ===================================================== */
+        
+        .home-page {
+            width: 100%;
+            overflow-x: hidden;
+        }
+        /* =====================================================
+           HERO
+           ===================================================== */
+        
+        .home-hero {
+            width: min(1100px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 150px 0 90px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        
+        .home-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 13px;
+            margin-bottom: 28px;
+            border: 1px solid rgba(185, 255, 92, 0.15);
+            border-radius: 999px;
+            background: rgba(185, 255, 92, 0.045);
+            color: #a5a5ad;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+        }
+        
+        .home-hero h1 {
+            margin: 0;
+            color: #ffffff;
+            font-size: clamp(48px, 7vw, 88px);
+            line-height: 0.99;
+            letter-spacing: -0.055em;
+            font-weight: 700;
+        }
+        
+        .home-hero-description {
+            width: min(700px, 100%);
+            margin: 28px auto 0;
+            color: #909098;
+            font-size: 15px;
+            line-height: 1.75;
+        }
+        /* =====================================================
+           HERO BUTTONS
+           ===================================================== */
+        
+        .home-hero-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 32px;
+        }
+        
+        .home-primary-button,
+        .home-secondary-button {
+            min-height: 50px;
+            padding: 0 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border-radius: 13px;
+            box-sizing: border-box;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, filter 0.2s ease, border-color 0.2s ease;
+        }
+        
+        .home-primary-button {
+            background: #b9ff5c;
+            color: #080808;
+            border: 1px solid #b9ff5c;
+        }
+        
+        .home-primary-button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+        
+        .home-secondary-button {
+            background: rgba(255, 255, 255, 0.035);
+            color: #d2d2d7;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+        
+        .home-secondary-button:hover {
+            transform: translateY(-2px);
+            color: #b9ff5c;
+            border-color: rgba(185, 255, 92, 0.25);
+        }
+        /* =====================================================
+           HERO STATS
+           ===================================================== */
+        
+        .home-hero-stats {
+            width: min(720px, 100%);
+            margin: 65px auto 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        
+        .home-stat {
+            min-height: 105px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            position: relative;
+        }
+        
+        .home-stat+.home-stat::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 25%;
+            width: 1px;
+            height: 50%;
+            background: rgba(255, 255, 255, 0.07);
+        }
+        
+        .home-stat strong {
+            color: #b9ff5c;
+            font-size: 25px;
+            line-height: 1;
+        }
+        
+        .home-stat span {
+            color: #6f6f77;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+        }
+        /* =====================================================
+           OVERVIEW
+           ===================================================== */
+        
+        .home-overview-section {
+            width: min(1100px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 20px 0 90px;
+            box-sizing: border-box;
+        }
+        
+        .home-overview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+        
+        .home-overview-card {
+            min-width: 0;
+            padding: 27px;
+            background: rgba(16, 16, 18, 0.78);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-sizing: border-box;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+        
+        .home-overview-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(185, 255, 92, 0.20);
+            background: rgba(21, 21, 23, 0.88);
+        }
+        
+        .home-overview-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 21px;
+            border-radius: 14px;
+            background: rgba(185, 255, 92, 0.08);
+            border: 1px solid rgba(185, 255, 92, 0.12);
+            color: #b9ff5c;
+            font-size: 20px;
+        }
+        
+        .home-overview-card h2 {
+            margin: 0 0 12px;
+            color: #ffffff;
+            font-size: 18px;
+            line-height: 1.3;
+        }
+        
+        .home-overview-card p {
+            margin: 0 0 20px;
+            color: #85858d;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+        
+        .home-text-link {
+            color: #b9ff5c;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        
+        .home-text-link:hover {
+            opacity: 0.75;
+        }
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+        
+        .home-footer {
+            width: min(1100px, calc(100% - 40px));
+            margin: 0 auto 25px;
+            padding: 25px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            box-sizing: border-box;
+        }
+        
+        .home-footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .home-footer-brand strong {
+            color: #ffffff;
+            font-size: 13px;
+        }
+        
+        .home-footer-brand span {
+            color: #606068;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+        
+        .home-footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 18px;
+        }
+        
+        .home-footer-links a {
+            color: #777780;
+            font-size: 12px;
+            text-decoration: none;
+        }
+        
+        .home-footer-links a:hover {
+            color: #b9ff5c;
+        }
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+        
+        @media (max-width: 900px) {
+            .home-hero {
+                padding-top: 120px;
+            }
+            .home-overview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 650px) {
+            .home-hero {
+                width: calc(100% - 28px);
+                padding-top: 105px;
+                padding-bottom: 65px;
+            }
+            .home-hero h1 {
+                font-size: 43px;
+            }
+            .home-hero-description {
+                font-size: 13px;
+            }
+            .home-hero-buttons {
+                flex-direction: column;
+            }
+            .home-primary-button,
+            .home-secondary-button {
+                width: 100%;
+            }
+            .home-hero-stats {
+                grid-template-columns: 1fr;
+            }
+            .home-stat {
+                min-height: 75px;
+            }
+            .home-stat+.home-stat::before {
+                left: 25%;
+                top: 0;
+                width: 50%;
+                height: 1px;
+            }
+            .home-overview-section {
+                width: calc(100% - 28px);
+                padding-bottom: 60px;
+            }
+            .home-overview-card {
+                padding: 22px;
+            }
+            .home-footer {
+                width: calc(100% - 28px);
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .home-footer-links {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+
 </head>
+
 
 <body>
 
-    <!-- Background effects -->
-    <div class="background-grid"></div>
-    <div class="glow glow-one"></div>
-    <div class="glow glow-two"></div>
 
-
-    <!-- ================= HEADER ================= -->
+    <!-- =========================================================
+     NAVBAR
+     ========================================================= -->
 
     <header class="navbar">
 
-        <div class="logo-area">
+        <a href="index.html" class="brand">
 
-            <div class="logo-icon">
+            <div class="brand-icon">
                 ⚡
             </div>
 
-            <div class="logo-text">
-                <strong>PRJ_232</strong>
-                <span>Substation AI</span>
+
+            <div class="brand-text">
+
+                <strong>
+                PRJ_232
+            </strong>
+
+                <span>
+                SUBSTATION AI
+            </span>
+
             </div>
 
-        </div>
+        </a>
 
 
         <nav class="nav-links">
 
-            <a href="#" class="active">
-                Home
-            </a>
+            <a href="index.html" class="nav-link active">
+            Home
+        </a>
 
-            <a href="#">
-                Maintenance
-            </a>
 
-            <a href="#">
-                Fault Analysis
-            </a>
+            <a href="maintenance.html" class="nav-link">
+            Maintenance
+        </a>
 
-            <a href="#">
-                Knowledge Base
-            </a>
 
-            <a href="#">
-                About
-            </a>
+            <a href="fault-analysis.html" class="nav-link">
+            Fault Analysis
+        </a>
+
+
+            <a href="knowledge-base.html" class="nav-link">
+            Knowledge Base
+        </a>
+
+
+            <a href="about.html" class="nav-link">
+            About
+        </a>
 
         </nav>
 
 
-        <div class="nav-actions">
+        <div class="nav-right">
 
-            <div class="ai-status">
+            <div class="status-pill">
+
                 <span class="status-dot"></span>
-                Local AI
+
+                <span>
+                AI Assistant
+            </span>
+
             </div>
 
-            <button class="menu-button">
-                ☰
-            </button>
+
+            <button class="menu-button" type="button" aria-label="Open navigation menu">
+            ☰
+        </button>
 
         </div>
 
@@ -78,87 +432,111 @@
 
 
 
-    <!-- ================= HERO ================= -->
+    <!-- =========================================================
+     MAIN
+     ========================================================= -->
 
-    <main>
+    <main class="home-page">
 
-        <section class="hero">
 
-            <div class="hero-badge">
-                <span>●</span>
-                LOCAL AI • ENGINEERING ASSISTANT
+        <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+        <section class="home-hero">
+
+
+            <div class="home-hero-badge">
+
+                <span class="status-dot"></span> AI • ENGINEERING ASSISTANT
+
             </div>
 
 
             <h1>
+
                 Intelligent Maintenance
-                <br>
-                <span>For Electrical Substations</span>
+
+                <br> For Electrical Substations
+
             </h1>
 
 
-            <p class="hero-description">
-                AI-powered maintenance assistance combining
-                trained fault classification, technical
-                knowledge retrieval, and local AI.
+            <p class="home-hero-description">
+
+                AI-powered maintenance assistance combining trained fault classification, technical knowledge retrieval, and intelligent engineering support.
+
             </p>
 
 
-            <div class="hero-buttons">
+            <!-- BUTTONS -->
 
-                <button class="primary-button">
-                    Start Analysis
-                    <span>→</span>
-                </button>
+            <div class="home-hero-buttons">
 
-                <button class="secondary-button">
-                    Explore System
-                </button>
+
+                <a href="fault-analysis.html" class="home-primary-button">
+
+                Start Analysis
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+                <a href="maintenance.html" class="home-secondary-button">
+
+                Explore System
+
+            </a>
 
             </div>
 
 
-            <!-- Hero stats -->
+            <!-- STATS -->
 
-            <div class="hero-stats">
+            <div class="home-hero-stats">
 
-                <div class="stat">
 
-                    <strong>6</strong>
+                <div class="home-stat">
+
+                    <strong>
+                    6
+                </strong>
 
                     <span>
-                        Fault Classes
-                    </span>
+                    FAULT CLASSES
+                </span>
 
                 </div>
 
 
-                <div class="stat-line"></div>
+                <div class="home-stat">
 
-
-                <div class="stat">
-
-                    <strong>3</strong>
+                    <strong>
+                    3
+                </strong>
 
                     <span>
-                        Technical Manuals
-                    </span>
+                    TECHNICAL MANUALS
+                </span>
 
                 </div>
 
 
-                <div class="stat-line"></div>
+                <div class="home-stat">
 
-
-                <div class="stat">
-
-                    <strong>AI</strong>
+                    <strong>
+                    AI
+                </strong>
 
                     <span>
-                        Local Processing
-                    </span>
+                    ENGINEERING ASSISTANCE
+                </span>
 
                 </div>
+
 
             </div>
 
@@ -166,386 +544,107 @@
 
 
 
-        <!-- ================= DASHBOARD PREVIEW ================= -->
+        <!-- =====================================================
+         SYSTEM OVERVIEW
+         ===================================================== -->
 
-        <section class="dashboard-preview">
+        <section class="home-overview-section">
 
-            <!-- LEFT SIDEBAR -->
 
-            <aside class="dashboard-sidebar">
+            <div class="home-overview-grid">
 
-                <div class="sidebar-title">
 
-                    <div class="mini-logo">
+                <!-- FAULT -->
+
+                <div class="home-overview-card">
+
+                    <div class="home-overview-icon">
                         ⚡
                     </div>
 
-                    <div>
-                        <strong>PRJ_232</strong>
-                        <span>AI Assistant</span>
-                    </div>
 
-                </div>
-
-
-                <div class="sidebar-section">
-
-                    <span class="sidebar-label">
-                        WORKSPACE
-                    </span>
-
-
-                    <button class="sidebar-item selected">
-
-                        <span>◉</span>
-
-                        Overview
-
-                    </button>
-
-
-                    <button class="sidebar-item">
-
-                        <span>✦</span>
-
-                        Maintenance AI
-
-                    </button>
-
-
-                    <button class="sidebar-item">
-
-                        <span>⚡</span>
-
+                    <h2>
                         Fault Analysis
-
-                    </button>
-
-
-                    <button class="sidebar-item">
-
-                        <span>⌕</span>
-
-                        Knowledge Base
-
-                    </button>
-
-                </div>
+                    </h2>
 
 
-                <div class="sidebar-bottom">
+                    <p>
 
-                    <div class="system-status">
+                        Enter three-phase voltage and current measurements and use the trained Random Forest model to classify electrical fault conditions.
 
-                        <span class="status-dot"></span>
-
-                        <div>
-
-                            <strong>
-                                System Online
-                            </strong>
-
-                            <small>
-                                Local processing active
-                            </small>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </aside>
+                    </p>
 
 
+                    <a href="fault-analysis.html" class="home-text-link">
 
-            <!-- CENTER CONTENT -->
+                    Analyze measurements →
 
-            <div class="dashboard-main">
-
-                <div class="dashboard-top">
-
-                    <div>
-
-                        <span class="eyebrow">
-                            AI MAINTENANCE PLATFORM
-                        </span>
-
-                        <h2>
-                            Substation Intelligence
-                        </h2>
-
-                    </div>
-
-
-                    <div class="live-pill">
-
-                        <span class="status-dot"></span>
-
-                        LIVE
-
-                    </div>
+                </a>
 
                 </div>
 
 
-                <!-- Main AI cards -->
 
-                <div class="ai-cards">
+                <!-- MAINTENANCE -->
 
+                <div class="home-overview-card">
 
-                    <!-- CHAT CARD -->
-
-                    <div class="ai-card chat-preview">
-
-                        <div class="card-top">
-
-                            <div class="card-icon">
-                                ✦
-                            </div>
-
-                            <span class="card-tag">
-                                AI CHAT
-                            </span>
-
-                        </div>
-
-
-                        <h3>
-                            Maintenance Assistant
-                        </h3>
-
-
-                        <p>
-                            Ask questions about transformers,
-                            circuit breakers, inspections,
-                            testing and safety.
-                        </p>
-
-
-                        <div class="fake-chat">
-
-                            <div class="fake-message user-message">
-                                What should I check during
-                                breaker maintenance?
-                            </div>
-
-
-                            <div class="fake-message ai-message">
-
-                                <span class="tiny-icon">
-                                    ⚡
-                                </span>
-
-                                I can help you identify
-                                maintenance checks and
-                                safety procedures.
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="fake-input">
-
-                            <span>
-                                Ask a maintenance question...
-                            </span>
-
-                            <button>
-                                ↑
-                            </button>
-
-                        </div>
-
+                    <div class="home-overview-icon">
+                        ◈
                     </div>
 
 
-
-                    <!-- FAULT CARD -->
-
-                    <div class="ai-card fault-preview">
-
-                        <div class="card-top">
-
-                            <div class="card-icon fault-icon">
-                                ⚡
-                            </div>
-
-                            <span class="card-tag">
-                                ML MODEL
-                            </span>
-
-                        </div>
+                    <h2>
+                        Maintenance Assistant
+                    </h2>
 
 
-                        <h3>
-                            Fault Analysis
-                        </h3>
+                    <p>
+
+                        Ask questions about substation maintenance, circuit breakers, transformers, inspection, testing and safety.
+
+                    </p>
 
 
-                        <p>
-                            Analyze three-phase electrical
-                            measurements using the trained
-                            classification model.
-                        </p>
+                    <a href="maintenance.html" class="home-text-link">
 
+                    Open assistant →
 
-                        <div class="measurement-preview">
-
-                            <div>
-                                <span>Ia</span>
-                                <strong>858.3</strong>
-                            </div>
-
-                            <div>
-                                <span>Ib</span>
-                                <strong>41.2</strong>
-                            </div>
-
-                            <div>
-                                <span>Ic</span>
-                                <strong>12.1</strong>
-                            </div>
-
-                            <div>
-                                <span>Va</span>
-                                <strong>0.02</strong>
-                            </div>
-
-                            <div>
-                                <span>Vb</span>
-                                <strong>-0.32</strong>
-                            </div>
-
-                            <div>
-                                <span>Vc</span>
-                                <strong>0.30</strong>
-                            </div>
-
-                        </div>
-
-
-                        <button class="analysis-button">
-
-                            Analyze Measurements
-
-                            <span>
-                                →
-                            </span>
-
-                        </button>
-
-                    </div>
+                </a>
 
                 </div>
 
 
-                <!-- Knowledge sources -->
 
-                <div class="knowledge-panel">
+                <!-- KNOWLEDGE -->
 
-                    <div class="knowledge-heading">
+                <div class="home-overview-card">
 
-                        <div>
-
-                            <span class="eyebrow">
-                                DOCUMENT INTELLIGENCE
-                            </span>
-
-                            <h3>
-                                Maintenance Knowledge Base
-                            </h3>
-
-                        </div>
-
-
-                        <span class="document-count">
-                            3 Manuals
-                        </span>
-
+                    <div class="home-overview-icon">
+                        ▣
                     </div>
 
 
-                    <div class="document-cards">
-
-                        <div class="document-card">
-
-                            <div class="document-icon">
-                                📄
-                            </div>
-
-                            <div>
-
-                                <strong>
-                                    Circuit Breaker
-                                </strong>
-
-                                <span>
-                                    Maintenance Guide
-                                </span>
-
-                            </div>
-
-                            <span class="arrow">
-                                →
-                            </span>
-
-                        </div>
+                    <h2>
+                        Technical Knowledge
+                    </h2>
 
 
-                        <div class="document-card">
+                    <p>
 
-                            <div class="document-icon">
-                                📄
-                            </div>
+                        Explore the technical manuals used as the knowledge source for maintenance-related responses.
 
-                            <div>
-
-                                <strong>
-                                    Electrical Substation
-                                </strong>
-
-                                <span>
-                                    Maintenance Information
-                                </span>
-
-                            </div>
-
-                            <span class="arrow">
-                                →
-                            </span>
-
-                        </div>
+                    </p>
 
 
-                        <div class="document-card">
+                    <a href="knowledge-base.html" class="home-text-link">
 
-                            <div class="document-icon">
-                                📄
-                            </div>
+                    View knowledge base →
 
-                            <div>
-
-                                <strong>
-                                    Transformer
-                                </strong>
-
-                                <span>
-                                    Maintenance Manual
-                                </span>
-
-                            </div>
-
-                            <span class="arrow">
-                                →
-                            </span>
-
-                        </div>
-
-                    </div>
+                </a>
 
                 </div>
+
 
             </div>
 
@@ -555,24 +654,89 @@
 
 
 
-    <!-- ================= FOOTER ================= -->
+    <!-- =========================================================
+     FOOTER
+     ========================================================= -->
 
-    <footer>
+    <footer class="footer home-footer">
 
-        <span>
+
+        <div class="footer-brand home-footer-brand">
+
+            <strong>
             PRJ_232
-        </span>
+        </strong>
 
-        <span>
+
+            <span>
             AI-Powered Maintenance Chatbot for Electrical Substations
         </span>
 
-        <span>
-            Local AI System
-        </span>
+        </div>
+
+
+        <div class="footer-links home-footer-links">
+
+
+            <a href="index.html">
+            Home
+        </a>
+
+
+            <a href="maintenance.html">
+            Maintenance
+        </a>
+
+
+            <a href="fault-analysis.html">
+            Fault Analysis
+        </a>
+
+
+            <a href="knowledge-base.html">
+            Knowledge Base
+        </a>
+
+
+            <a href="about.html">
+            About
+        </a>
+
+
+        </div>
 
     </footer>
 
 
+
+    <!-- =========================================================
+     MOBILE MENU
+     ========================================================= -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            const menuButton =
+                document.querySelector(".menu-button");
+
+            const navLinks =
+                document.querySelector(".nav-links");
+
+
+            if (menuButton && navLinks) {
+
+                menuButton.addEventListener("click", function() {
+
+                    navLinks.classList.toggle("mobile-open");
+
+                });
+
+            }
+
+        });
+    </script>
+
+
 </body>
+
 </html>
