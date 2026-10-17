@@ -10,7 +10,6 @@
 
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- Maintenance page specific layout -->
     <style>
         /* =========================================================
            MAINTENANCE PAGE
@@ -150,20 +149,47 @@
         .maintenance-message-name {
             margin-bottom: 7px;
             color: #b9ff5c;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
             letter-spacing: 0.12em;
             text-transform: uppercase;
         }
+        /* UPDATED CHAT TEXT */
         
         .maintenance-message-text {
-            padding: 16px 18px;
+            padding: 17px 19px;
             background: rgba(255, 255, 255, 0.035);
             border: 1px solid rgba(255, 255, 255, 0.07);
             border-radius: 14px;
-            color: #e5e5e8;
-            font-size: 14px;
+            color: #e9e9ec;
+            /* Bigger and slightly bolder */
+            font-size: 16px;
+            font-weight: 500;
             line-height: 1.7;
+        }
+
+        .maintenance-message-text ul,
+        .maintenance-message-text ol {
+            margin: 10px 0;
+            padding-left: 22px;
+        }
+
+        .maintenance-message-text li {
+            margin-bottom: 7px;
+            line-height: 1.6;
+        }
+
+        .maintenance-message-text strong {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .maintenance-message-text p {
+            margin: 0 0 10px 0;
+        }
+
+        .maintenance-message-text p:last-child {
+            margin-bottom: 0;
         }
         /* QUICK QUESTIONS */
         
@@ -191,52 +217,70 @@
             border-color: rgba(185, 255, 92, 0.30);
             background: rgba(185, 255, 92, 0.05);
         }
-        /* INPUT */
+        /* =========================================================
+           INPUT AREA
+           ========================================================= */
         
         .maintenance-chat-input-area {
+            width: 100%;
+            box-sizing: border-box;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             padding: 18px 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.07);
         }
         
         .maintenance-chat-input-area input {
-            flex: 1;
+            flex: 1 1 auto;
             min-width: 0;
-            height: 50px;
-            padding: 0 16px;
+            width: 100%;
+            box-sizing: border-box;
+            height: 52px;
+            padding: 0 17px;
             border-radius: 13px;
             border: 1px solid rgba(255, 255, 255, 0.10);
             outline: none;
             background: rgba(255, 255, 255, 0.035);
             color: #ffffff;
-            font-size: 14px;
+            font-size: 16px;
+            font-weight: 500;
         }
         
         .maintenance-chat-input-area input::placeholder {
             color: #66666e;
+            font-weight: 400;
         }
         
         .maintenance-chat-input-area input:focus {
             border-color: rgba(185, 255, 92, 0.35);
         }
+        /* SEND BUTTON */
         
         .maintenance-send-button {
-            height: 50px;
-            padding: 0 20px;
+            flex: 0 0 auto;
+            width: 110px;
+            min-width: 110px;
+            height: 52px;
+            padding: 0 16px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 7px;
             border: 0;
             border-radius: 13px;
             background: #b9ff5c;
             color: #080808;
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 15px;
+            font-weight: 800;
             cursor: pointer;
             transition: 0.2s ease;
+            box-sizing: border-box;
+        }
+        
+        .maintenance-send-button span {
+            font-size: 18px;
+            font-weight: 800;
         }
         
         .maintenance-send-button:hover {
@@ -301,7 +345,9 @@
         .maintenance-footer-links a:hover {
             color: #b9ff5c;
         }
-        /* MOBILE */
+        /* =========================================================
+           TABLET
+           ========================================================= */
         
         @media (max-width: 900px) {
             .maintenance-page {
@@ -331,6 +377,9 @@
                 align-items: flex-start;
             }
         }
+        /* =========================================================
+           MOBILE
+           ========================================================= */
         
         @media (max-width: 650px) {
             .maintenance-page {
@@ -353,20 +402,55 @@
             .maintenance-quick-questions {
                 padding: 14px 18px;
             }
+            /* Mobile input row */
             .maintenance-chat-input-area {
                 padding: 14px;
+                gap: 8px;
             }
             .maintenance-chat-input-area input {
                 height: 46px;
+                font-size: 15px;
             }
             .maintenance-send-button {
+                width: 88px;
+                min-width: 88px;
                 height: 46px;
-                padding: 0 14px;
+                padding: 0 10px;
+                font-size: 14px;
+            }
+            .maintenance-send-button span {
+                font-size: 16px;
+            }
+            .maintenance-message-text {
+                font-size: 15px;
             }
             .maintenance-footer {
                 width: calc(100% - 24px);
                 flex-direction: column;
                 align-items: flex-start;
+            }
+        }
+        /* =========================================================
+           VERY SMALL SCREENS
+           ========================================================= */
+        
+        @media (max-width: 420px) {
+            .maintenance-chat-input-area {
+                gap: 7px;
+                padding: 12px;
+            }
+            .maintenance-send-button {
+                width: 78px;
+                min-width: 78px;
+                padding: 0 8px;
+                font-size: 13px;
+            }
+            .maintenance-send-button span {
+                display: none;
+            }
+            .maintenance-chat-input-area input {
+                font-size: 14px;
+                padding: 0 13px;
             }
         }
     </style>
@@ -378,8 +462,8 @@
 
 
     <!-- =========================================================
-     NAVBAR
-     ========================================================= -->
+         NAVBAR
+         ========================================================= -->
 
     <header class="navbar">
 
@@ -394,8 +478,8 @@
                 <strong>PRJ_232</strong>
 
                 <span>
-                SUBSTATION AI
-            </span>
+                    SUBSTATION AI
+                </span>
 
             </div>
 
@@ -405,24 +489,24 @@
         <nav class="nav-links">
 
             <a href="index.html" class="nav-link">
-            Home
-        </a>
+                Home
+            </a>
 
             <a href="maintenance.html" class="nav-link active">
-            Maintenance
-        </a>
+                Maintenance
+            </a>
 
             <a href="fault-analysis.html" class="nav-link">
-            Fault Analysis
-        </a>
+                Fault Analysis
+            </a>
 
             <a href="knowledge-base.html" class="nav-link">
-            Knowledge Base
-        </a>
+                Knowledge Base
+            </a>
 
             <a href="about.html" class="nav-link">
-            About
-        </a>
+                About
+            </a>
 
         </nav>
 
@@ -434,25 +518,24 @@
                 <span class="status-dot"></span>
 
                 <span>
-                AI Assistant
-            </span>
+                    AI Assistant
+                </span>
 
             </div>
 
 
             <button class="menu-button" type="button" aria-label="Open navigation menu">
-            ☰
-        </button>
+                ☰
+            </button>
 
         </div>
 
     </header>
 
 
-
     <!-- =========================================================
-     MAIN
-     ========================================================= -->
+         MAIN
+         ========================================================= -->
 
     <main class="maintenance-page">
 
@@ -485,10 +568,9 @@
         </section>
 
 
-
         <!-- =====================================================
-         CHAT
-         ===================================================== -->
+             CHAT
+             ===================================================== -->
 
         <section class="maintenance-chat-section">
 
@@ -515,20 +597,15 @@
 
 
                     <a href="knowledge-base.html" class="maintenance-chat-source-link">
-                    Knowledge Base →
-                </a>
+                        Knowledge Base →
+                    </a>
 
                 </div>
 
 
-
                 <!-- =================================================
-                 CHAT MESSAGES
-
-                 IMPORTANT:
-                 These original class names are retained so that
-                 maintenance.js continues working.
-                 ================================================= -->
+                     CHAT MESSAGES
+                     ================================================= -->
 
                 <div class="chat-messages maintenance-chat-messages">
 
@@ -559,41 +636,37 @@
                 </div>
 
 
-
                 <!-- =================================================
-                 QUICK QUESTIONS
-                 ================================================= -->
+                     QUICK QUESTIONS
+                     ================================================= -->
 
                 <div class="quick-questions maintenance-quick-questions">
 
                     <button type="button" data-question="What are the safety precautions for circuit breaker maintenance?">
-                    Circuit breaker safety
-                </button>
+                        Circuit breaker safety
+                    </button>
 
 
                     <button type="button" data-question="What maintenance should be performed on transformers?">
-                    Transformer maintenance
-                </button>
+                        Transformer maintenance
+                    </button>
 
 
                     <button type="button" data-question="What inspections are required during substation maintenance?">
-                    Inspection procedures
-                </button>
+                        Inspection procedures
+                    </button>
 
 
                     <button type="button" data-question="What tests are performed on circuit breakers?">
-                    Circuit breaker testing
-                </button>
+                        Circuit breaker testing
+                    </button>
 
                 </div>
 
 
-
                 <!-- =================================================
-                 INPUT
-
-                 Original IDs/classes retained for JS.
-                 ================================================= -->
+                     INPUT
+                     ================================================= -->
 
                 <div class="chat-input-area maintenance-chat-input-area">
 
@@ -601,12 +674,18 @@
 
 
                     <button type="button" id="send-message" class="maintenance-send-button">
-                    Send
-                    <span>→</span>
-                </button>
+
+                        <span class="send-text">
+                            Send
+                        </span>
+
+                        <span>
+                            →
+                        </span>
+
+                    </button>
 
                 </div>
-
 
 
                 <!-- DISCLAIMER -->
@@ -625,10 +704,9 @@
     </main>
 
 
-
     <!-- =========================================================
-     FOOTER
-     ========================================================= -->
+         FOOTER
+         ========================================================= -->
 
     <footer class="footer maintenance-footer">
 
@@ -636,12 +714,12 @@
         <div class="footer-brand maintenance-footer-brand">
 
             <strong>
-            PRJ_232
-        </strong>
+                PRJ_232
+            </strong>
 
             <span>
-            AI-Powered Maintenance Chatbot for Electrical Substations
-        </span>
+                AI-Powered Maintenance Chatbot for Electrical Substations
+            </span>
 
         </div>
 
@@ -649,42 +727,40 @@
         <div class="footer-links maintenance-footer-links">
 
             <a href="index.html">
-            Home
-        </a>
+                Home
+            </a>
 
             <a href="maintenance.html">
-            Maintenance
-        </a>
+                Maintenance
+            </a>
 
             <a href="fault-analysis.html">
-            Fault Analysis
-        </a>
+                Fault Analysis
+            </a>
 
             <a href="knowledge-base.html">
-            Knowledge Base
-        </a>
+                Knowledge Base
+            </a>
 
             <a href="about.html">
-            About
-        </a>
+                About
+            </a>
 
         </div>
 
     </footer>
 
 
-
     <!-- =========================================================
-     MAINTENANCE CHATBOT JS
-     ========================================================= -->
+         MAINTENANCE CHATBOT JS
+         ========================================================= -->
 
     <script src="js/maintenance.js"></script>
 
 
-
     <!-- =========================================================
-     MOBILE MENU
-     ========================================================= -->
+         MOBILE MENU
+         ========================================================= -->
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

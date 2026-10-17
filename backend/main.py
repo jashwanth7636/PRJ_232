@@ -4,13 +4,17 @@ from pathlib import Path
 
 import joblib
 import numpy as np
+import pandas as pd
 from dotenv import load_dotenv
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from google import genai
+from google.genai import types
 
 
 # ============================================================
@@ -28,7 +32,7 @@ if not GEMINI_API_KEY:
 
 gemini_client = genai.Client(api_key=GEMINI_API_KEY)
 
-GEMINI_MODEL = "gemini-3.5-flash-lite"
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-flash-latest")
 
 
 # ============================================================
@@ -169,22 +173,14 @@ def search_documents(query, top_k=3):
 # HEALTH
 # ============================================================
 
-@app.get("/")
-def root():
-
-    return {
-        "project": "PRJ_232",
-        "name": "AI-Powered Maintenance Chatbot",
-        "status": "running"
-    }
-
-
 @app.get("/health")
+@app.get("/api/health")
 def health():
 
     return {
         "status": "healthy",
         "gemini": "connected",
+        "gemini_model": GEMINI_MODEL,
         "fault_model": "loaded",
         "documents": len(usable_chunks)
     }
@@ -340,21 +336,31 @@ Keep the response concise, normally around 3-6 bullet points or a few short para
     # GEMINI
     # --------------------------------------------------------
 
-    response = gemini_client.models.generate_content(
-
-        model=GEMINI_MODEL,
-
-        contents=prompt,
-
-        config={
-            "system_instruction": system_instruction,
-            "temperature": 0.2,
-            "max_output_tokens": 300
-        }
-    )
-
-
-    answer = response.text.strip()
+    try:
+        response = gemini_client.models.generate_content(
+            model=GEMINI_MODEL,
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                system_instruction=system_instruction,
+                temperature=0.2,
+                max_output_tokens=2500
+            )
+        )
+        if response.text and response.text.strip():
+            answer = response.text.strip()
+            if response.candidates and response.candidates[0].finish_reason:
+                finish_reason_str = str(response.candidates[0].finish_reason)
+                if "MAX_TOKENS" in finish_reason_str:
+                    print("Notice: Response reached max output tokens limit.")
+        else:
+            raise ValueError("Empty text received from model.")
+    except Exception as e:
+        print(f"Gemini API warning/error: {e}")
+        if retrieved:
+            bullets = "\n\n".join([f"• **From {item['source']}:** {clean_text(item['text'])[:300]}..." for item in retrieved])
+            answer = f"The generative AI service encountered a temporary error ({e}), but here is technical information retrieved directly from the substation manuals:\n\n{bullets}"
+        else:
+            answer = "The substation AI assistant could not complete this request due to a connection or API error. Please verify your GEMINI_API_KEY and internet connection, then try again."
 
 
     # --------------------------------------------------------
@@ -392,7 +398,7 @@ Keep the response concise, normally around 3-6 bullet points or a few short para
 @app.post("/predict-fault")
 def predict_fault(request: FaultPredictionRequest):
 
-    features = np.array([
+    features = pd.DataFrame([
         [
             request.Ia,
             request.Ib,
@@ -401,7 +407,7 @@ def predict_fault(request: FaultPredictionRequest):
             request.Vb,
             request.Vc
         ]
-    ])
+    ], columns=["Ia", "Ib", "Ic", "Va", "Vb", "Vc"])
 
     prediction = fault_model.predict(features)
 
@@ -429,3 +435,54 @@ def predict_fault(request: FaultPredictionRequest):
         "predicted_fault": predicted_fault,
         "probabilities": probability_dict
     }
+
+
+# ============================================================
+# FRONTEND STATIC FILES & PAGE ROUTING
+# ============================================================
+
+FRONTEND_DIR = PROJECT_ROOT / "frontend"
+
+if FRONTEND_DIR.exists():
+    css_path = FRONTEND_DIR / "css"
+    if css_path.exists():
+        app.mount("/css", StaticFiles(directory=css_path), name="css")
+
+    js_path = FRONTEND_DIR / "js"
+    if js_path.exists():
+        app.mount("/js", StaticFiles(directory=js_path), name="js")
+
+    @app.get("/", include_in_schema=False)
+    def serve_home():
+        index_file = FRONTEND_DIR / "index.html"
+        if index_file.exists():
+            return FileResponse(index_file)
+        return {"project": "PRJ_232", "status": "running"}
+
+    @app.get("/{page_name:path}", include_in_schema=False)
+    def serve_frontend_page(page_name: str):
+        if page_name in ["chat", "predict-fault", "health", "api", "docs", "openapi.json", "redoc"]:
+            raise HTTPException(status_code=404, detail="Not found")
+
+        candidate = FRONTEND_DIR / page_name
+        if candidate.is_file():
+            return FileResponse(candidate)
+
+        candidate_html = FRONTEND_DIR / f"{page_name}.html"
+        if candidate_html.is_file():
+            return FileResponse(candidate_html)
+
+        raise HTTPException(status_code=404, detail="Page not found")
+
+
+# ============================================================
+# MAIN ENTRYPOINT
+# ============================================================
+
+if __name__ == "__main__":
+    import uvicorn
+    print("\n" + "=" * 60)
+    print("Starting PRJ_232 Substation AI Server...")
+    print("Frontend UI & API available at: http://127.0.0.1:8000")
+    print("=" * 60 + "\n")
+    uvicorn.run("backend.main:app", host="127.0.0.1", port=8000, reload=True)
