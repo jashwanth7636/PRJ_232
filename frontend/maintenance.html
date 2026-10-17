@@ -72,6 +72,31 @@
                     >
                 </div>
 
+                <!-- Primary Workspace Navigation Links in Sidebar -->
+                <div class="sidebar-nav-section">
+                    <a href="maintenance.html" class="sidebar-nav-link active">
+                        <span>💬</span> <span>Chat Copilot</span>
+                    </a>
+                    <a href="fault-analysis.html" class="sidebar-nav-link">
+                        <span>⚡</span> <span>Fault Analysis</span>
+                    </a>
+                    <a href="knowledge-base.html" class="sidebar-nav-link">
+                        <span>📚</span> <span>Knowledge Base</span>
+                    </a>
+                    <a href="checklists.html" class="sidebar-nav-link">
+                        <span>📋</span> <span>Maintenance Checklists</span>
+                    </a>
+                    <a href="index.html" class="sidebar-nav-link">
+                        <span>📊</span> <span>Operations Dashboard</span>
+                    </a>
+                    <a href="settings.html" class="sidebar-nav-link">
+                        <span>⚙️</span> <span>Diagnostics & Settings</span>
+                    </a>
+                    <a href="about.html" class="sidebar-nav-link">
+                        <span>ℹ️</span> <span>About Architecture</span>
+                    </a>
+                </div>
+
                 <div class="conversations-list" id="conversations-list">
                     <div style="padding: 20px 10px; text-align: center; color: var(--text-muted); font-size: 12px;">
                         Loading conversations...
@@ -81,9 +106,9 @@
                 <div class="sidebar-user-footer" id="sidebar-user-footer">
                     <div style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--text-secondary);">
                         <span style="font-size: 14px;">⚡</span>
-                        <span>VoltSage Session</span>
+                        <span>User Session</span>
                     </div>
-                    <span style="font-size: 10px; font-weight: 700; color: var(--accent-cyan); background: rgba(0, 210, 255, 0.1); padding: 2px 6px; border-radius: 4px;">SECURE</span>
+                    <button type="button" class="btn btn-outline" style="padding: 4px 8px; font-size: 11px;" onclick="VoltSageAuth.logout()">Sign Out</button>
                 </div>
 
             </aside>
@@ -108,6 +133,9 @@
                     </div>
 
                     <div style="display: flex; align-items: center; gap: 8px;">
+                        <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px;" onclick="startNewChat()">
+                            + New Chat
+                        </button>
                         <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px;" onclick="if(confirm('Clear screen?')){document.querySelector('.chat-messages').innerHTML='';}">
                             Clear Screen
                         </button>
@@ -118,19 +146,36 @@
                 <div class="chat-messages" style="flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 18px;">
                     
                     <!-- Default Initial Welcome Card -->
-                    <div class="chat-message assistant">
-                        <div class="message-avatar">AI</div>
-                        <div style="display: flex; flex-direction: column; align-items: flex-start; max-width: 100%;">
-                            <div class="message-sender">VoltSage AI • Technical Copilot</div>
-                            <div class="message-bubble">
-                                <p><strong>Welcome to VoltSage AI — Electrical Substation Copilot.</strong></p>
-                                <p>I assist electrical engineers, technicians, and operators with equipment maintenance, fault diagnostics, and inspection procedures grounded in indexed technical manuals.</p>
-                                <p style="margin-bottom: 0;">You can ask about:</p>
-                                <ul style="margin-top: 6px;">
-                                    <li>Transformer Dissolved Gas Analysis (DGA), oil breakdown voltage testing (BDV), and conservator silica gel breather care</li>
-                                    <li>SF6 gas circuit breaker timing tests, contact resistance measurement, and lock-out/tag-out (LOTO) precautions</li>
-                                    <li>Busbar insulation, disconnect switch clearances, and protective relay testing (IS/IEC standards)</li>
-                                </ul>
+                    <div style="text-align: center; max-width: 680px; margin: 30px auto; padding: 20px;">
+                        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: var(--radius-md); background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(0, 102, 255, 0.25)); border: 1px solid var(--border-active); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--accent-cyan); box-shadow: 0 0 25px rgba(0, 210, 255, 0.25);">
+                            ⚡
+                        </div>
+                        <h1 style="font-size: 26px; font-weight: 800; color: #ffffff; margin-bottom: 10px; letter-spacing: -0.01em;">
+                            Let’s solve substation maintenance challenges
+                        </h1>
+                        <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 28px;">
+                            Ask technical questions about high-voltage transformers, circuit breakers, busbar clearances, or protective relays. Technical responses are directly grounded in the connected maintenance knowledge base (IS 10028, IEEE C37, NEMA AB 4).
+                        </p>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; text-align: left;">
+                            <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='What are the safety precautions for circuit breaker maintenance?'; sendMessage();">
+                                <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">🛡️ Circuit Breaker Maintenance</div>
+                                <div style="font-size: 11.5px; color: var(--text-muted);">Essential LOTO precautions and contact resistance procedures</div>
+                            </div>
+
+                            <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='What causes Buchholz relay trips in power transformers?'; sendMessage();">
+                                <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">⚡ Transformer DGA & Buchholz</div>
+                                <div style="font-size: 11.5px; color: var(--text-muted);">Causes of gas accumulation and oil BDV breakdown limits</div>
+                            </div>
+
+                            <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='Explain the difference between LG, LL, LLG, and LLL symmetrical substation faults.'; sendMessage();">
+                                <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">🔍 3-Phase Fault Diagnosis</div>
+                                <div style="font-size: 11.5px; color: var(--text-muted);">Understanding symmetrical vs asymmetrical transmission faults</div>
+                            </div>
+
+                            <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='What are the inspection steps for SF6 gas circuit breakers?'; sendMessage();">
+                                <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">📋 SF6 Breaker Inspection</div>
+                                <div style="font-size: 11.5px; color: var(--text-muted);">Pressure gauge threshold checks and moisture verification</div>
                             </div>
                         </div>
                     </div>

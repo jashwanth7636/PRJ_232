@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from typing import Optional, List, Dict, Any
 from fastapi import FastAPI, HTTPException, UploadFile, File, Request, Response, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, EmailStr
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -380,21 +380,25 @@ def chat(request: ChatRequest, http_request: Request):
             "sources": []
         }
 
-    # Optional authenticated user check & conversation linking
+    # Enforce authentication: Logged-out users cannot access the chatbot
     current_user = get_current_user_optional(http_request)
-    conv_id = request.conversation_id
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authentication required. Please sign in to access the VoltSage AI copilot."
+        )
 
-    if current_user:
-        if not conv_id:
+    conv_id = request.conversation_id
+    if not conv_id:
+        title = user_message[:45].strip()
+        new_conv = database.create_conversation(current_user["id"], title)
+        conv_id = new_conv["id"]
+    else:
+        existing = database.get_conversation(conv_id, current_user["id"])
+        if not existing:
             title = user_message[:45].strip()
             new_conv = database.create_conversation(current_user["id"], title)
             conv_id = new_conv["id"]
-        else:
-            existing = database.get_conversation(conv_id, current_user["id"])
-            if not existing:
-                title = user_message[:45].strip()
-                new_conv = database.create_conversation(current_user["id"], title)
-                conv_id = new_conv["id"]
 
         database.add_message_to_conversation(conv_id, "user", user_message)
 
@@ -868,19 +872,63 @@ if FRONTEND_DIR.exists():
     if js_path.exists():
         app.mount("/js", StaticFiles(directory=js_path), name="js")
 
+    @app.get("/login", include_in_schema=False)
+    def serve_login(request: Request):
+        user = get_current_user_optional(request)
+        if user:
+            return RedirectResponse(url="/maintenance.html", status_code=status.HTTP_302_FOUND)
+        login_file = FRONTEND_DIR / "login.html"
+        if login_file.exists():
+            return FileResponse(login_file)
+        raise HTTPException(status_code=404, detail="Login page not found")
+
+    @app.get("/register", include_in_schema=False)
+    def serve_register(request: Request):
+        user = get_current_user_optional(request)
+        if user:
+            return RedirectResponse(url="/maintenance.html", status_code=status.HTTP_302_FOUND)
+        reg_file = FRONTEND_DIR / "register.html"
+        if reg_file.exists():
+            return FileResponse(reg_file)
+        return RedirectResponse(url="/login?tab=register", status_code=status.HTTP_302_FOUND)
+
     @app.get("/", include_in_schema=False)
-    def serve_home():
-        index_file = FRONTEND_DIR / "index.html"
-        if index_file.exists():
-            return FileResponse(index_file)
-        return {"project": "PRJ_232", "status": "running"}
+    def serve_home(request: Request):
+        user = get_current_user_optional(request)
+        if user:
+            return RedirectResponse(url="/maintenance.html", status_code=status.HTTP_302_FOUND)
+        return RedirectResponse(url="/login", status_code=status.HTTP_302_FOUND)
 
     @app.get("/{page_name:path}", include_in_schema=False)
-    def serve_frontend_page(page_name: str):
+    def serve_frontend_page(page_name: str, request: Request):
         if page_name in ["chat", "predict-fault", "health", "api", "docs", "openapi.json", "redoc"] or page_name.startswith("api/"):
             raise HTTPException(status_code=404, detail="Not found")
 
+        clean_name = page_name.lower().rstrip("/")
+
+        # Public auth routes
+        if clean_name in ["login", "login.html"]:
+            user = get_current_user_optional(request)
+            if user:
+                return RedirectResponse(url="/maintenance.html", status_code=status.HTTP_302_FOUND)
+            return FileResponse(FRONTEND_DIR / "login.html")
+
+        if clean_name in ["register", "register.html"]:
+            user = get_current_user_optional(request)
+            if user:
+                return RedirectResponse(url="/maintenance.html", status_code=status.HTTP_302_FOUND)
+            return FileResponse(FRONTEND_DIR / "register.html")
+
+        # Static assets (images, icons, etc. excluding HTML files)
         candidate = FRONTEND_DIR / page_name
+        if candidate.is_file() and not page_name.endswith(".html"):
+            return FileResponse(candidate)
+
+        # Protected pages: enforce server-side session check
+        user = get_current_user_optional(request)
+        if not user:
+            return RedirectResponse(url="/login", status_code=status.HTTP_302_FOUND)
+
         if candidate.is_file():
             return FileResponse(candidate)
 

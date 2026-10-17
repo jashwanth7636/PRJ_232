@@ -302,20 +302,54 @@ async function loadUserConversations() {
     }
 }
 
-function renderConversationsList() {
-    if (!convsListEl || allConversations.length === 0) {
-        if (convsListEl && !convsListEl.querySelector("a")) {
-            convsListEl.innerHTML = `
-                <div style="padding: 20px 10px; text-align: center; color: var(--text-muted); font-size: 12px;">
-                    No recent conversations.
-                </div>
-            `;
+function groupConversationsByDate(convs) {
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+
+    const isSameDay = (d1, d2) =>
+        d1.getFullYear() === d2.getFullYear() &&
+        d1.getMonth() === d2.getMonth() &&
+        d1.getDate() === d2.getDate();
+
+    const groups = {
+        today: [],
+        yesterday: [],
+        earlier: []
+    };
+
+    convs.forEach(c => {
+        const rawDate = c.updated_at || c.created_at;
+        const d = new Date(rawDate);
+        if (isNaN(d.getTime())) {
+            groups.earlier.push(c);
+        } else if (isSameDay(d, today)) {
+            groups.today.push(c);
+        } else if (isSameDay(d, yesterday)) {
+            groups.yesterday.push(c);
+        } else {
+            groups.earlier.push(c);
         }
+    });
+
+    return groups;
+}
+
+function renderConversationsList() {
+    if (!convsListEl) return;
+
+    if (allConversations.length === 0) {
+        convsListEl.innerHTML = `
+            <div style="padding: 24px 10px; text-align: center; color: var(--text-muted); font-size: 12px;">
+                No recent conversations.<br>
+                <span style="font-size: 11px; color: var(--accent-cyan); cursor: pointer;" onclick="startNewChat()">Start a new chat ⚡</span>
+            </div>
+        `;
         return;
     }
 
     const query = convSearchInput?.value.toLowerCase().trim() || "";
-    const filtered = allConversations.filter(c => !query || c.title.toLowerCase().includes(query));
+    const filtered = allConversations.filter(c => !query || (c.title && c.title.toLowerCase().includes(query)));
 
     if (filtered.length === 0) {
         convsListEl.innerHTML = `
@@ -326,19 +360,30 @@ function renderConversationsList() {
         return;
     }
 
+    const groups = groupConversationsByDate(filtered);
     let html = "";
-    filtered.forEach(c => {
-        const isActive = c.id === currentConversationId;
-        html += `
-            <div class="conv-item ${isActive ? 'active' : ''}" onclick="selectConversation('${c.id}')">
-                <span class="conv-title" title="${escapeHtml(c.title)}">💬 ${escapeHtml(c.title)}</span>
-                <div class="conv-actions">
-                    <button type="button" class="conv-action-btn" title="Rename" onclick="event.stopPropagation(); renameConversation('${c.id}')">✏️</button>
-                    <button type="button" class="conv-action-btn delete" title="Delete" onclick="event.stopPropagation(); deleteConversation('${c.id}')">🗑️</button>
+
+    const renderGroup = (label, list) => {
+        if (!list || list.length === 0) return "";
+        let groupHtml = `<div class="conv-group-header">${label}</div>`;
+        list.forEach(c => {
+            const isActive = c.id === currentConversationId;
+            groupHtml += `
+                <div class="conv-item ${isActive ? 'active' : ''}" onclick="selectConversation('${c.id}')">
+                    <span class="conv-title" title="${escapeHtml(c.title)}">💬 ${escapeHtml(c.title)}</span>
+                    <div class="conv-actions">
+                        <button type="button" class="conv-action-btn" title="Rename" onclick="event.stopPropagation(); renameConversation('${c.id}')">✏️</button>
+                        <button type="button" class="conv-action-btn delete" title="Delete" onclick="event.stopPropagation(); deleteConversation('${c.id}')">🗑️</button>
+                    </div>
                 </div>
-            </div>
-        `;
-    });
+            `;
+        });
+        return groupHtml;
+    };
+
+    html += renderGroup("TODAY", groups.today);
+    html += renderGroup("YESTERDAY", groups.yesterday);
+    html += renderGroup("EARLIER", groups.earlier);
 
     convsListEl.innerHTML = html;
 }
@@ -406,19 +451,36 @@ window.startNewChat = function() {
 function renderWelcomeMessage() {
     if (!chatMessages) return;
     chatMessages.innerHTML = `
-        <div class="chat-message assistant">
-            <div class="message-avatar">AI</div>
-            <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                <div class="message-sender">VoltSage AI • Technical Copilot</div>
-                <div class="message-bubble">
-                    <p><strong>Welcome to VoltSage AI — Electrical Substation Copilot.</strong></p>
-                    <p>I assist electrical engineers, technicians, and operators with substation equipment maintenance, fault diagnostics, and safety protocols grounded in indexed standards (IS 10028, IEEE C37, NEMA AB 4).</p>
-                    <p style="margin-bottom: 0;">You can ask about:</p>
-                    <ul style="margin-top: 6px;">
-                        <li>Transformer Dissolved Gas Analysis (DGA), oil breakdown voltage testing (BDV), and conservator silica gel care</li>
-                        <li>SF6 gas circuit breaker timing tests, contact resistance measurement, and lock-out/tag-out (LOTO) precautions</li>
-                        <li>Busbar insulation, disconnect switch clearances, and protective relay testing (IS/IEC standards)</li>
-                    </ul>
+        <div style="text-align: center; max-width: 680px; margin: 30px auto; padding: 20px;">
+            <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: var(--radius-md); background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(0, 102, 255, 0.25)); border: 1px solid var(--border-active); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--accent-cyan); box-shadow: 0 0 25px rgba(0, 210, 255, 0.25);">
+                ⚡
+            </div>
+            <h1 style="font-size: 26px; font-weight: 800; color: #ffffff; margin-bottom: 10px; letter-spacing: -0.01em;">
+                Let’s solve substation maintenance challenges
+            </h1>
+            <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 28px;">
+                Ask technical questions about high-voltage transformers, circuit breakers, busbar clearances, or protective relays. Technical responses are directly grounded in the connected maintenance knowledge base (IS 10028, IEEE C37, NEMA AB 4).
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; text-align: left;">
+                <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='What are the safety precautions for circuit breaker maintenance?'; sendMessage();">
+                    <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">🛡️ Circuit Breaker Maintenance</div>
+                    <div style="font-size: 11.5px; color: var(--text-muted);">Essential LOTO precautions and contact resistance procedures</div>
+                </div>
+
+                <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='What causes Buchholz relay trips in power transformers?'; sendMessage();">
+                    <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">⚡ Transformer DGA & Buchholz</div>
+                    <div style="font-size: 11.5px; color: var(--text-muted);">Causes of gas accumulation and oil BDV breakdown limits</div>
+                </div>
+
+                <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='Explain the difference between LG, LL, LLG, and LLL symmetrical substation faults.'; sendMessage();">
+                    <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">🔍 3-Phase Fault Diagnosis</div>
+                    <div style="font-size: 11.5px; color: var(--text-muted);">Understanding symmetrical vs asymmetrical transmission faults</div>
+                </div>
+
+                <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='What are the inspection steps for SF6 gas circuit breakers?'; sendMessage();">
+                    <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">📋 SF6 Breaker Inspection</div>
+                    <div style="font-size: 11.5px; color: var(--text-muted);">Pressure gauge threshold checks and moisture verification</div>
                 </div>
             </div>
         </div>
