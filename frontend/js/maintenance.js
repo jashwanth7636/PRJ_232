@@ -88,9 +88,9 @@ function addMessage(text, type, sources) {
 
     let sourcesHTML = "";
     if (sources && sources.length > 0) {
-        sourcesHTML = `<div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 11px; color: #85858d;">
-            <span style="font-weight: 600; color: #b9ff5c; margin-right: 6px;">Knowledge Source:</span>` +
-            sources.map(s => `<span style="display: inline-block; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 2px 7px; border-radius: 6px; margin: 2px 4px 2px 0; color: #b5b5bc;">${escapeHtml(s.source)}</span>`).join("") +
+        sourcesHTML = `<div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-subtle); font-size: 11px; color: var(--text-muted);">
+            <span style="font-weight: 700; color: var(--accent-cyan); margin-right: 6px;">Knowledge Source:</span>` +
+            sources.map(s => `<span style="display: inline-block; background: rgba(0, 210, 255, 0.08); border: 1px solid rgba(0, 210, 255, 0.2); padding: 2px 7px; border-radius: 6px; margin: 2px 4px 2px 0; color: var(--accent-cyan);">${escapeHtml(s.source)}</span>`).join("") +
         `</div>`;
     }
 
@@ -99,28 +99,28 @@ function addMessage(text, type, sources) {
         message.style.cssText = "align-self: flex-end; justify-content: flex-end;";
         message.innerHTML = `
             <div class="message-content maintenance-message-content" style="text-align: right; max-width: 820px;">
-                <div class="message-name maintenance-message-name" style="color: #8e8e96; text-align: right;">
+                <div class="message-name maintenance-message-name" style="color: var(--text-muted); text-align: right;">
                     Operator
                 </div>
-                <div class="message-text maintenance-message-text" style="background: rgba(185, 255, 92, 0.08); border-color: rgba(185, 255, 92, 0.22); color: #ffffff; text-align: left;">
+                <div class="message-text maintenance-message-text" style="background: rgba(0, 210, 255, 0.12); border: 1px solid rgba(0, 210, 255, 0.25); color: #ffffff; text-align: left;">
                     ${escapeHtml(text).replace(/\n/g, "<br>")}
                 </div>
             </div>
-            <div class="message-avatar maintenance-message-avatar" style="background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.15); color: #ffffff;">
-                U
+            <div class="message-avatar maintenance-message-avatar" style="background: rgba(0, 210, 255, 0.15); border: 1px solid rgba(0, 210, 255, 0.3); color: var(--accent-cyan);">
+                OP
             </div>
         `;
     } else {
         message.className = "message assistant-message maintenance-message";
         message.innerHTML = `
-            <div class="message-avatar maintenance-message-avatar">
+            <div class="message-avatar maintenance-message-avatar" style="background: rgba(0, 102, 255, 0.2); border: 1px solid rgba(0, 210, 255, 0.3); color: var(--accent-cyan);">
                 AI
             </div>
             <div class="message-content maintenance-message-content">
-                <div class="message-name maintenance-message-name">
+                <div class="message-name maintenance-message-name" style="color: var(--text-muted);">
                     Substation AI
                 </div>
-                <div class="message-text maintenance-message-text">
+                <div class="message-text maintenance-message-text" style="background: var(--bg-card); border: 1px solid var(--border-card); color: var(--text-primary);">
                     ${formatMessage(text)}
                     ${sourcesHTML}
                 </div>
@@ -139,11 +139,11 @@ function addLoadingMessage() {
     const message = document.createElement("div");
     message.className = "message assistant-message maintenance-message loading-message";
     message.innerHTML = `
-        <div class="message-avatar maintenance-message-avatar">AI</div>
+        <div class="message-avatar maintenance-message-avatar" style="background: rgba(0, 102, 255, 0.2); border: 1px solid rgba(0, 210, 255, 0.3); color: var(--accent-cyan);">AI</div>
         <div class="message-content maintenance-message-content">
-            <div class="message-name maintenance-message-name">Substation AI</div>
-            <div class="message-text maintenance-message-text" style="color: #8e8e96; display: flex; align-items: center; gap: 8px;">
-                <span class="status-dot" style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #b9ff5c;"></span> Consulting substation documentation...
+            <div class="message-name maintenance-message-name" style="color: var(--text-muted);">Substation AI</div>
+            <div class="message-text maintenance-message-text" style="background: var(--bg-card); border: 1px solid var(--border-card); color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+                <span class="status-dot" style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan);"></span> Consulting substation documentation...
             </div>
         </div>
     `;

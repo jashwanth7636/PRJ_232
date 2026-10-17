@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRJ_232 | System Settings & Diagnostics</title>
+    <link rel="stylesheet" href="css/industrial.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+
+    <!-- TOP NAVBAR -->
+    <header class="navbar">
+        <a href="index.html" class="brand">
+            <div class="brand-icon">⚡</div>
+            <div class="brand-text">
+                <div class="brand-title">
+                    SUBSTATION AI
+                    <span class="brand-badge">PRJ_232</span>
+                </div>
+                <div class="brand-subtitle">ELECTRICAL SCADA INTELLIGENCE</div>
+            </div>
+        </a>
+
+        <ul class="nav-links">
+            <li class="nav-item"><a href="index.html" class="nav-link">Dashboard</a></li>
+            <li class="nav-item"><a href="maintenance.html" class="nav-link">Maintenance AI</a></li>
+            <li class="nav-item"><a href="fault-analysis.html" class="nav-link">Fault Analysis</a></li>
+            <li class="nav-item"><a href="knowledge-base.html" class="nav-link">Knowledge Base</a></li>
+            <li class="nav-item"><a href="checklists.html" class="nav-link">Checklists</a></li>
+            <li class="nav-item"><a href="settings.html" class="nav-link active">Settings</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <div class="status-pill">
+                <span class="status-dot"></span> System Operational
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN PAGE CONTAINER -->
+    <main class="page-container" style="max-width: 980px;">
+
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <div class="badge-tag">
+                <span>SYSTEM CONFIGURATION & OPERATIONAL PREFERENCES</span>
+            </div>
+            <h1 class="page-title">Application Settings & Diagnostics</h1>
+            <p class="page-subtitle">
+                Customize industrial interface display preferences, manage local application state, and view real-time backend telemetry without exposing sensitive API credentials.
+            </p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 28px;">
+            
+            <!-- SECTION 1: DISPLAY & INTERFACE -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Interface & Accent Palette</div>
+                        <div class="card-subtitle">Personalize your SCADA visualization theme</div>
+                    </div>
+                    <div class="card-icon">🎨</div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div>
+                        <label class="form-label">Theme Accent Color</label>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button type="button" class="btn btn-outline" data-accent="#00d2ff" style="border-color: #00d2ff; color: #fff;">
+                                <span style="width: 12px; height: 12px; border-radius: 50%; background: #00d2ff; display: inline-block;"></span>
+                                Electric Cyan (Default)
+                            </button>
+                            <button type="button" class="btn btn-outline" data-accent="#00f59b" style="border-color: #00f59b; color: #fff;">
+                                <span style="width: 12px; height: 12px; border-radius: 50%; background: #00f59b; display: inline-block;"></span>
+                                Emerald SCADA
+                            </button>
+                            <button type="button" class="btn btn-outline" data-accent="#ffb703" style="border-color: #ffb703; color: #fff;">
+                                <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffb703; display: inline-block;"></span>
+                                Amber Warning
+                            </button>
+                            <button type="button" class="btn btn-outline" data-accent="#3b82f6" style="border-color: #3b82f6; color: #fff;">
+                                <span style="width: 12px; height: 12px; border-radius: 50%; background: #3b82f6; display: inline-block;"></span>
+                                Royal Cobalt
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label" for="setting-chat-density">Chat Response Density</label>
+                            <select id="setting-chat-density" class="form-input">
+                                <option value="detailed">Comprehensive Technical (Default)</option>
+                                <option value="compact">Concise Field Summary</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 0; display: flex; flex-direction: column; justify-content: center;">
+                            <label class="form-label">Automatic Scroll</label>
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; margin-top: 6px;">
+                                <input type="checkbox" id="setting-autoscroll" checked style="width: 18px; height: 18px; accent-color: var(--accent-cyan);">
+                                <span style="font-size: 13px; color: var(--text-secondary);">Auto-scroll conversation to latest response</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: APPLICATION DATA CONTROLS -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Session Storage & Maintenance Data</div>
+                        <div class="card-subtitle">Manage client-side cached state and history</div>
+                    </div>
+                    <div class="card-icon">🗄️</div>
+                </div>
+
+                <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+                    <button type="button" id="btn-clear-chat-history" class="btn btn-secondary">
+                        <span>Clear Chatbot History</span>
+                    </button>
+                    <button type="button" id="btn-reset-settings" class="btn btn-outline" style="border-color: var(--danger); color: var(--danger);">
+                        <span>Reset Preferences to Defaults</span>
+                    </button>
+                </div>
+                <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 10px;">
+                    Note: Substation machine learning models and server document indexes are persistent and will not be affected by local preference resets.
+                </div>
+            </div>
+
+            <!-- SECTION 3: SYSTEM TELEMETRY & DIAGNOSTICS -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Live Backend Diagnostics & Model Metadata</div>
+                        <div class="card-subtitle">Telemetry received from <code>/health</code> and <code>/api/stats</code></div>
+                    </div>
+                    <div class="card-icon">🩺</div>
+                </div>
+
+                <div id="diagnostics-info">
+                    <p style="color: var(--text-muted);">Querying server telemetry...</p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- SHARED INDUSTRIAL FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-title">PRJ_232 • Substation AI</div>
+                    <p class="footer-desc">
+                        AI-powered electrical substation fault classification and maintenance guidance system. Designed for final-year B.Tech engineering evaluation with zero mock data and real ML inference.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-heading">NAVIGATION</div>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Operations Dashboard</a></li>
+                        <li><a href="maintenance.html">Maintenance RAG Chatbot</a></li>
+                        <li><a href="fault-analysis.html">3-Phase Fault Classifier</a></li>
+                        <li><a href="knowledge-base.html">Technical Knowledge Base</a></li>
+                        <li><a href="checklists.html">Maintenance Checklists</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-heading">STANDARDS & REFS</div>
+                    <ul class="footer-links">
+                        <li><a href="https://standards.ieee.org" target="_blank" rel="noopener">IEEE C37.04 Breakers</a></li>
+                        <li><a href="https://standardsbis.bsbedge.com" target="_blank" rel="noopener">IS 10028 Power Transformers</a></li>
+                        <li><a href="https://www.iec.ch" target="_blank" rel="noopener">IEC 60255 Protection Relays</a></li>
+                        <li><a href="https://www.nema.org" target="_blank" rel="noopener">NEMA AB 4 Molded Breakers</a></li>
+                        <li><a href="settings.html">System Diagnostics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-heading">SYSTEM TELEMETRY</div>
+                    <div style="font-size: 12px; color: var(--text-muted); line-height: 1.8;">
+                        <div>Model: <span style="color: #fff;">Random Forest (100 Trees)</span></div>
+                        <div>Validation Acc: <span style="color: var(--accent-cyan);">86.94%</span></div>
+                        <div>Test Split Acc: <span style="color: var(--accent-cyan);">85.34%</span></div>
+                        <div>RAG Index: <span style="color: #fff;">884 Chunks (TF-IDF)</span></div>
+                        <div>Backend: <span style="color: var(--success);">FastAPI / Uvicorn</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 PRJ_232 — Final-Year B.Tech Major Project. All Rights Reserved.</span>
+                <span>Industrial Engineering SCADA Interface v2.4</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CONTROLLER SCRIPT -->
+    <script src="js/settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRJ_232 | Maintenance Checklists — Substation Verification</title>
+    <link rel="stylesheet" href="css/industrial.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+
+    <!-- TOP NAVBAR -->
+    <header class="navbar">
+        <a href="index.html" class="brand">
+            <div class="brand-icon">⚡</div>
+            <div class="brand-text">
+                <div class="brand-title">
+                    SUBSTATION AI
+                    <span class="brand-badge">PRJ_232</span>
+                </div>
+                <div class="brand-subtitle">ELECTRICAL SCADA INTELLIGENCE</div>
+            </div>
+        </a>
+
+        <ul class="nav-links">
+            <li class="nav-item"><a href="index.html" class="nav-link">Dashboard</a></li>
+            <li class="nav-item"><a href="maintenance.html" class="nav-link">Maintenance AI</a></li>
+            <li class="nav-item"><a href="fault-analysis.html" class="nav-link">Fault Analysis</a></li>
+            <li class="nav-item"><a href="knowledge-base.html" class="nav-link">Knowledge Base</a></li>
+            <li class="nav-item"><a href="checklists.html" class="nav-link active">Checklists</a></li>
+            <li class="nav-item"><a href="settings.html" class="nav-link">Settings</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <div class="status-pill">
+                <span class="status-dot"></span> Protocols Validated
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN PAGE CONTAINER -->
+    <main class="page-container" style="max-width: 1040px;">
+
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <div class="badge-tag">
+                <span>STANDARDIZED OPERATIONAL PROCEDURES</span>
+            </div>
+            <h1 class="page-title">Substation Maintenance Checklists</h1>
+            <p class="page-subtitle">
+                Interactive maintenance procedures compiled from Indian Standards (IS 10028, IS 1866), NEMA AB 4, and IEEE guidelines. Progress is saved locally in your browser session for field verification.
+            </p>
+        </div>
+
+        <!-- OVERALL PROGRESS CARD -->
+        <div class="card" style="margin-bottom: 28px; background: linear-gradient(135deg, rgba(17, 26, 46, 0.95), rgba(12, 18, 32, 0.95));">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; flex-wrap: wrap; gap: 14px;">
+                <div>
+                    <div style="font-size: 11px; font-weight: 700; color: var(--accent-cyan); letter-spacing: 0.08em; text-transform: uppercase;">
+                        CUMULATIVE SUBSTATION VERIFICATION STATUS
+                    </div>
+                    <div style="display: flex; align-items: baseline; gap: 10px; margin-top: 4px;">
+                        <span id="overall-progress-text" style="font-size: 34px; font-weight: 800; color: #fff;">0%</span>
+                        <span id="overall-progress-summary" style="font-size: 13px; color: var(--text-muted);">0 of 16 procedures verified</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" class="btn btn-outline" style="font-size: 12.5px;" onclick="printChecklists()">
+                        🖨️ Print / Export
+                    </button>
+                    <button type="button" class="btn btn-secondary" style="font-size: 12.5px;" onclick="resetChecklists()">
+                        🔄 Reset Progress
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div style="height: 8px; width: 100%; background: rgba(255,255,255,0.06); border-radius: 99px; overflow: hidden; position: relative;">
+                <div id="overall-progress-bar" style="height: 100%; width: 0%; background: var(--accent-gradient); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+            </div>
+        </div>
+
+        <!-- CHECKLISTS DYNAMIC CONTAINER -->
+        <div id="checklists-container" style="display: flex; flex-direction: column; gap: 24px;">
+            <!-- Rendered by checklists.js from /api/checklists -->
+            <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                Loading substation maintenance procedures...
+            </div>
+        </div>
+
+    </main>
+
+    <!-- SHARED INDUSTRIAL FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-title">PRJ_232 • Substation AI</div>
+                    <p class="footer-desc">
+                        AI-powered electrical substation fault classification and maintenance guidance system. Designed for final-year B.Tech engineering evaluation with zero mock data and real ML inference.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-heading">NAVIGATION</div>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Operations Dashboard</a></li>
+                        <li><a href="maintenance.html">Maintenance RAG Chatbot</a></li>
+                        <li><a href="fault-analysis.html">3-Phase Fault Classifier</a></li>
+                        <li><a href="knowledge-base.html">Technical Knowledge Base</a></li>
+                        <li><a href="checklists.html">Maintenance Checklists</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-heading">STANDARDS & REFS</div>
+                    <ul class="footer-links">
+                        <li><a href="https://standards.ieee.org" target="_blank" rel="noopener">IEEE C37.04 Breakers</a></li>
+                        <li><a href="https://standardsbis.bsbedge.com" target="_blank" rel="noopener">IS 10028 Power Transformers</a></li>
+                        <li><a href="https://www.iec.ch" target="_blank" rel="noopener">IEC 60255 Protection Relays</a></li>
+                        <li><a href="https://www.nema.org" target="_blank" rel="noopener">NEMA AB 4 Molded Breakers</a></li>
+                        <li><a href="settings.html">System Diagnostics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-heading">SYSTEM TELEMETRY</div>
+                    <div style="font-size: 12px; color: var(--text-muted); line-height: 1.8;">
+                        <div>Model: <span style="color: #fff;">Random Forest (100 Trees)</span></div>
+                        <div>Validation Acc: <span style="color: var(--accent-cyan);">86.94%</span></div>
+                        <div>Test Split Acc: <span style="color: var(--accent-cyan);">85.34%</span></div>
+                        <div>RAG Index: <span style="color: #fff;">884 Chunks (TF-IDF)</span></div>
+                        <div>Backend: <span style="color: var(--success);">FastAPI / Uvicorn</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 PRJ_232 — Final-Year B.Tech Major Project. All Rights Reserved.</span>
+                <span>Industrial Engineering SCADA Interface v2.4</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CONTROLLER SCRIPT -->
+    <script src="js/checklists.js"></script>
+</body>
+</html>

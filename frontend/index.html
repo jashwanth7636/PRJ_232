@@ -1,742 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>PRJ_232 | Substation AI</title>
-
-    <link rel="stylesheet" href="css/style.css">
-
-
-    <!-- =========================================================
-         HOMEPAGE STYLES
-         ========================================================= -->
-
-    <style>
-        /* =====================================================
-           HOMEPAGE CONTAINER
-           ===================================================== */
-        
-        .home-page {
-            width: 100%;
-            overflow-x: hidden;
-        }
-        /* =====================================================
-           HERO
-           ===================================================== */
-        
-        .home-hero {
-            width: min(1100px, calc(100% - 40px));
-            margin: 0 auto;
-            padding: 150px 0 90px;
-            text-align: center;
-            box-sizing: border-box;
-        }
-        
-        .home-hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 13px;
-            margin-bottom: 28px;
-            border: 1px solid rgba(185, 255, 92, 0.15);
-            border-radius: 999px;
-            background: rgba(185, 255, 92, 0.045);
-            color: #a5a5ad;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-        }
-        
-        .home-hero h1 {
-            margin: 0;
-            color: #ffffff;
-            font-size: clamp(48px, 7vw, 88px);
-            line-height: 0.99;
-            letter-spacing: -0.055em;
-            font-weight: 700;
-        }
-        
-        .home-hero-description {
-            width: min(700px, 100%);
-            margin: 28px auto 0;
-            color: #909098;
-            font-size: 15px;
-            line-height: 1.75;
-        }
-        /* =====================================================
-           HERO BUTTONS
-           ===================================================== */
-        
-        .home-hero-buttons {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 32px;
-        }
-        
-        .home-primary-button,
-        .home-secondary-button {
-            min-height: 50px;
-            padding: 0 22px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            border-radius: 13px;
-            box-sizing: border-box;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.2s ease, filter 0.2s ease, border-color 0.2s ease;
-        }
-        
-        .home-primary-button {
-            background: #b9ff5c;
-            color: #080808;
-            border: 1px solid #b9ff5c;
-        }
-        
-        .home-primary-button:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.05);
-        }
-        
-        .home-secondary-button {
-            background: rgba(255, 255, 255, 0.035);
-            color: #d2d2d7;
-            border: 1px solid rgba(255, 255, 255, 0.10);
-        }
-        
-        .home-secondary-button:hover {
-            transform: translateY(-2px);
-            color: #b9ff5c;
-            border-color: rgba(185, 255, 92, 0.25);
-        }
-        /* =====================================================
-           HERO STATS
-           ===================================================== */
-        
-        .home-hero-stats {
-            width: min(720px, 100%);
-            margin: 65px auto 0;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            border-top: 1px solid rgba(255, 255, 255, 0.07);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-        }
-        
-        .home-stat {
-            min-height: 105px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            position: relative;
-        }
-        
-        .home-stat+.home-stat::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 25%;
-            width: 1px;
-            height: 50%;
-            background: rgba(255, 255, 255, 0.07);
-        }
-        
-        .home-stat strong {
-            color: #b9ff5c;
-            font-size: 25px;
-            line-height: 1;
-        }
-        
-        .home-stat span {
-            color: #6f6f77;
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-        }
-        /* =====================================================
-           OVERVIEW
-           ===================================================== */
-        
-        .home-overview-section {
-            width: min(1100px, calc(100% - 40px));
-            margin: 0 auto;
-            padding: 20px 0 90px;
-            box-sizing: border-box;
-        }
-        
-        .home-overview-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 18px;
-        }
-        
-        .home-overview-card {
-            min-width: 0;
-            padding: 27px;
-            background: rgba(16, 16, 18, 0.78);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            box-sizing: border-box;
-            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-        }
-        
-        .home-overview-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(185, 255, 92, 0.20);
-            background: rgba(21, 21, 23, 0.88);
-        }
-        
-        .home-overview-icon {
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 21px;
-            border-radius: 14px;
-            background: rgba(185, 255, 92, 0.08);
-            border: 1px solid rgba(185, 255, 92, 0.12);
-            color: #b9ff5c;
-            font-size: 20px;
-        }
-        
-        .home-overview-card h2 {
-            margin: 0 0 12px;
-            color: #ffffff;
-            font-size: 18px;
-            line-height: 1.3;
-        }
-        
-        .home-overview-card p {
-            margin: 0 0 20px;
-            color: #85858d;
-            font-size: 13px;
-            line-height: 1.7;
-        }
-        
-        .home-text-link {
-            color: #b9ff5c;
-            font-size: 12px;
-            font-weight: 700;
-            text-decoration: none;
-        }
-        
-        .home-text-link:hover {
-            opacity: 0.75;
-        }
-        /* =====================================================
-           FOOTER
-           ===================================================== */
-        
-        .home-footer {
-            width: min(1100px, calc(100% - 40px));
-            margin: 0 auto 25px;
-            padding: 25px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.07);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 30px;
-            box-sizing: border-box;
-        }
-        
-        .home-footer-brand {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        
-        .home-footer-brand strong {
-            color: #ffffff;
-            font-size: 13px;
-        }
-        
-        .home-footer-brand span {
-            color: #606068;
-            font-size: 11px;
-            line-height: 1.5;
-        }
-        
-        .home-footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-            gap: 18px;
-        }
-        
-        .home-footer-links a {
-            color: #777780;
-            font-size: 12px;
-            text-decoration: none;
-        }
-        
-        .home-footer-links a:hover {
-            color: #b9ff5c;
-        }
-        /* =====================================================
-           RESPONSIVE
-           ===================================================== */
-        
-        @media (max-width: 900px) {
-            .home-hero {
-                padding-top: 120px;
-            }
-            .home-overview-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 650px) {
-            .home-hero {
-                width: calc(100% - 28px);
-                padding-top: 105px;
-                padding-bottom: 65px;
-            }
-            .home-hero h1 {
-                font-size: 43px;
-            }
-            .home-hero-description {
-                font-size: 13px;
-            }
-            .home-hero-buttons {
-                flex-direction: column;
-            }
-            .home-primary-button,
-            .home-secondary-button {
-                width: 100%;
-            }
-            .home-hero-stats {
-                grid-template-columns: 1fr;
-            }
-            .home-stat {
-                min-height: 75px;
-            }
-            .home-stat+.home-stat::before {
-                left: 25%;
-                top: 0;
-                width: 50%;
-                height: 1px;
-            }
-            .home-overview-section {
-                width: calc(100% - 28px);
-                padding-bottom: 60px;
-            }
-            .home-overview-card {
-                padding: 22px;
-            }
-            .home-footer {
-                width: calc(100% - 28px);
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .home-footer-links {
-                justify-content: flex-start;
-            }
-        }
-    </style>
-
+    <title>PRJ_232 | Substation AI — Industrial Operations Dashboard</title>
+    <link rel="stylesheet" href="css/industrial.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 </head>
-
-
 <body>
 
-
-    <!-- =========================================================
-     NAVBAR
-     ========================================================= -->
-
+    <!-- TOP NAVBAR -->
     <header class="navbar">
-
         <a href="index.html" class="brand">
-
-            <div class="brand-icon">
-                ⚡
-            </div>
-
-
+            <div class="brand-icon">⚡</div>
             <div class="brand-text">
-
-                <strong>
-                PRJ_232
-            </strong>
-
-                <span>
-                SUBSTATION AI
-            </span>
-
+                <div class="brand-title">
+                    SUBSTATION AI
+                    <span class="brand-badge">PRJ_232</span>
+                </div>
+                <div class="brand-subtitle">ELECTRICAL SCADA INTELLIGENCE</div>
             </div>
-
         </a>
 
-
-        <nav class="nav-links">
-
-            <a href="index.html" class="nav-link active">
-            Home
-        </a>
-
-
-            <a href="maintenance.html" class="nav-link">
-            Maintenance
-        </a>
-
-
-            <a href="fault-analysis.html" class="nav-link">
-            Fault Analysis
-        </a>
-
-
-            <a href="knowledge-base.html" class="nav-link">
-            Knowledge Base
-        </a>
-
-
-            <a href="about.html" class="nav-link">
-            About
-        </a>
-
-        </nav>
-
+        <ul class="nav-links">
+            <li class="nav-item"><a href="index.html" class="nav-link active">Dashboard</a></li>
+            <li class="nav-item"><a href="maintenance.html" class="nav-link">Maintenance AI</a></li>
+            <li class="nav-item"><a href="fault-analysis.html" class="nav-link">Fault Analysis</a></li>
+            <li class="nav-item"><a href="knowledge-base.html" class="nav-link">Knowledge Base</a></li>
+            <li class="nav-item"><a href="checklists.html" class="nav-link">Checklists</a></li>
+            <li class="nav-item"><a href="settings.html" class="nav-link">Settings</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        </ul>
 
         <div class="nav-right">
+            <div class="status-pill" id="system-status-pill">
+                <span class="status-dot"></span> System Operational
+            </div>
+        </div>
+    </header>
 
-            <div class="status-pill">
+    <!-- MAIN PAGE CONTAINER -->
+    <main class="page-container">
+        
+        <!-- HERO / HEADER -->
+        <div class="page-header">
+            <div class="badge-tag">
+                <span>SCADA TELEMETRY & DIAGNOSTICS PLATFORM</span>
+            </div>
+            <h1 class="page-title">Electrical Substation AI Operations Center</h1>
+            <p class="page-subtitle">
+                Real-time 3-phase fault diagnosis using trained ensemble machine learning combined with retrieval-augmented generative AI for substation maintenance and protection compliance.
+            </p>
+        </div>
 
-                <span class="status-dot"></span>
-
-                <span>
-                AI Assistant
-            </span>
-
+        <!-- REAL-TIME TELEMETRY STAT GRID -->
+        <div class="stat-grid">
+            <div class="stat-card">
+                <span class="stat-label">Model Accuracy</span>
+                <div class="stat-value cyan" id="metric-accuracy">86.9%</div>
+                <span class="stat-sub" id="metric-test-acc">Test Split: 85.3%</span>
             </div>
 
+            <div class="stat-card">
+                <span class="stat-label">Document Chunks</span>
+                <div class="stat-value" id="metric-chunks">884</div>
+                <span class="stat-sub" id="metric-docs">3 Technical Manuals</span>
+            </div>
 
-            <button class="menu-button" type="button" aria-label="Open navigation menu">
-            ☰
-        </button>
+            <div class="stat-card">
+                <span class="stat-label">Equipment Monitored</span>
+                <div class="stat-value green" id="metric-equipment">4</div>
+                <span class="stat-sub">Active Bays & Subsystems</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-label">Fault Classes</span>
+                <div class="stat-value amber" id="metric-faults">6</div>
+                <span class="stat-sub">LG, LL, LLG, LLL, LLLG, Normal</span>
+            </div>
+        </div>
+
+        <!-- QUICK ACCESS MODULES GRID -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 34px;">
+            
+            <!-- Module 1: AI Chatbot -->
+            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">AI Maintenance Chatbot</div>
+                            <div class="card-subtitle">RAG-Assisted Engineering Assistant</div>
+                        </div>
+                        <div class="card-icon">💬</div>
+                    </div>
+                    <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 20px;">
+                        Query technical substation guidelines, transformer inspection steps, SF6 breaker gas pressures, and IS 10028 maintenance protocols with cited documentation.
+                    </p>
+                </div>
+                <a href="maintenance.html" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                    Launch Maintenance AI →
+                </a>
+            </div>
+
+            <!-- Module 2: Fault Analysis -->
+            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Fault Classification</div>
+                            <div class="card-subtitle">Trained Random Forest Classifier</div>
+                        </div>
+                        <div class="card-icon">⚡</div>
+                    </div>
+                    <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 20px;">
+                        Evaluate 3-phase instantaneous currents (Ia, Ib, Ic) and voltages (Va, Vb, Vc). Instantly detect single-line, double-line, symmetrical 3-phase faults, or normal conditions.
+                    </p>
+                </div>
+                <a href="fault-analysis.html" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                    Open Fault Analyzer →
+                </a>
+            </div>
+
+            <!-- Module 3: Knowledge Base -->
+            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Knowledge Base</div>
+                            <div class="card-subtitle">Vector-Indexed Document Corpus</div>
+                        </div>
+                        <div class="card-icon">📚</div>
+                    </div>
+                    <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 20px;">
+                        Explore 884 indexed technical chunks from Indian Standards (IS), IEEE and manufacturer manuals. Upload new engineering PDFs with automated chunking and vector indexing.
+                    </p>
+                </div>
+                <a href="knowledge-base.html" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+                    Explore Documents →
+                </a>
+            </div>
+
+            <!-- Module 4: Checklists -->
+            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Maintenance Checklists</div>
+                            <div class="card-subtitle">Standardized Verification Procedures</div>
+                        </div>
+                        <div class="card-icon">📋</div>
+                    </div>
+                    <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 20px;">
+                        Interactive maintenance routines for power transformers (IS 10028), circuit breakers (NEMA AB 4), busbars (IEEE 605), and relays (IEC 60255) with progress tracking.
+                    </p>
+                </div>
+                <a href="checklists.html" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+                    View Checklists →
+                </a>
+            </div>
 
         </div>
 
-    </header>
-
-
-
-    <!-- =========================================================
-     MAIN
-     ========================================================= -->
-
-    <main class="home-page">
-
-
-        <!-- =====================================================
-         HERO
-         ===================================================== -->
-
-        <section class="home-hero">
-
-
-            <div class="home-hero-badge">
-
-                <span class="status-dot"></span> AI • ENGINEERING ASSISTANT
-
-            </div>
-
-
-            <h1>
-
-                Intelligent Maintenance
-
-                <br> For Electrical Substations
-
-            </h1>
-
-
-            <p class="home-hero-description">
-
-                AI-powered maintenance assistance combining trained fault classification, technical knowledge retrieval, and intelligent engineering support.
-
-            </p>
-
-
-            <!-- BUTTONS -->
-
-            <div class="home-hero-buttons">
-
-
-                <a href="fault-analysis.html" class="home-primary-button">
-
-                Start Analysis
-
-                <span>
-                    →
-                </span>
-
-            </a>
-
-
-                <a href="maintenance.html" class="home-secondary-button">
-
-                Explore System
-
-            </a>
-
-            </div>
-
-
-            <!-- STATS -->
-
-            <div class="home-hero-stats">
-
-
-                <div class="home-stat">
-
-                    <strong>
-                    6
-                </strong>
-
-                    <span>
-                    FAULT CLASSES
-                </span>
-
+        <!-- TWO-COLUMN SECTION: EQUIPMENT STATUS & ARCHITECTURE SUMMARY -->
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: start;">
+            
+            <!-- Left: Monitored Substation Equipment -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Substation Bay Equipment Telemetry</div>
+                        <div class="card-subtitle">Active assets configured in monitoring grid</div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-cyan); background: rgba(0, 210, 255, 0.1); padding: 4px 10px; border-radius: var(--radius-pill); border: 1px solid rgba(0,210,255,0.2);">LIVE FEED</span>
                 </div>
 
-
-                <div class="home-stat">
-
-                    <strong>
-                    3
-                </strong>
-
-                    <span>
-                    TECHNICAL MANUALS
-                </span>
-
+                <div id="equipment-status-list">
+                    <!-- Populated dynamically by dashboard.js from /api/stats -->
+                    <div style="text-align: center; padding: 20px; color: var(--text-muted);">
+                        Loading monitored equipment data...
+                    </div>
                 </div>
 
-
-                <div class="home-stat">
-
-                    <strong>
-                    AI
-                </strong>
-
-                    <span>
-                    ENGINEERING ASSISTANCE
-                </span>
-
+                <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted);">
+                    <span>Telemetry Protocol: Modbus-TCP / IEC 61850</span>
+                    <a href="checklists.html" style="color: var(--accent-cyan); font-weight: 600;">Conduct Inspection →</a>
                 </div>
-
-
             </div>
 
-        </section>
+            <!-- Right: Industrial AI System Architecture -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">AI System Pipeline Architecture</div>
+                        <div class="card-subtitle">Validated final-year engineering pipeline</div>
+                    </div>
+                    <div class="card-icon">⚙️</div>
+                </div>
 
-
-
-        <!-- =====================================================
-         SYSTEM OVERVIEW
-         ===================================================== -->
-
-        <section class="home-overview-section">
-
-
-            <div class="home-overview-grid">
-
-
-                <!-- FAULT -->
-
-                <div class="home-overview-card">
-
-                    <div class="home-overview-icon">
-                        ⚡
+                <div style="display: flex; flex-direction: column; gap: 14px;">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; padding: 12px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
+                        <div style="font-size: 18px; color: var(--accent-cyan);">01</div>
+                        <div>
+                            <strong style="color: #fff; font-size: 13px; display: block;">Feature Extraction & Normalization</strong>
+                            <span style="color: var(--text-muted); font-size: 12px;">3-phase currents and voltages processed and passed through scikit-learn standard scaling pipeline.</span>
+                        </div>
                     </div>
 
-
-                    <h2>
-                        Fault Analysis
-                    </h2>
-
-
-                    <p>
-
-                        Enter three-phase voltage and current measurements and use the trained Random Forest model to classify electrical fault conditions.
-
-                    </p>
-
-
-                    <a href="fault-analysis.html" class="home-text-link">
-
-                    Analyze measurements →
-
-                </a>
-
-                </div>
-
-
-
-                <!-- MAINTENANCE -->
-
-                <div class="home-overview-card">
-
-                    <div class="home-overview-icon">
-                        ◈
+                    <div style="display: flex; gap: 12px; align-items: flex-start; padding: 12px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
+                        <div style="font-size: 18px; color: var(--accent-cyan);">02</div>
+                        <div>
+                            <strong style="color: #fff; font-size: 13px; display: block;">Random Forest Ensemble Classification</strong>
+                            <span style="color: var(--text-muted); font-size: 12px;">100 estimators delivering 86.94% validation accuracy across 6 distinct electrical operational states.</span>
+                        </div>
                     </div>
 
-
-                    <h2>
-                        Maintenance Assistant
-                    </h2>
-
-
-                    <p>
-
-                        Ask questions about substation maintenance, circuit breakers, transformers, inspection, testing and safety.
-
-                    </p>
-
-
-                    <a href="maintenance.html" class="home-text-link">
-
-                    Open assistant →
-
-                </a>
-
-                </div>
-
-
-
-                <!-- KNOWLEDGE -->
-
-                <div class="home-overview-card">
-
-                    <div class="home-overview-icon">
-                        ▣
+                    <div style="display: flex; gap: 12px; align-items: flex-start; padding: 12px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
+                        <div style="font-size: 18px; color: var(--accent-cyan);">03</div>
+                        <div>
+                            <strong style="color: #fff; font-size: 13px; display: block;">RAG Substation Knowledge Grounding</strong>
+                            <span style="color: var(--text-muted); font-size: 12px;">TF-IDF cosine similarity search retrieving relevant technical manual excerpts fed into Gemini Flash with strict engineering prompt boundaries.</span>
+                        </div>
                     </div>
-
-
-                    <h2>
-                        Technical Knowledge
-                    </h2>
-
-
-                    <p>
-
-                        Explore the technical manuals used as the knowledge source for maintenance-related responses.
-
-                    </p>
-
-
-                    <a href="knowledge-base.html" class="home-text-link">
-
-                    View knowledge base →
-
-                </a>
-
                 </div>
 
-
+                <div style="margin-top: 18px; display: flex; gap: 10px;">
+                    <a href="about.html" class="btn btn-outline" style="flex: 1; justify-content: center; font-size: 12.5px;">
+                        Full Model Benchmarks →
+                    </a>
+                </div>
             </div>
 
-        </section>
+        </div>
 
     </main>
 
-
-
-    <!-- =========================================================
-     FOOTER
-     ========================================================= -->
-
-    <footer class="footer home-footer">
-
-
-        <div class="footer-brand home-footer-brand">
-
-            <strong>
-            PRJ_232
-        </strong>
-
-
-            <span>
-            AI-Powered Maintenance Chatbot for Electrical Substations
-        </span>
-
+    <!-- SHARED INDUSTRIAL FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-title">PRJ_232 • Substation AI</div>
+                    <p class="footer-desc">
+                        AI-powered electrical substation fault classification and maintenance guidance system. Designed for final-year B.Tech engineering evaluation with zero mock data and real ML inference.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-heading">NAVIGATION</div>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Operations Dashboard</a></li>
+                        <li><a href="maintenance.html">Maintenance RAG Chatbot</a></li>
+                        <li><a href="fault-analysis.html">3-Phase Fault Classifier</a></li>
+                        <li><a href="knowledge-base.html">Technical Knowledge Base</a></li>
+                        <li><a href="checklists.html">Maintenance Checklists</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-heading">STANDARDS & REFS</div>
+                    <ul class="footer-links">
+                        <li><a href="https://standards.ieee.org" target="_blank" rel="noopener">IEEE C37.04 Breakers</a></li>
+                        <li><a href="https://standardsbis.bsbedge.com" target="_blank" rel="noopener">IS 10028 Power Transformers</a></li>
+                        <li><a href="https://www.iec.ch" target="_blank" rel="noopener">IEC 60255 Protection Relays</a></li>
+                        <li><a href="https://www.nema.org" target="_blank" rel="noopener">NEMA AB 4 Molded Breakers</a></li>
+                        <li><a href="settings.html">System Diagnostics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-heading">SYSTEM TELEMETRY</div>
+                    <div style="font-size: 12px; color: var(--text-muted); line-height: 1.8;">
+                        <div>Model: <span style="color: #fff;">Random Forest (100 Trees)</span></div>
+                        <div>Validation Acc: <span style="color: var(--accent-cyan);">86.94%</span></div>
+                        <div>Test Split Acc: <span style="color: var(--accent-cyan);">85.34%</span></div>
+                        <div>RAG Index: <span style="color: #fff;">884 Chunks (TF-IDF)</span></div>
+                        <div>Backend: <span style="color: var(--success);">FastAPI / Uvicorn</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 PRJ_232 — Final-Year B.Tech Major Project. All Rights Reserved.</span>
+                <span>Industrial Engineering SCADA Interface v2.4</span>
+            </div>
         </div>
-
-
-        <div class="footer-links home-footer-links">
-
-
-            <a href="index.html">
-            Home
-        </a>
-
-
-            <a href="maintenance.html">
-            Maintenance
-        </a>
-
-
-            <a href="fault-analysis.html">
-            Fault Analysis
-        </a>
-
-
-            <a href="knowledge-base.html">
-            Knowledge Base
-        </a>
-
-
-            <a href="about.html">
-            About
-        </a>
-
-
-        </div>
-
     </footer>
 
-
-
-    <!-- =========================================================
-     MOBILE MENU
-     ========================================================= -->
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-
-            const menuButton =
-                document.querySelector(".menu-button");
-
-            const navLinks =
-                document.querySelector(".nav-links");
-
-
-            if (menuButton && navLinks) {
-
-                menuButton.addEventListener("click", function() {
-
-                    navLinks.classList.toggle("mobile-open");
-
-                });
-
-            }
-
-        });
-    </script>
-
-
+    <!-- CONTROLLER SCRIPT -->
+    <script src="js/dashboard.js"></script>
 </body>
-
 </html>
