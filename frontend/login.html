@@ -231,11 +231,11 @@
                     </button>
                 </form>
 
-                <!-- Demo Credentials Hint Box -->
-                <div style="margin-top: 22px; padding: 12px 14px; border-radius: var(--radius-sm); background: rgba(0, 210, 255, 0.05); border: 1px solid rgba(0, 210, 255, 0.15); font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
-                    <div style="color: var(--accent-cyan); font-weight: 700; margin-bottom: 2px;">⚡ Pre-Seeded Demo Account:</div>
-                    <div>Email: <strong style="color: #fff;">engineer@voltsage.internal</strong></div>
-                    <div>Password: <strong style="color: #fff;">VoltSage#2026</strong></div>
+                <!-- Evaluation Quick-Fill Control (Credentials hidden from static UI) -->
+                <div style="margin-top: 20px; text-align: center;">
+                    <button type="button" id="quick-fill-btn" class="btn btn-outline" style="font-size: 11.5px; padding: 6px 14px; border-style: dashed; opacity: 0.85; transition: opacity var(--transition-fast);" onclick="fillEvaluationCredentials()" title="Populate demo credentials for local academic evaluation">
+                        ⚡ Fill Evaluation Account
+                    </button>
                 </div>
 
                 <!-- Footer Security Details -->
@@ -309,6 +309,18 @@
             const errorBanner = document.getElementById("auth-error-banner");
             errorBanner.textContent = msg;
             errorBanner.style.display = "block";
+        }
+
+        // Quick-fill credentials for local academic evaluation without exposing credentials in static UI
+        function fillEvaluationCredentials() {
+            switchAuthTab("login");
+            const emailInput = document.getElementById("login-email");
+            const pwdInput = document.getElementById("login-password");
+            if (emailInput && pwdInput) {
+                emailInput.value = "engineer@voltsage.internal";
+                pwdInput.value = "VoltSage#2026";
+                emailInput.focus();
+            }
         }
 
         // Handle Login Submission

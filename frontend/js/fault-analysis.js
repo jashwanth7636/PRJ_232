@@ -218,7 +218,7 @@ async function performFaultAnalysis() {
             resultBox.innerHTML = `
                 <div style="padding: 24px; text-align: left; width: 100%; box-sizing: border-box;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--accent-cyan); text-transform: uppercase;">
+                        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--copper-primary); text-transform: uppercase;">
                             CLASSIFIED FAULT CONDITION
                         </span>
                         <span style="font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: var(--radius-pill); background: ${badgeBg}; color: ${badgeColor}; border: 1px solid ${badgeColor};">
@@ -228,7 +228,7 @@ async function performFaultAnalysis() {
 
                     <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px;">
                         <div style="font-size: 46px; font-weight: 900; color: #fff; letter-spacing: -0.03em; font-family: var(--font-mono);">${pred}</div>
-                        <div style="font-size: 16px; font-weight: 700; color: var(--accent-cyan);">${details.title}</div>
+                        <div style="font-size: 16px; font-weight: 700; color: var(--copper-hover);">${details.title}</div>
                     </div>
 
                     <p style="color: #cbd5e1; font-size: 13.5px; line-height: 1.6; margin-bottom: 16px;">
@@ -242,7 +242,7 @@ async function performFaultAnalysis() {
 
                     <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted);">
                         <span>Model Confidence: <strong style="color: #fff;">${confidence}%</strong></span>
-                        <span>Model: <strong style="color: var(--accent-cyan);">Random Forest (86.9% Val Acc)</strong></span>
+                        <span>Model: <strong style="color: var(--copper-hover);">Random Forest (86.9% Val Acc)</strong></span>
                     </div>
                 </div>
             `;
@@ -256,12 +256,12 @@ async function performFaultAnalysis() {
                 const pct = (p * 100).toFixed(1);
                 const isWinner = (f === pred);
                 html += `
-                    <div style="display: grid; grid-template-columns: 55px 1fr 50px; align-items: center; gap: 12px; margin-bottom: 10px; font-size: 12px; ${isWinner ? 'background: rgba(0, 210, 255, 0.08); padding: 6px 10px; border-radius: var(--radius-sm); border: 1px solid rgba(0, 210, 255, 0.25);' : 'padding: 4px 6px;'}">
-                        <span style="font-weight: 700; color: ${isWinner ? 'var(--accent-cyan)' : 'var(--text-secondary)'}; font-family: var(--font-mono);">${f}</span>
+                    <div style="display: grid; grid-template-columns: 55px 1fr 50px; align-items: center; gap: 12px; margin-bottom: 10px; font-size: 12px; ${isWinner ? 'background: rgba(245, 158, 54, 0.12); padding: 6px 10px; border-radius: var(--radius-sm); border: 1px solid rgba(245, 158, 54, 0.4);' : 'padding: 4px 6px;'}">
+                        <span style="font-weight: 700; color: ${isWinner ? 'var(--copper-hover)' : 'var(--text-secondary)'}; font-family: var(--font-mono);">${f}</span>
                         <div style="height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden;">
-                            <div style="height: 100%; width: ${pct}%; background: ${isWinner ? 'var(--accent-cyan)' : 'rgba(255,255,255,0.2)'}; transition: width 0.5s ease;"></div>
+                            <div style="height: 100%; width: ${pct}%; background: ${isWinner ? 'var(--copper-gradient)' : 'rgba(255,255,255,0.2)'}; transition: width 0.5s ease;"></div>
                         </div>
-                        <span style="text-align: right; font-weight: ${isWinner ? '700' : '400'}; color: ${isWinner ? 'var(--accent-cyan)' : 'var(--text-muted)'}; font-family: var(--font-mono);">${pct}%</span>
+                        <span style="text-align: right; font-weight: ${isWinner ? '700' : '400'}; color: ${isWinner ? 'var(--copper-hover)' : 'var(--text-muted)'}; font-family: var(--font-mono);">${pct}%</span>
                     </div>
                 `;
             });
