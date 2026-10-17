@@ -1,5 +1,7 @@
 import os
 import json
+import re
+import html
 from pathlib import Path
 
 import joblib
@@ -159,6 +161,43 @@ CHUNKS_PATH = PROJECT_ROOT / "data" / "processed" / "document_chunks.json"
 def clean_text(text):
     return " ".join(str(text).split())
 
+def format_document_title(source: str) -> str:
+    """
+    Format the source filename into a clean, professional document title.
+    - Decodes HTML entities (e.g. '&amp;' -> '&')
+    - Strips file extensions like '.txt' or '.pdf'
+    - Strips document ingestion sequence numbers like ' 0001', ' 0002', ' 0003'
+    """
+    if not source:
+        return ""
+    title = html.unescape(str(source)).strip()
+    title = re.sub(r'\.(txt|pdf)$', '', title, flags=re.IGNORECASE)
+    title = re.sub(r'\s+\d{4}$', '', title)
+    return title.strip()
+
+def extract_page_number(text: str) -> Optional[int]:
+    """
+    Extract a verified page number from the excerpt text if explicitly present.
+    Matches standard patterns present in technical manuals:
+      - '117 | P a g e' or '1 | Page'
+      - '46-EN' or '6-EN' (Schneider instruction bulletins)
+      - Explicit standalone 'Page 15' / 'Page: 15' / 'Pg. 15'
+    Returns integer page number if reliably matched, else None.
+    Never guesses.
+    """
+    if not text:
+        return None
+    m1 = re.search(r'(?:^|\n)\s*(\d{1,4})\s*\|\s*P\s*a\s*g\s*e\b', text, re.IGNORECASE)
+    if m1:
+        return int(m1.group(1))
+    m2 = re.search(r'(?:^|\n)\s*(\d{1,4})-EN\b', text, re.IGNORECASE)
+    if m2:
+        return int(m2.group(1))
+    m3 = re.search(r'(?:^|\n)\s*(?:Page|Pg\.?)[:\s]+(\d{1,4})\s*(?:$|\n)', text, re.IGNORECASE)
+    if m3:
+        return int(m3.group(1))
+    return None
+
 usable_chunks = []
 documents = []
 vectorizer = None
@@ -229,10 +268,13 @@ def search_documents(query, top_k=3):
             continue
 
         chunk = usable_chunks[index]
+        page_num = extract_page_number(chunk["text"])
 
         results.append({
             "chunk_id": chunk["chunk_id"],
             "source": chunk["source"],
+            "clean_title": format_document_title(chunk["source"]),
+            "page": page_num,
             "score": round(score, 4),
             "text": chunk["text"]
         })
@@ -457,19 +499,24 @@ def chat(request: ChatRequest, http_request: Request):
 
 
     # --------------------------------------------------------
-    # Build document context
+    # Build document context with clean titles and verified pages
     # --------------------------------------------------------
 
     document_context = ""
 
     if retrieved:
-        document_context = "\n\n".join(
-            [
-                f"Document Title: {item['source']}\n"
+        context_blocks = []
+        for idx, item in enumerate(retrieved, 1):
+            doc_title = item.get("clean_title") or format_document_title(item["source"])
+            page_num = item.get("page")
+            page_str = f"Page {page_num}" if page_num else "Unavailable"
+            context_blocks.append(
+                f"[Excerpt {idx}]\n"
+                f"Document Title: {doc_title}\n"
+                f"Verified Page: {page_str}\n"
                 f"Excerpt Content:\n{item['text']}"
-                for item in retrieved
-            ]
-        )
+            )
+        document_context = "\n\n".join(context_blocks)
 
 
     # --------------------------------------------------------
@@ -486,19 +533,24 @@ Rules:
 - Organize explanations into short paragraphs or bullet points where appropriate.
 - Combine relevant information from multiple excerpts when they support the same answer.
 - Preserve the technical meaning and terminology of the manuals.
+- In your answer, refer directly to the actual document title (e.g. 'According to the *ETC Manual for Flat wall & Corrugated Transformer*...' or 'According to the *Circuit Breaker Maintenance Guide*...') rather than generic phrases like 'the uploaded manual' or 'the document'.
+- If a verified page number is provided on an excerpt that supports the answer, you may cite that page number alongside the document title (e.g. 'page 117'). If no page number is verified, cite only the document title alone without any page number. Do not refer to pages as 'unverified' or 'unavailable' in the user response. Never invent or guess a page number.
 - Do not invent maintenance procedures, measurements, safety precautions, test limits, manufacturer recommendations, page numbers, or citations.
-- If a requested detail is not supported by the supplied excerpts, explicitly say that the available manual excerpts do not establish that detail.
+- If a requested detail is not supported by the supplied excerpts, explicitly state that the available manual excerpts do not establish or contain that information.
 - If the retrieved excerpts are irrelevant or insufficient, explain the limitation instead of guessing.
 - Distinguish information explicitly stated in the manual from any uncertainty.
-- Cite sources using the actual document titles and page numbers only when those page numbers are available and verified.
-- Never invent a page number.
 - Do not expose internal retrieval metadata, chunk IDs, raw JSON, or debugging information.
 - Do not claim that a procedure is safe or approved unless the supplied source supports that claim.
 
 Return a readable answer, not a list of unprocessed document chunks.
 
+CRITICAL CITATION RULES:
 At the very end of your response, on a new line, add:
-SOURCES_USED: <comma-separated list of document titles that genuinely supported your answer, or NONE if the excerpts did not provide sufficient evidence or were irrelevant>"""
+SOURCES_USED: <comma-separated list of document titles that provided factual information or procedures included in your answer, or NONE if no relevant factual information was found in the excerpts>
+- If the retrieved excerpts do not contain any relevant factual answers or procedures for the question, write:
+SOURCES_USED: NONE
+- If you explain factual procedures, steps, or precautions from a manual in your response, include that document's title in SOURCES_USED.
+- Never cite a document if no factual information from it was used to answer the question."""
 
 
     # --------------------------------------------------------
@@ -579,18 +631,24 @@ Please generate a clear, readable answer based strictly on the instructions."""
 
         # Match only sources that genuinely supported the answer
         if sources_used:
-            seen = set()
+            seen_titles = set()
             for src_title in sources_used:
-                src_clean = src_title.lower().strip().replace(".txt", "").replace("&amp;", "&")
+                src_norm = re.sub(r'\(.*?\)', '', src_title).strip().lower()
+                src_norm = html.unescape(src_norm).replace(".txt", "").replace(".pdf", "").strip()
                 for item in retrieved:
-                    item_src_clean = item["source"].lower().replace(".txt", "").replace("&amp;", "&")
-                    if (src_clean in item_src_clean or item_src_clean in src_clean) and item["source"] not in seen:
-                        display_source = item["source"].replace("&amp;", "&")
-                        sources.append({
-                            "source": display_source,
+                    clean_title = item.get("clean_title") or format_document_title(item["source"])
+                    clean_norm = clean_title.lower()
+                    if (src_norm in clean_norm or clean_norm in src_norm) and clean_title not in seen_titles:
+                        # Find verified page from matching retrieved chunks if available
+                        best_page = next((it["page"] for it in retrieved if (it.get("clean_title") == clean_title or it.get("source") == item["source"]) and it.get("page")), None)
+                        source_obj = {
+                            "source": clean_title,
                             "score": item["score"]
-                        })
-                        seen.add(item["source"])
+                        }
+                        if best_page:
+                            source_obj["page"] = best_page
+                        sources.append(source_obj)
+                        seen_titles.add(clean_title)
     else:
         print(f"Gemini generation failure: {last_error}")
         answer = "The VoltSage AI assistant could not complete this request due to an AI service error. Please verify your connection and try again."

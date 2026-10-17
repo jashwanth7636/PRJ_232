@@ -119,7 +119,12 @@ function addMessage(text, type, sources = [], rawText = "") {
     if (sources && sources.length > 0) {
         sourcesHTML = `<div class="sources-container">
             <span style="font-weight: 700; color: var(--accent-cyan); font-size: 11px;">Knowledge Sources:</span>` +
-            sources.map(s => `<span class="source-badge">📄 ${escapeHtml(s.source)}</span>`).join("") +
+            sources.map(s => {
+                const title = typeof s === "string" ? s : (s.source || "");
+                const pageNum = (typeof s === "object" && s.page) ? s.page : null;
+                const pageLabel = pageNum ? ` (Page ${escapeHtml(String(pageNum))})` : "";
+                return `<span class="source-badge">📄 ${escapeHtml(title)}${pageLabel}</span>`;
+            }).join("") +
         `</div>`;
     }
 
