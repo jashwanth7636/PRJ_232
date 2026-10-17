@@ -3,255 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoltSage AI | Electrical Fault Analysis — Substation Classifier</title>
+    <title>VoltSage AI | 3-Phase Fault Analysis — PRJ_232</title>
     <link rel="stylesheet" href="css/industrial.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 </head>
-<body>
+<body style="margin: 0; padding: 0; overflow: hidden; background: var(--bg-base);">
 
-    <!-- TOP NAVBAR -->
-    <header class="navbar">
-        <a href="index.html" class="brand">
-            <div class="brand-icon">⚡</div>
-            <div class="brand-text">
-                <div class="brand-title">
-                    VOLTSAGE AI
-                    <span class="brand-badge">PRJ_232</span>
+    <!-- APP WRAPPER -->
+    <div class="voltsage-app">
+
+        <!-- UNIFIED APP SIDEBAR -->
+        <aside class="app-sidebar" id="app-sidebar">
+            <!-- Brand Squircle -->
+            <div class="app-sidebar-brand">
+                <div class="brand-icon-box">⚡</div>
+                <div style="overflow: hidden;">
+                    <div class="brand-title-row">
+                        VOLTSAGE AI
+                        <span class="brand-sub-badge">PRJ_232</span>
+                    </div>
+                    <div class="brand-subtitle">Substation Intelligence</div>
                 </div>
-                <div class="brand-subtitle">ELECTRICAL SUBSTATION INTELLIGENCE</div>
             </div>
-        </a>
 
-        <ul class="nav-links">
-            <li class="nav-item"><a href="index.html" class="nav-link">Dashboard</a></li>
-            <li class="nav-item"><a href="maintenance.html" class="nav-link">Maintenance AI</a></li>
-            <li class="nav-item"><a href="fault-analysis.html" class="nav-link active">Fault Analysis</a></li>
-            <li class="nav-item"><a href="knowledge-base.html" class="nav-link">Knowledge Base</a></li>
-            <li class="nav-item"><a href="checklists.html" class="nav-link">Checklists</a></li>
-            <li class="nav-item"><a href="settings.html" class="nav-link">Settings</a></li>
-            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-        </ul>
+            <!-- Navigation Links -->
+            <nav class="app-sidebar-nav">
+                <a href="index.html" class="app-nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="maintenance.html" class="app-nav-item">
+                    <span class="nav-icon">💬</span>
+                    <span>Maintenance AI</span>
+                </a>
+                <a href="fault-analysis.html" class="app-nav-item active">
+                    <span class="nav-icon">⚡</span>
+                    <span>Fault Analysis</span>
+                </a>
+                <a href="knowledge-base.html" class="app-nav-item">
+                    <span class="nav-icon">📚</span>
+                    <span>Knowledge Base</span>
+                </a>
+                <a href="checklists.html" class="app-nav-item">
+                    <span class="nav-icon">📋</span>
+                    <span>Checklists</span>
+                </a>
+                <a href="settings.html" class="app-nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+                <a href="about.html" class="app-nav-item">
+                    <span class="nav-icon">ℹ️</span>
+                    <span>About</span>
+                </a>
+            </nav>
 
-        <div class="nav-right" id="navbar-auth-section">
-            <div class="status-pill">
-                <span class="status-dot"></span> ML Inference Online
+            <!-- User Profile Footer -->
+            <div class="app-sidebar-footer" id="sidebar-user-footer">
+                <div class="user-profile-row">
+                    <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
+                        <div class="user-avatar" id="sidebar-avatar-fallback">BJ</div>
+                        <div class="user-info">
+                            <div class="user-name" id="sidebar-user-name">User</div>
+                            <div class="user-role">User</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline" style="padding: 4px 9px; font-size: 11px; border-radius: var(--radius-sm); border-color: rgba(255,255,255,0.15);" title="Sign Out" onclick="VoltSageAuth.logout()">
+                        Sign Out
+                    </button>
+                </div>
             </div>
-        </div>
-    </header>
+        </aside>
 
-    <!-- MAIN PAGE CONTAINER -->
-    <main class="page-container">
-
-        <!-- PAGE HEADER -->
-        <div class="page-header">
-            <div class="badge-tag">
-                <span>SCADA FAULT CLASSIFIER • RANDOM FOREST (100 TREES)</span>
-            </div>
-            <h1 class="page-title">Electrical Substation Fault Diagnostic System</h1>
-            <p class="page-subtitle">
-                Evaluate instantaneous 3-phase current and voltage telemetry to detect electrical faults, classify fault topology (LG, LL, LLG, LLL, LLLG), and calculate class probabilities based on our trained machine learning model.
-            </p>
-        </div>
-
-        <!-- MAIN TWO-COLUMN ANALYSIS LAYOUT -->
-        <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 28px; align-items: start;">
+        <!-- MAIN VIEWPORT -->
+        <main class="app-main-viewport">
             
-            <!-- LEFT COLUMN: SENSOR INPUT FORM & PRESETS -->
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">Telemetry Parameter Inputs</div>
-                        <div class="card-subtitle">Instantaneous 3-phase currents and line-to-neutral voltages</div>
+            <!-- CINEMATIC HORIZON HEADER BANNER -->
+            <header class="cinematic-header-banner">
+                <div class="cinematic-banner-meta">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                        <button type="button" class="menu-button" id="sidebar-mobile-toggle" onclick="document.getElementById('app-sidebar').classList.toggle('mobile-open')">
+                            ☰
+                        </button>
+                        <h1 class="cinematic-banner-title">3-Phase Fault Classification</h1>
                     </div>
-                    <div class="card-icon">⚡</div>
+                    <p class="cinematic-banner-subtitle">
+                        Instantaneous electrical measurements evaluated by trained Random Forest model
+                    </p>
                 </div>
 
-                <!-- Ground-Truth Preset Buttons -->
-                <div style="margin-bottom: 22px; padding: 14px; background: rgba(7, 11, 18, 0.6); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                    <div style="font-size: 11px; font-weight: 700; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
-                        TEST DATASET BENCHMARK PRESETS (GROUND TRUTH):
+                <div class="cinematic-banner-badges">
+                    <div class="date-time-pill">
+                        <span>⚡</span>
+                        <span>Random Forest • 100 Trees</span>
                     </div>
-                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px; border-radius: var(--radius-pill);" onclick="loadPreset('Normal')">
-                            Normal (Balanced)
-                        </button>
-                        <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px; border-radius: var(--radius-pill);" onclick="loadPreset('LG')">
-                            Single Line-to-Ground (LG)
-                        </button>
-                        <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px; border-radius: var(--radius-pill);" onclick="loadPreset('LL')">
-                            Line-to-Line (LL)
-                        </button>
-                        <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px; border-radius: var(--radius-pill);" onclick="loadPreset('LLG')">
-                            Double Line-to-Ground (LLG)
-                        </button>
-                        <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px; border-radius: var(--radius-pill);" onclick="loadPreset('LLL')">
-                            Three-Phase (LLL)
-                        </button>
-                        <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px; border-radius: var(--radius-pill);" onclick="loadPreset('LLLG')">
-                            Three-Phase Ground (LLLG)
-                        </button>
+                    <div class="status-pill" style="margin: 0;">
+                        <span class="status-dot"></span> 86.9% Validation Accuracy
                     </div>
                 </div>
+            </header>
 
-                <!-- Input Form -->
-                <form id="fault-form" onsubmit="event.preventDefault();">
+            <!-- SCROLLABLE PAGE BODY CONTENT -->
+            <div class="app-page-content">
+
+                <!-- MAIN TWO-COLUMN ANALYSIS LAYOUT -->
+                <div class="fault-analysis-grid">
                     
-                    <!-- 3-Phase Current Group -->
-                    <div style="margin-bottom: 20px;">
-                        <div style="font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
-                            <span>Phase Currents (Amperes A)</span>
-                            <span style="font-size: 10.5px; color: var(--accent-cyan);">Range: -1000A to +1000A</span>
+                    <!-- LEFT COLUMN: SENSOR INPUT FORM & PRESETS -->
+                    <div class="card" style="margin-bottom: 0;">
+                        <div class="card-header" style="margin-bottom: 16px;">
+                            <div>
+                                <div class="card-title">Input Measurements</div>
+                                <div class="card-subtitle">Instantaneous phase currents & line-to-neutral voltages</div>
+                            </div>
+                            <div class="card-icon">⚡</div>
                         </div>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label class="form-label" for="Ia">Phase A (Ia)</label>
-                                <input type="number" step="any" id="Ia" class="form-input font-mono" placeholder="e.g. -35.89" required>
+
+                        <!-- Tab Switcher Pills -->
+                        <div class="tab-pills-row">
+                            <button type="button" class="tab-pill-btn active" id="tab-all-params">All Parameters</button>
+                            <button type="button" class="tab-pill-btn" onclick="document.getElementById('currents-group').scrollIntoView({behavior:'smooth'})">Currents (A)</button>
+                            <button type="button" class="tab-pill-btn" onclick="document.getElementById('voltages-group').scrollIntoView({behavior:'smooth'})">Voltages (V)</button>
+                        </div>
+
+                        <!-- Ground-Truth Preset Buttons -->
+                        <div style="margin-bottom: 22px; padding: 14px; background: rgba(8, 11, 16, 0.7); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
+                            <div style="font-size: 11px; font-weight: 700; color: var(--copper-primary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;">
+                                TEST DATASET BENCHMARK PRESETS (GROUND TRUTH):
                             </div>
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label class="form-label" for="Ib">Phase B (Ib)</label>
-                                <input type="number" step="any" id="Ib" class="form-input font-mono" placeholder="e.g. -1.18" required>
-                            </div>
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label class="form-label" for="Ic">Phase C (Ic)</label>
-                                <input type="number" step="any" id="Ic" class="form-input font-mono" placeholder="e.g. 33.75" required>
+                            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px; border-radius: var(--radius-pill);" onclick="loadPreset('Normal')">
+                                    Normal (Balanced)
+                                </button>
+                                <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px; border-radius: var(--radius-pill);" onclick="loadPreset('LG')">
+                                    Single Line-to-Ground (LG)
+                                </button>
+                                <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px; border-radius: var(--radius-pill);" onclick="loadPreset('LL')">
+                                    Line-to-Line (LL)
+                                </button>
+                                <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px; border-radius: var(--radius-pill);" onclick="loadPreset('LLG')">
+                                    Double Line-to-Ground (LLG)
+                                </button>
+                                <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px; border-radius: var(--radius-pill);" onclick="loadPreset('LLL')">
+                                    Three-Phase (LLL)
+                                </button>
+                                <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px; border-radius: var(--radius-pill);" onclick="loadPreset('LLLG')">
+                                    Three-Phase Ground (LLLG)
+                                </button>
                             </div>
                         </div>
+
+                        <!-- Input Form -->
+                        <form id="fault-form" onsubmit="event.preventDefault();">
+                            
+                            <!-- 3-Phase Current Group -->
+                            <div id="currents-group" style="margin-bottom: 20px;">
+                                <div style="font-size: 11.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+                                    <span>Phase Currents (Amperes A)</span>
+                                    <span style="font-size: 10.5px; color: var(--copper-primary);">Range: -1000A to +1000A</span>
+                                </div>
+                                <div class="inputs-three-col">
+                                    <div class="fault-input-card">
+                                        <label class="fault-input-label" for="Ia">Phase A (Ia)</label>
+                                        <input type="number" step="any" id="Ia" class="fault-input-field" placeholder="-35.89" required>
+                                    </div>
+                                    <div class="fault-input-card">
+                                        <label class="fault-input-label" for="Ib">Phase B (Ib)</label>
+                                        <input type="number" step="any" id="Ib" class="fault-input-field" placeholder="-1.18" required>
+                                    </div>
+                                    <div class="fault-input-card">
+                                        <label class="fault-input-label" for="Ic">Phase C (Ic)</label>
+                                        <input type="number" step="any" id="Ic" class="fault-input-field" placeholder="33.75" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3-Phase Voltage Group -->
+                            <div id="voltages-group" style="margin-bottom: 26px;">
+                                <div style="font-size: 11.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+                                    <span>Phase Voltages (Per Unit p.u.)</span>
+                                    <span style="font-size: 10.5px; color: var(--teal-status);">Range: -1.0 to +1.0 p.u.</span>
+                                </div>
+                                <div class="inputs-three-col">
+                                    <div class="fault-input-card">
+                                        <label class="fault-input-label" for="Va">Phase A (Va)</label>
+                                        <input type="number" step="any" id="Va" class="fault-input-field" placeholder="0.46" required>
+                                    </div>
+                                    <div class="fault-input-card">
+                                        <label class="fault-input-label" for="Vb">Phase B (Vb)</label>
+                                        <input type="number" step="any" id="Vb" class="fault-input-field" placeholder="-0.54" required>
+                                    </div>
+                                    <div class="fault-input-card">
+                                        <label class="fault-input-label" for="Vc">Phase C (Vc)</label>
+                                        <input type="number" step="any" id="Vc" class="fault-input-field" placeholder="0.07" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div style="display: flex; gap: 14px;">
+                                <button type="button" id="reset-btn" class="btn btn-secondary" style="flex: 1; height: 46px; font-size: 13.5px;">
+                                    <span>Reset</span>
+                                </button>
+                                <button type="button" id="analyze-btn" class="btn btn-copper" style="flex: 2; height: 46px; font-size: 14px;">
+                                    <span>Predict Fault →</span>
+                                </button>
+                            </div>
+
+                        </form>
                     </div>
 
-                    <!-- 3-Phase Voltage Group -->
-                    <div style="margin-bottom: 24px;">
-                        <div style="font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
-                            <span>Phase Voltages (Per Unit p.u.)</span>
-                            <span style="font-size: 10.5px; color: var(--accent-cyan);">Range: -1.0 to +1.0 p.u.</span>
+                    <!-- RIGHT COLUMN: DIAGNOSTIC RESULTS & PROBABILITIES -->
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        
+                        <!-- Prediction Outcome Card -->
+                        <div class="card" style="margin-bottom: 0;">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">Prediction Result</div>
+                                    <div class="card-subtitle">Real-time inference output from trained Random Forest model</div>
+                                </div>
+                                <span style="font-size: 10px; font-weight: 700; color: var(--teal-status); background: rgba(25, 199, 165, 0.12); padding: 4px 10px; border-radius: var(--radius-pill); border: 1px solid rgba(25, 199, 165, 0.3);">
+                                    ML CLASSIFIER
+                                </span>
+                            </div>
+
+                            <!-- Fault Result Display Area -->
+                            <div id="fault-result">
+                                <div style="text-align: center; padding: 40px 20px;">
+                                    <div style="width: 52px; height: 52px; margin: 0 auto 14px; border-radius: 12px; background: rgba(245, 158, 54, 0.1); border: 1px solid rgba(245, 158, 54, 0.3); display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--copper-primary);">⚡</div>
+                                    <h3 style="color: #fff; font-size: 16px; margin-bottom: 6px;">Awaiting Measurements</h3>
+                                    <p style="color: var(--text-muted); font-size: 13px; max-width: 320px; margin: 0 auto;">Enter 3-phase current and voltage parameters or pick a sample preset to evaluate.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label class="form-label" for="Va">Phase A (Va)</label>
-                                <input type="number" step="any" id="Va" class="form-input font-mono" placeholder="e.g. 0.46" required>
+
+                        <!-- Class Probabilities Card -->
+                        <div class="card" style="margin-bottom: 0;">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">Class Probability Distribution</div>
+                                    <div class="card-subtitle">Posterior probability generated by ensemble trees</div>
+                                </div>
+                                <div class="card-icon" style="font-size: 16px;">📊</div>
                             </div>
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label class="form-label" for="Vb">Phase B (Vb)</label>
-                                <input type="number" step="any" id="Vb" class="form-input font-mono" placeholder="e.g. -0.54" required>
-                            </div>
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label class="form-label" for="Vc">Phase C (Vc)</label>
-                                <input type="number" step="any" id="Vc" class="form-input font-mono" placeholder="e.g. 0.07" required>
+
+                            <div id="probabilities">
+                                <!-- Populated dynamically by fault-analysis.js -->
+                                <div class="probability-row" style="display: grid; grid-template-columns: 60px 1fr 50px; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 12px;">
+                                    <span style="font-weight: 700; color: var(--text-secondary);">Normal</span>
+                                    <div style="height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden;">
+                                        <div style="height: 100%; width: 0%; background: var(--teal-status);"></div>
+                                    </div>
+                                    <span style="text-align: right; color: var(--text-muted); font-family: var(--font-mono);">0.0%</span>
+                                </div>
+                                <div class="probability-row" style="display: grid; grid-template-columns: 60px 1fr 50px; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 12px;">
+                                    <span style="font-weight: 700; color: var(--text-secondary);">LG</span>
+                                    <div style="height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden;">
+                                        <div style="height: 100%; width: 0%; background: var(--copper-primary);"></div>
+                                    </div>
+                                    <span style="text-align: right; color: var(--text-muted); font-family: var(--font-mono);">0.0%</span>
+                                </div>
+                                <div class="probability-row" style="display: grid; grid-template-columns: 60px 1fr 50px; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 12px;">
+                                    <span style="font-weight: 700; color: var(--text-secondary);">LL</span>
+                                    <div style="height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden;">
+                                        <div style="height: 100%; width: 0%; background: var(--copper-primary);"></div>
+                                    </div>
+                                    <span style="text-align: right; color: var(--text-muted); font-family: var(--font-mono);">0.0%</span>
+                                </div>
+                                <div class="probability-row" style="display: grid; grid-template-columns: 60px 1fr 50px; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 12px;">
+                                    <span style="font-weight: 700; color: var(--text-secondary);">LLL</span>
+                                    <div style="height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden;">
+                                        <div style="height: 100%; width: 0%; background: var(--copper-primary);"></div>
+                                    </div>
+                                    <span style="text-align: right; color: var(--text-muted); font-family: var(--font-mono);">0.0%</span>
+                                </div>
+                                <div class="probability-row" style="display: grid; grid-template-columns: 60px 1fr 50px; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 12px;">
+                                    <span style="font-weight: 700; color: var(--text-secondary);">LLG</span>
+                                    <div style="height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden;">
+                                        <div style="height: 100%; width: 0%; background: var(--copper-primary);"></div>
+                                    </div>
+                                    <span style="text-align: right; color: var(--text-muted); font-family: var(--font-mono);">0.0%</span>
+                                </div>
+                                <div class="probability-row" style="display: grid; grid-template-columns: 60px 1fr 50px; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 12px;">
+                                    <span style="font-weight: 700; color: var(--text-secondary);">LLLG</span>
+                                    <div style="height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden;">
+                                        <div style="height: 100%; width: 0%; background: var(--copper-primary);"></div>
+                                    </div>
+                                    <span style="text-align: right; color: var(--text-muted); font-family: var(--font-mono);">0.0%</span>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Model Pipeline Meta -->
+                        <div style="padding: 14px 18px; background: rgba(8, 11, 16, 0.6); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); font-size: 12px; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center;">
+                            <span>Trained Estimator: <code>best_fault_model.joblib</code></span>
+                            <span>Validation Accuracy: <strong style="color: var(--teal-status);">86.94%</strong></span>
+                        </div>
+
                     </div>
 
-                    <!-- Buttons -->
-                    <div style="display: flex; gap: 14px;">
-                        <button type="button" id="analyze-btn" class="btn btn-primary" style="flex: 2; height: 46px; font-size: 14px;">
-                            <span>⚡ Classify Fault State</span>
-                        </button>
-                        <button type="button" id="reset-btn" class="btn btn-secondary" style="flex: 1; height: 46px; font-size: 14px;">
-                            <span>Reset</span>
-                        </button>
-                    </div>
+                </div>
 
-                </form>
+                <!-- MINIMAL ONE-LINE FOOTER -->
+                <div style="text-align: center; padding: 24px 0 12px; font-size: 11.5px; color: var(--text-muted); border-top: 1px solid var(--border-subtle); margin-top: 20px;">
+                    VoltSage AI — PRJ_232 Electrical Substation Intelligence • Final-Year B.Tech Major Project
+                </div>
+
             </div>
 
-            <!-- RIGHT COLUMN: DIAGNOSTIC RESULTS & PROBABILITIES -->
-            <div style="display: flex; flex-direction: column; gap: 20px;">
-                
-                <!-- Prediction Outcome Card -->
-                <div class="card">
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title">Diagnostic Assessment</div>
-                            <div class="card-subtitle">Real-time inference output from trained Random Forest model</div>
-                        </div>
-                        <span style="font-size: 11px; font-weight: 700; color: var(--accent-cyan); background: rgba(0, 210, 255, 0.1); padding: 4px 10px; border-radius: var(--radius-pill); border: 1px solid rgba(0,210,255,0.2);">INFERENCE RESULT</span>
-                    </div>
+        </main>
 
-                    <!-- Fault Result Display Area -->
-                    <div id="fault-result">
-                        <div style="text-align: center; padding: 40px 20px;">
-                            <div style="width: 48px; height: 48px; margin: 0 auto 14px; border-radius: 12px; background: rgba(0, 210, 255, 0.08); border: 1px solid var(--border-card); display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--accent-cyan);">⚡</div>
-                            <h3 style="color: #fff; font-size: 16px; margin-bottom: 6px;">Awaiting Measurements</h3>
-                            <p style="color: var(--text-muted); font-size: 13px; max-width: 320px; margin: 0 auto;">Enter 3-phase current and voltage parameters or pick a sample preset to evaluate.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Class Probabilities Card -->
-                <div class="card">
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title">Class Probability Distribution</div>
-                            <div class="card-subtitle">Posterior probability generated by ensemble trees</div>
-                        </div>
-                        <div class="card-icon" style="font-size: 16px;">📊</div>
-                    </div>
-
-                    <div id="probabilities">
-                        <!-- Populated dynamically by fault-analysis.js -->
-                        <div class="probability-row" style="display: grid; grid-template-columns: 55px 1fr 50px; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 12px;">
-                            <span style="font-weight: 700; color: var(--text-secondary);">LG</span>
-                            <div style="height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden;">
-                                <div style="height: 100%; width: 0%; background: var(--accent-cyan);"></div>
-                            </div>
-                            <span style="text-align: right; color: var(--text-muted); font-family: var(--font-mono);">0.0%</span>
-                        </div>
-                        <div class="probability-row" style="display: grid; grid-template-columns: 55px 1fr 50px; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 12px;">
-                            <span style="font-weight: 700; color: var(--text-secondary);">LL</span>
-                            <div style="height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden;">
-                                <div style="height: 100%; width: 0%; background: var(--accent-cyan);"></div>
-                            </div>
-                            <span style="text-align: right; color: var(--text-muted); font-family: var(--font-mono);">0.0%</span>
-                        </div>
-                        <div class="probability-row" style="display: grid; grid-template-columns: 55px 1fr 50px; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 12px;">
-                            <span style="font-weight: 700; color: var(--text-secondary);">LLG</span>
-                            <div style="height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden;">
-                                <div style="height: 100%; width: 0%; background: var(--accent-cyan);"></div>
-                            </div>
-                            <span style="text-align: right; color: var(--text-muted); font-family: var(--font-mono);">0.0%</span>
-                        </div>
-                        <div class="probability-row" style="display: grid; grid-template-columns: 55px 1fr 50px; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 12px;">
-                            <span style="font-weight: 700; color: var(--text-secondary);">LLL</span>
-                            <div style="height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden;">
-                                <div style="height: 100%; width: 0%; background: var(--accent-cyan);"></div>
-                            </div>
-                            <span style="text-align: right; color: var(--text-muted); font-family: var(--font-mono);">0.0%</span>
-                        </div>
-                        <div class="probability-row" style="display: grid; grid-template-columns: 55px 1fr 50px; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 12px;">
-                            <span style="font-weight: 700; color: var(--text-secondary);">LLLG</span>
-                            <div style="height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden;">
-                                <div style="height: 100%; width: 0%; background: var(--accent-cyan);"></div>
-                            </div>
-                            <span style="text-align: right; color: var(--text-muted); font-family: var(--font-mono);">0.0%</span>
-                        </div>
-                        <div class="probability-row" style="display: grid; grid-template-columns: 55px 1fr 50px; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 12px;">
-                            <span style="font-weight: 700; color: var(--text-secondary);">Normal</span>
-                            <div style="height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden;">
-                                <div style="height: 100%; width: 0%; background: var(--accent-cyan);"></div>
-                            </div>
-                            <span style="text-align: right; color: var(--text-muted); font-family: var(--font-mono);">0.0%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Model Pipeline Meta -->
-                <div style="padding: 14px 18px; background: rgba(7, 11, 18, 0.4); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); font-size: 12px; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center;">
-                    <span>Trained Estimator: <code>best_fault_model.joblib</code></span>
-                    <span>Validation Accuracy: <strong style="color: var(--accent-cyan);">86.94%</strong></span>
-                </div>
-
-            </div>
-
-        </div>
-
-    </main>
-
-    <!-- COMPACT FOOTER -->
-    <footer class="footer-minimal">
-        <div class="footer-minimal-container">
-            <span>VoltSage AI • PRJ_232 Substation Intelligence</span>
-            <span>Final-Year B.Tech Major Project</span>
-        </div>
-    </footer>
+    </div>
 
     <!-- CONTROLLER SCRIPTS -->
     <script src="js/auth.js"></script>

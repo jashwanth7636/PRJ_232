@@ -3,136 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoltSage AI | Knowledge Base & Document Repository</title>
+    <title>VoltSage AI | Technical Knowledge Base — PRJ_232</title>
     <link rel="stylesheet" href="css/industrial.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 </head>
-<body>
+<body style="margin: 0; padding: 0; overflow: hidden; background: var(--bg-base);">
 
-    <!-- TOP NAVBAR -->
-    <header class="navbar">
-        <a href="index.html" class="brand">
-            <div class="brand-icon">⚡</div>
-            <div class="brand-text">
-                <div class="brand-title">
-                    VOLTSAGE AI
-                    <span class="brand-badge">PRJ_232</span>
-                </div>
-                <div class="brand-subtitle">ELECTRICAL SUBSTATION INTELLIGENCE</div>
-            </div>
-        </a>
+    <!-- APP WRAPPER -->
+    <div class="voltsage-app">
 
-        <ul class="nav-links">
-            <li class="nav-item"><a href="index.html" class="nav-link">Dashboard</a></li>
-            <li class="nav-item"><a href="maintenance.html" class="nav-link">Maintenance AI</a></li>
-            <li class="nav-item"><a href="fault-analysis.html" class="nav-link">Fault Analysis</a></li>
-            <li class="nav-item"><a href="knowledge-base.html" class="nav-link active">Knowledge Base</a></li>
-            <li class="nav-item"><a href="checklists.html" class="nav-link">Checklists</a></li>
-            <li class="nav-item"><a href="settings.html" class="nav-link">Settings</a></li>
-            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-        </ul>
-
-        <div class="nav-right" id="navbar-auth-section">
-            <div class="status-pill">
-                <span class="status-dot"></span> Corpus Synchronized
-            </div>
-        </div>
-    </header>
-
-    <!-- MAIN PAGE CONTAINER -->
-    <main class="page-container">
-
-        <!-- PAGE HEADER -->
-        <div class="page-header">
-            <div class="badge-tag">
-                <span>RAG TECHNICAL CORPUS • DYNAMIC INGESTION</span>
-            </div>
-            <h1 class="page-title">Substation Engineering Knowledge Base</h1>
-            <p class="page-subtitle">
-                Access official technical documentation, Indian Standards (IS), IEEE references, and manufacturer maintenance manuals. New PDFs uploaded here are automatically extracted, chunked, and indexed for the RAG chatbot.
-            </p>
-        </div>
-
-        <!-- TELEMETRY SUMMARY STATS -->
-        <div class="stat-grid" style="margin-bottom: 28px;">
-            <div class="stat-card">
-                <span class="stat-label">Active Documents</span>
-                <div class="stat-value cyan" id="stat-total-docs">3</div>
-                <span class="stat-sub">Verified Standards Manuals</span>
-            </div>
-
-            <div class="stat-card">
-                <span class="stat-label">Indexed Chunks</span>
-                <div class="stat-value" id="stat-total-chunks">884</div>
-                <span class="stat-sub">Searchable Text Segments</span>
-            </div>
-
-            <div class="stat-card">
-                <span class="stat-label">Vector Embedding</span>
-                <div class="stat-value green" style="font-size: 24px; padding-top: 6px;">TF-IDF</div>
-                <span class="stat-sub">Cosine Similarity Search</span>
-            </div>
-
-            <div class="stat-card">
-                <span class="stat-label">Ingestion Engine</span>
-                <div class="stat-value amber" style="font-size: 24px; padding-top: 6px;">pypdf</div>
-                <span class="stat-sub">1200-char / 200-overlap chunks</span>
-            </div>
-        </div>
-
-        <!-- TWO-COLUMN LAYOUT: UPLOAD SECTION & DOCUMENT REPOSITORY -->
-        <div style="display: grid; grid-template-columns: 360px 1fr; gap: 28px; align-items: start; margin-bottom: 34px;">
-            
-            <!-- LEFT: PDF UPLOAD CARD -->
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">Upload Manual</div>
-                        <div class="card-subtitle">Add PDF to live RAG knowledge base</div>
+        <!-- UNIFIED APP SIDEBAR -->
+        <aside class="app-sidebar" id="app-sidebar">
+            <!-- Brand Squircle -->
+            <div class="app-sidebar-brand">
+                <div class="brand-icon-box">⚡</div>
+                <div style="overflow: hidden;">
+                    <div class="brand-title-row">
+                        VOLTSAGE AI
+                        <span class="brand-sub-badge">PRJ_232</span>
                     </div>
-                    <div class="card-icon">📤</div>
+                    <div class="brand-subtitle">Substation Intelligence</div>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="app-sidebar-nav">
+                <a href="index.html" class="app-nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="maintenance.html" class="app-nav-item">
+                    <span class="nav-icon">💬</span>
+                    <span>Maintenance AI</span>
+                </a>
+                <a href="fault-analysis.html" class="app-nav-item">
+                    <span class="nav-icon">⚡</span>
+                    <span>Fault Analysis</span>
+                </a>
+                <a href="knowledge-base.html" class="app-nav-item active">
+                    <span class="nav-icon">📚</span>
+                    <span>Knowledge Base</span>
+                </a>
+                <a href="checklists.html" class="app-nav-item">
+                    <span class="nav-icon">📋</span>
+                    <span>Checklists</span>
+                </a>
+                <a href="settings.html" class="app-nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+                <a href="about.html" class="app-nav-item">
+                    <span class="nav-icon">ℹ️</span>
+                    <span>About</span>
+                </a>
+            </nav>
+
+            <!-- User Profile Footer -->
+            <div class="app-sidebar-footer" id="sidebar-user-footer">
+                <div class="user-profile-row">
+                    <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
+                        <div class="user-avatar" id="sidebar-avatar-fallback">BJ</div>
+                        <div class="user-info">
+                            <div class="user-name" id="sidebar-user-name">User</div>
+                            <div class="user-role">User</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline" style="padding: 4px 9px; font-size: 11px; border-radius: var(--radius-sm); border-color: rgba(255,255,255,0.15);" title="Sign Out" onclick="VoltSageAuth.logout()">
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN VIEWPORT -->
+        <main class="app-main-viewport">
+            
+            <!-- CINEMATIC HORIZON HEADER BANNER -->
+            <header class="cinematic-header-banner">
+                <div class="cinematic-banner-meta">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                        <button type="button" class="menu-button" id="sidebar-mobile-toggle" onclick="document.getElementById('app-sidebar').classList.toggle('mobile-open')">
+                            ☰
+                        </button>
+                        <h1 class="cinematic-banner-title">Technical Knowledge Base</h1>
+                    </div>
+                    <p class="cinematic-banner-subtitle">
+                        Vector-indexed Indian Standards (IS), IEEE references, and manufacturer documentation
+                    </p>
                 </div>
 
-                <form id="upload-form" onsubmit="event.preventDefault();">
-                    
-                    <!-- Drag & Drop Zone -->
-                    <div id="upload-dropzone" style="border: 2px dashed var(--border-active); border-radius: var(--radius-md); padding: 26px 16px; text-align: center; background: rgba(7, 11, 18, 0.5); cursor: pointer; transition: all 0.2s ease; margin-bottom: 16px;" onclick="document.getElementById('pdf-upload-input').click();">
-                        <div style="font-size: 32px; margin-bottom: 8px;">📄</div>
-                        <div id="selected-file-label" style="font-size: 12.5px; font-weight: 600; color: var(--text-secondary); word-break: break-all;">
-                            Drop a PDF manual here or click to browse
+                <div class="cinematic-banner-badges">
+                    <div class="date-time-pill">
+                        <span>📚</span>
+                        <span id="stat-total-chunks">885 Chunks Grounded</span>
+                    </div>
+                    <div class="status-pill" style="margin: 0;">
+                        <span class="status-dot"></span> Corpus Synchronized
+                    </div>
+                </div>
+            </header>
+
+            <!-- SCROLLABLE PAGE BODY CONTENT -->
+            <div class="app-page-content">
+
+                <!-- TOP DRAG & DROP UPLOAD BOX -->
+                <div class="kb-upload-card" id="upload-dropzone" onclick="document.getElementById('pdf-upload-input').click();">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(245, 158, 54, 0.12); border: 1px solid rgba(245, 158, 54, 0.35); display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--copper-primary);">
+                        📤
+                    </div>
+                    <div style="text-align: center;">
+                        <div id="selected-file-label" style="font-size: 15px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">
+                            Drag & drop PDF technical manuals here or click to browse
                         </div>
-                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">
-                            Supported format: PDF up to 30 MB
-                        </div>
+                        <p style="font-size: 12.5px; color: var(--text-muted); margin: 0;">
+                            Automatic text extraction, semantic chunking (1200 chars / 200 overlap), and live TF-IDF vector indexing
+                        </p>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; align-items: center; margin-top: 6px;">
+                        <button type="button" class="btn btn-copper" id="upload-submit-btn" onclick="event.stopPropagation(); document.getElementById('pdf-upload-input').click();" style="padding: 8px 22px; font-size: 13px;">
+                            <span>Upload Documents</span>
+                        </button>
                         <input type="file" id="pdf-upload-input" accept=".pdf" style="display: none;">
                     </div>
 
-                    <!-- Upload Feedback Message -->
-                    <div id="upload-feedback" style="display: none; padding: 12px; border-radius: var(--radius-sm); font-size: 12px; margin-bottom: 16px;"></div>
+                    <div id="upload-feedback" style="display: none; padding: 10px 16px; border-radius: var(--radius-sm); font-size: 12px; margin-top: 8px;"></div>
+                </div>
 
-                    <!-- Upload Button -->
-                    <button type="button" id="upload-submit-btn" class="btn btn-primary" style="width: 100%; justify-content: center; height: 44px;">
-                        <span>Upload & Index Document</span>
-                    </button>
-
-                    <div style="margin-top: 14px; font-size: 11.5px; color: var(--text-muted); line-height: 1.5;">
-                        <strong style="color: var(--text-secondary);">Indexing Process:</strong> When uploaded, the backend extracts text with <code>pypdf</code>, splits it into overlapping windows, appends to <code>document_chunks.json</code>, and automatically reloads the live TF-IDF vector matrix in memory without requiring a server restart.
+                <!-- 4 STAT PILLS -->
+                <div class="kb-stats-grid">
+                    <div class="kb-stat-pill">
+                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(245, 158, 54, 0.15); color: var(--copper-primary); display: flex; align-items: center; justify-content: center; font-size: 16px;">📚</div>
+                        <div>
+                            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Active Manuals</div>
+                            <div style="font-size: 17px; font-weight: 800; color: #fff;" id="stat-total-docs">3 Documents</div>
+                        </div>
                     </div>
-                </form>
-            </div>
 
-            <!-- RIGHT: DOCUMENT SEARCH & BROWSER -->
-            <div>
-                
-                <!-- Search & Filters Bar -->
-                <div class="card" style="padding: 18px 22px; margin-bottom: 20px;">
+                    <div class="kb-stat-pill">
+                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(25, 199, 165, 0.15); color: var(--teal-status); display: flex; align-items: center; justify-content: center; font-size: 16px;">⚡</div>
+                        <div>
+                            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Indexed Chunks</div>
+                            <div style="font-size: 17px; font-weight: 800; color: var(--teal-status);">885 Chunks</div>
+                        </div>
+                    </div>
+
+                    <div class="kb-stat-pill">
+                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(96, 165, 250, 0.15); color: #60A5FA; display: flex; align-items: center; justify-content: center; font-size: 16px;">🎛️</div>
+                        <div>
+                            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Embedding Engine</div>
+                            <div style="font-size: 17px; font-weight: 800; color: #fff;">TF-IDF Matrix</div>
+                        </div>
+                    </div>
+
+                    <div class="kb-stat-pill">
+                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(168, 85, 247, 0.15); color: #C084FC; display: flex; align-items: center; justify-content: center; font-size: 16px;">⚡</div>
+                        <div>
+                            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Retrieval Latency</div>
+                            <div style="font-size: 17px; font-weight: 800; color: #fff;">&lt; 5 ms</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEARCH & FILTER BAR -->
+                <div class="card" style="padding: 16px 20px; margin-bottom: 0;">
                     <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
                         <div style="flex: 1; min-width: 240px; position: relative;">
                             <input 
                                 type="text" 
                                 id="doc-search-input" 
                                 class="form-input" 
-                                placeholder="Search by title, equipment or keyword..."
+                                placeholder="Search by title, standard code, equipment, or keyword..."
                                 style="font-size: 13.5px;"
                             >
                         </div>
@@ -153,27 +194,23 @@
                     </div>
                 </div>
 
-                <!-- Documents Grid (Populated dynamically) -->
-                <div id="documents-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px;">
-                    <!-- Populated dynamically by knowledge-base.js from /api/documents -->
+                <!-- DOCUMENTS GRID (Populated dynamically by knowledge-base.js) -->
+                <div id="documents-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px;">
                     <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">
                         Loading indexed technical documents...
                     </div>
                 </div>
 
+                <!-- MINIMAL ONE-LINE FOOTER -->
+                <div style="text-align: center; padding: 24px 0 12px; font-size: 11.5px; color: var(--text-muted); border-top: 1px solid var(--border-subtle); margin-top: 20px;">
+                    VoltSage AI — PRJ_232 Electrical Substation Intelligence • Final-Year B.Tech Major Project
+                </div>
+
             </div>
 
-        </div>
+        </main>
 
-    </main>
-
-    <!-- COMPACT FOOTER -->
-    <footer class="footer-minimal">
-        <div class="footer-minimal-container">
-            <span>VoltSage AI • PRJ_232 Substation Intelligence</span>
-            <span>Final-Year B.Tech Major Project</span>
-        </div>
-    </footer>
+    </div>
 
     <!-- CONTROLLER SCRIPTS -->
     <script src="js/auth.js"></script>

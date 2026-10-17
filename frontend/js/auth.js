@@ -74,22 +74,25 @@ window.VoltSageAuth = {
         const sidebarFooter = document.getElementById("sidebar-user-footer");
         if (!sidebarFooter) return;
 
+        const initials = ((user.full_name || user.email || "User").split(" ").map(n => n[0]).join("") || "US").slice(0, 2).toUpperCase();
+        const displayName = user.full_name || (user.email ? user.email.split("@")[0] : "User");
+
         sidebarFooter.innerHTML = `
             <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 10px;">
                 <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
-                    <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--accent-gradient); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0;">
-                        ${(user.full_name || user.email).slice(0, 2).toUpperCase()}
+                    <div style="width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #3B82F6 0%, #06B6D4 100%); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0; box-shadow: 0 0 12px rgba(59, 130, 246, 0.35);">
+                        ${initials}
                     </div>
-                    <div style="overflow: hidden; line-height: 1.3;">
-                        <div style="font-size: 12.5px; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                            ${user.full_name || user.email}
+                    <div style="overflow: hidden; line-height: 1.25;">
+                        <div style="font-size: 13px; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            ${displayName}
                         </div>
-                        <div style="font-size: 10.5px; color: var(--accent-cyan); font-weight: 700;">
-                            Role: User
+                        <div style="font-size: 10.5px; color: var(--text-muted); font-weight: 600;">
+                            User
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-outline" style="padding: 4px 8px; font-size: 11px; border-radius: var(--radius-sm);" title="Sign Out" onclick="VoltSageAuth.logout()">
+                <button type="button" class="btn btn-outline" style="padding: 4px 9px; font-size: 11px; border-radius: var(--radius-sm); border-color: rgba(255,255,255,0.15);" title="Sign Out" onclick="VoltSageAuth.logout()">
                     Sign Out
                 </button>
             </div>

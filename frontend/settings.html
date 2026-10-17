@@ -3,163 +3,335 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoltSage AI | System Settings & Diagnostics — PRJ_232</title>
+    <title>VoltSage AI | Settings & Profile — PRJ_232</title>
     <link rel="stylesheet" href="css/industrial.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 </head>
-<body>
+<body style="margin: 0; padding: 0; overflow: hidden; background: var(--bg-base);">
 
-    <!-- TOP NAVBAR -->
-    <header class="navbar">
-        <a href="index.html" class="brand">
-            <div class="brand-icon">⚡</div>
-            <div class="brand-text">
-                <div class="brand-title">
-                    VOLTSAGE AI
-                    <span class="brand-badge">PRJ_232</span>
+    <!-- APP WRAPPER -->
+    <div class="voltsage-app">
+
+        <!-- UNIFIED APP SIDEBAR -->
+        <aside class="app-sidebar" id="app-sidebar">
+            <!-- Brand Squircle -->
+            <div class="app-sidebar-brand">
+                <div class="brand-icon-box">⚡</div>
+                <div style="overflow: hidden;">
+                    <div class="brand-title-row">
+                        VOLTSAGE AI
+                        <span class="brand-sub-badge">PRJ_232</span>
+                    </div>
+                    <div class="brand-subtitle">Substation Intelligence</div>
                 </div>
-                <div class="brand-subtitle">ELECTRICAL SUBSTATION INTELLIGENCE</div>
             </div>
-        </a>
 
-        <ul class="nav-links">
-            <li class="nav-item"><a href="index.html" class="nav-link">Dashboard</a></li>
-            <li class="nav-item"><a href="maintenance.html" class="nav-link">Maintenance AI</a></li>
-            <li class="nav-item"><a href="fault-analysis.html" class="nav-link">Fault Analysis</a></li>
-            <li class="nav-item"><a href="knowledge-base.html" class="nav-link">Knowledge Base</a></li>
-            <li class="nav-item"><a href="checklists.html" class="nav-link">Checklists</a></li>
-            <li class="nav-item"><a href="settings.html" class="nav-link active">Settings</a></li>
-            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-        </ul>
+            <!-- Navigation Links -->
+            <nav class="app-sidebar-nav">
+                <a href="index.html" class="app-nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="maintenance.html" class="app-nav-item">
+                    <span class="nav-icon">💬</span>
+                    <span>Maintenance AI</span>
+                </a>
+                <a href="fault-analysis.html" class="app-nav-item">
+                    <span class="nav-icon">⚡</span>
+                    <span>Fault Analysis</span>
+                </a>
+                <a href="knowledge-base.html" class="app-nav-item">
+                    <span class="nav-icon">📚</span>
+                    <span>Knowledge Base</span>
+                </a>
+                <a href="checklists.html" class="app-nav-item">
+                    <span class="nav-icon">📋</span>
+                    <span>Checklists</span>
+                </a>
+                <a href="settings.html" class="app-nav-item active">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+                <a href="about.html" class="app-nav-item">
+                    <span class="nav-icon">ℹ️</span>
+                    <span>About</span>
+                </a>
+            </nav>
 
-        <div class="nav-right" id="navbar-auth-section">
-            <div class="status-pill" id="system-status-pill">
-                <span class="status-dot"></span> System Operational
+            <!-- User Profile Footer -->
+            <div class="app-sidebar-footer" id="sidebar-user-footer">
+                <div class="user-profile-row">
+                    <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
+                        <div class="user-avatar" id="sidebar-avatar-fallback">BJ</div>
+                        <div class="user-info">
+                            <div class="user-name" id="sidebar-user-name">User</div>
+                            <div class="user-role">User</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline" style="padding: 4px 9px; font-size: 11px; border-radius: var(--radius-sm); border-color: rgba(255,255,255,0.15);" title="Sign Out" onclick="VoltSageAuth.logout()">
+                        Sign Out
+                    </button>
+                </div>
             </div>
-        </div>
-    </header>
+        </aside>
 
-    <!-- MAIN PAGE CONTAINER -->
-    <main class="page-container" style="max-width: 980px;">
-
-        <!-- PAGE HEADER -->
-        <div class="page-header">
-            <div class="badge-tag">
-                <span>SYSTEM CONFIGURATION & OPERATIONAL PREFERENCES</span>
-            </div>
-            <h1 class="page-title">Application Settings & Diagnostics</h1>
-            <p class="page-subtitle">
-                Customize industrial interface display preferences, manage local application state, and view real-time backend telemetry without exposing sensitive API credentials.
-            </p>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 28px;">
+        <!-- MAIN VIEWPORT -->
+        <main class="app-main-viewport">
             
-            <!-- SECTION 1: DISPLAY & INTERFACE -->
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">Interface & Accent Palette</div>
-                        <div class="card-subtitle">Personalize your SCADA visualization theme</div>
+            <!-- CINEMATIC HORIZON HEADER BANNER -->
+            <header class="cinematic-header-banner">
+                <div class="cinematic-banner-meta">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                        <button type="button" class="menu-button" id="sidebar-mobile-toggle" onclick="document.getElementById('app-sidebar').classList.toggle('mobile-open')">
+                            ☰
+                        </button>
+                        <h1 class="cinematic-banner-title">Settings & Profile</h1>
                     </div>
-                    <div class="card-icon">🎨</div>
+                    <p class="cinematic-banner-subtitle">
+                        Manage engineer account profile, workspace preferences, and application telemetry
+                    </p>
                 </div>
 
-                <div style="display: flex; flex-direction: column; gap: 20px;">
-                    <div>
-                        <label class="form-label">Theme Accent Color</label>
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                            <button type="button" class="btn btn-outline" data-accent="#00d2ff" style="border-color: #00d2ff; color: #fff;">
-                                <span style="width: 12px; height: 12px; border-radius: 50%; background: #00d2ff; display: inline-block;"></span>
-                                Electric Cyan (Default)
+                <div class="cinematic-banner-badges">
+                    <div class="date-time-pill">
+                        <span>⚙️</span>
+                        <span>User Preferences</span>
+                    </div>
+                    <div class="status-pill" id="system-status-pill" style="margin: 0;">
+                        <span class="status-dot"></span> System Operational
+                    </div>
+                </div>
+            </header>
+
+            <!-- SCROLLABLE PAGE BODY CONTENT -->
+            <div class="app-page-content" style="max-width: 900px;">
+
+                <!-- Settings Tab Switcher -->
+                <div class="tab-pills-row" style="margin-bottom: 0;">
+                    <button type="button" class="tab-pill-btn active" onclick="switchSettingsTab('profile', this)">Profile</button>
+                    <button type="button" class="tab-pill-btn" onclick="switchSettingsTab('preferences', this)">Preferences</button>
+                    <button type="button" class="tab-pill-btn" onclick="switchSettingsTab('data', this)">Data & Storage</button>
+                    <button type="button" class="tab-pill-btn" onclick="switchSettingsTab('system', this)">System Diagnostics</button>
+                </div>
+
+                <!-- TAB 1: PROFILE -->
+                <div id="tab-content-profile" class="settings-tab-section" style="display: flex; flex-direction: column; gap: 20px;">
+                    
+                    <!-- Profile Overview Card -->
+                    <div class="card" style="margin-bottom: 0;">
+                        <div style="display: flex; align-items: center; gap: 18px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 20px;">
+                            <div style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #F59E36 0%, #D97706 100%); color: #080B10; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; box-shadow: 0 0 20px var(--copper-glow);" id="profile-avatar-big">
+                                BJ
+                            </div>
+                            <div>
+                                <h2 style="font-size: 19px; color: #fff; margin: 0 0 4px;" id="profile-display-name">Engineer User</h2>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(25, 199, 165, 0.15); color: var(--teal-status); border: 1px solid rgba(25, 199, 165, 0.35);">
+                                        Role: User
+                                    </span>
+                                    <span style="font-size: 12px; color: var(--text-muted);" id="profile-display-email">engineer@voltsage.internal</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Profile Form -->
+                        <form onsubmit="event.preventDefault(); alert('Profile information saved locally.');">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" for="setting-fullname">Full Name</label>
+                                    <input type="text" id="setting-fullname" class="form-input" value="B. J. Ashwanth" placeholder="Your full name">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" for="setting-email">Email Address</label>
+                                    <input type="email" id="setting-email" class="form-input" value="engineer@voltsage.internal" readonly style="opacity: 0.8; cursor: not-allowed;">
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 22px;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" for="setting-role">Assigned Role</label>
+                                    <input type="text" id="setting-role" class="form-input" value="User" readonly style="opacity: 0.8; cursor: not-allowed;">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" for="setting-dept">Department</label>
+                                    <input type="text" id="setting-dept" class="form-input" value="Electrical Substation Operations">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-copper" style="padding: 10px 24px; font-size: 13.5px;">
+                                <span>Update Profile</span>
                             </button>
-                            <button type="button" class="btn btn-outline" data-accent="#00f59b" style="border-color: #00f59b; color: #fff;">
-                                <span style="width: 12px; height: 12px; border-radius: 50%; background: #00f59b; display: inline-block;"></span>
-                                Emerald SCADA
+                        </form>
+                    </div>
+
+                    <!-- Password Update Card -->
+                    <div class="card" style="margin-bottom: 0;">
+                        <div class="card-header" style="margin-bottom: 16px;">
+                            <div>
+                                <div class="card-title">Security & Password</div>
+                                <div class="card-subtitle">Update your personal account credentials</div>
+                            </div>
+                            <div class="card-icon">🔒</div>
+                        </div>
+
+                        <form onsubmit="event.preventDefault(); alert('Password updated successfully.');">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" for="pwd-new">New Password</label>
+                                    <input type="password" id="pwd-new" class="form-input" placeholder="••••••••" minlength="6">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" for="pwd-confirm">Confirm New Password</label>
+                                    <input type="password" id="pwd-confirm" class="form-input" placeholder="••••••••" minlength="6">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-secondary" style="padding: 10px 22px; font-size: 13.5px;">
+                                <span>Change Password</span>
                             </button>
-                            <button type="button" class="btn btn-outline" data-accent="#ffb703" style="border-color: #ffb703; color: #fff;">
-                                <span style="width: 12px; height: 12px; border-radius: 50%; background: #ffb703; display: inline-block;"></span>
-                                Amber Warning
-                            </button>
-                            <button type="button" class="btn btn-outline" data-accent="#3b82f6" style="border-color: #3b82f6; color: #fff;">
-                                <span style="width: 12px; height: 12px; border-radius: 50%; background: #3b82f6; display: inline-block;"></span>
-                                Royal Cobalt
-                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
+                <!-- TAB 2: PREFERENCES -->
+                <div id="tab-content-preferences" class="settings-tab-section" style="display: none; flex-direction: column; gap: 20px;">
+                    <div class="card" style="margin-bottom: 0;">
+                        <div class="card-header" style="margin-bottom: 16px;">
+                            <div>
+                                <div class="card-title">Theme Accent & Interface</div>
+                                <div class="card-subtitle">Personalize your SCADA visualization palette</div>
+                            </div>
+                            <div class="card-icon">🎨</div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 20px;">
+                            <div>
+                                <label class="form-label">Theme Accent Color</label>
+                                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <button type="button" class="btn btn-outline active" data-accent="#F59E36" style="border-color: #F59E36; color: #fff;">
+                                        <span style="width: 12px; height: 12px; border-radius: 50%; background: #F59E36; display: inline-block;"></span>
+                                        Industrial Copper (Default)
+                                    </button>
+                                    <button type="button" class="btn btn-outline" data-accent="#19C7A5" style="border-color: #19C7A5; color: #fff;">
+                                        <span style="width: 12px; height: 12px; border-radius: 50%; background: #19C7A5; display: inline-block;"></span>
+                                        Teal SCADA
+                                    </button>
+                                    <button type="button" class="btn btn-outline" data-accent="#3B82F6" style="border-color: #3B82F6; color: #fff;">
+                                        <span style="width: 12px; height: 12px; border-radius: 50%; background: #3B82F6; display: inline-block;"></span>
+                                        Cobalt Substation
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" for="setting-chat-density">Chat Response Density</label>
+                                    <select id="setting-chat-density" class="form-input">
+                                        <option value="detailed">Comprehensive Technical (Default)</option>
+                                        <option value="compact">Concise Field Summary</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group" style="margin-bottom: 0; display: flex; flex-direction: column; justify-content: center;">
+                                    <label class="form-label">Automatic Scroll</label>
+                                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; margin-top: 6px;">
+                                        <input type="checkbox" id="setting-autoscroll" checked style="width: 18px; height: 18px; accent-color: var(--copper-primary);">
+                                        <span style="font-size: 13px; color: var(--text-secondary);">Auto-scroll conversation to latest response</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label class="form-label" for="setting-chat-density">Chat Response Density</label>
-                            <select id="setting-chat-density" class="form-input">
-                                <option value="detailed">Comprehensive Technical (Default)</option>
-                                <option value="compact">Concise Field Summary</option>
-                            </select>
+                <!-- TAB 3: DATA & STORAGE -->
+                <div id="tab-content-data" class="settings-tab-section" style="display: none; flex-direction: column; gap: 20px;">
+                    <div class="card" style="margin-bottom: 0;">
+                        <div class="card-header" style="margin-bottom: 16px;">
+                            <div>
+                                <div class="card-title">Session Storage & Maintenance Cache</div>
+                                <div class="card-subtitle">Manage client-side cached state and conversation histories</div>
+                            </div>
+                            <div class="card-icon">🗄️</div>
                         </div>
 
-                        <div class="form-group" style="margin-bottom: 0; display: flex; flex-direction: column; justify-content: center;">
-                            <label class="form-label">Automatic Scroll</label>
-                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; margin-top: 6px;">
-                                <input type="checkbox" id="setting-autoscroll" checked style="width: 18px; height: 18px; accent-color: var(--accent-cyan);">
-                                <span style="font-size: 13px; color: var(--text-secondary);">Auto-scroll conversation to latest response</span>
-                            </label>
+                        <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+                            <button type="button" id="btn-clear-chat-history" class="btn btn-secondary">
+                                <span>Clear Local Chatbot History</span>
+                            </button>
+                            <button type="button" id="btn-reset-settings" class="btn btn-outline" style="border-color: var(--danger); color: var(--danger);">
+                                <span>Reset Preferences to Defaults</span>
+                            </button>
+                        </div>
+                        <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 14px; line-height: 1.5;">
+                            Note: The trained Random Forest model and indexed vector chunks reside on the backend server and will not be impacted by clearing local client preferences.
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- SECTION 2: APPLICATION DATA CONTROLS -->
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">Session Storage & Maintenance Data</div>
-                        <div class="card-subtitle">Manage client-side cached state and history</div>
+                <!-- TAB 4: SYSTEM DIAGNOSTICS -->
+                <div id="tab-content-system" class="settings-tab-section" style="display: none; flex-direction: column; gap: 20px;">
+                    <div class="card" style="margin-bottom: 0;">
+                        <div class="card-header" style="margin-bottom: 16px;">
+                            <div>
+                                <div class="card-title">Live Backend Diagnostics & Model Metadata</div>
+                                <div class="card-subtitle">Telemetry received from <code>/health</code> and <code>/api/stats</code></div>
+                            </div>
+                            <div class="card-icon">🩺</div>
+                        </div>
+
+                        <div id="diagnostics-info">
+                            <p style="color: var(--text-muted);">Querying server telemetry...</p>
+                        </div>
                     </div>
-                    <div class="card-icon">🗄️</div>
                 </div>
 
-                <div style="display: flex; gap: 14px; flex-wrap: wrap;">
-                    <button type="button" id="btn-clear-chat-history" class="btn btn-secondary">
-                        <span>Clear Chatbot History</span>
-                    </button>
-                    <button type="button" id="btn-reset-settings" class="btn btn-outline" style="border-color: var(--danger); color: var(--danger);">
-                        <span>Reset Preferences to Defaults</span>
-                    </button>
+                <!-- MINIMAL ONE-LINE FOOTER -->
+                <div style="text-align: center; padding: 24px 0 12px; font-size: 11.5px; color: var(--text-muted); border-top: 1px solid var(--border-subtle); margin-top: 20px;">
+                    VoltSage AI — PRJ_232 Electrical Substation Intelligence • Final-Year B.Tech Major Project
                 </div>
-                <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 10px;">
-                    Note: Substation machine learning models and server document indexes are persistent and will not be affected by local preference resets.
-                </div>
+
             </div>
 
-            <!-- SECTION 3: SYSTEM TELEMETRY & DIAGNOSTICS -->
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">Live Backend Diagnostics & Model Metadata</div>
-                        <div class="card-subtitle">Telemetry received from <code>/health</code> and <code>/api/stats</code></div>
-                    </div>
-                    <div class="card-icon">🩺</div>
-                </div>
+        </main>
 
-                <div id="diagnostics-info">
-                    <p style="color: var(--text-muted);">Querying server telemetry...</p>
-                </div>
-            </div>
+    </div>
 
-        </div>
-
-    </main>
-
-    <!-- COMPACT FOOTER -->
-    <footer class="footer-minimal">
-        <div class="footer-minimal-container">
-            <span>VoltSage AI • PRJ_232 Substation Intelligence</span>
-            <span>Final-Year B.Tech Major Project</span>
-        </div>
-    </footer>
-
-    <!-- CONTROLLER SCRIPT -->
+    <!-- CONTROLLER SCRIPTS -->
     <script src="js/auth.js"></script>
     <script src="js/settings.js"></script>
+    <script>
+        function switchSettingsTab(tabName, btn) {
+            document.querySelectorAll(".tab-pill-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            document.querySelectorAll(".settings-tab-section").forEach(sec => sec.style.display = "none");
+            const target = document.getElementById("tab-content-" + tabName);
+            if (target) target.style.display = "flex";
+        }
+
+        // Populate profile info from auth
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(() => {
+                if (window.VoltSageAuth && window.VoltSageAuth.currentUser) {
+                    const u = window.VoltSageAuth.currentUser;
+                    const name = u.full_name || u.email || "Engineer User";
+                    const email = u.email || "engineer@voltsage.internal";
+                    const initials = name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase() || "BJ";
+                    
+                    const nameEl = document.getElementById("profile-display-name");
+                    if (nameEl) nameEl.textContent = name;
+                    const emailEl = document.getElementById("profile-display-email");
+                    if (emailEl) emailEl.textContent = email;
+                    const avatarEl = document.getElementById("profile-avatar-big");
+                    if (avatarEl) avatarEl.textContent = initials;
+                    const inputName = document.getElementById("setting-fullname");
+                    if (inputName) inputName.value = name;
+                    const inputEmail = document.getElementById("setting-email");
+                    if (inputEmail) inputEmail.value = email;
+                }
+            }, 300);
+        });
+    </script>
 </body>
 </html>

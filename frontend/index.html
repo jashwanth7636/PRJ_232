@@ -5,245 +5,413 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VoltSage AI | Operations Dashboard — PRJ_232</title>
     <link rel="stylesheet" href="css/industrial.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 </head>
-<body>
+<body style="margin: 0; padding: 0; overflow: hidden; background: var(--bg-base);">
 
-    <!-- TOP NAVBAR -->
-    <header class="navbar">
-        <a href="index.html" class="brand">
-            <div class="brand-icon">⚡</div>
-            <div class="brand-text">
-                <div class="brand-title">
-                    VOLTSAGE AI
-                    <span class="brand-badge">PRJ_232</span>
+    <!-- APP WRAPPER -->
+    <div class="voltsage-app">
+
+        <!-- UNIFIED APP SIDEBAR -->
+        <aside class="app-sidebar" id="app-sidebar">
+            <!-- Brand Squircle -->
+            <div class="app-sidebar-brand">
+                <div class="brand-icon-box">⚡</div>
+                <div style="overflow: hidden;">
+                    <div class="brand-title-row">
+                        VOLTSAGE AI
+                        <span class="brand-sub-badge">PRJ_232</span>
+                    </div>
+                    <div class="brand-subtitle">Substation Intelligence</div>
                 </div>
-                <div class="brand-subtitle">ELECTRICAL SUBSTATION INTELLIGENCE</div>
-            </div>
-        </a>
-
-        <ul class="nav-links">
-            <li class="nav-item"><a href="index.html" class="nav-link active">Dashboard</a></li>
-            <li class="nav-item"><a href="maintenance.html" class="nav-link">Maintenance AI</a></li>
-            <li class="nav-item"><a href="fault-analysis.html" class="nav-link">Fault Analysis</a></li>
-            <li class="nav-item"><a href="knowledge-base.html" class="nav-link">Knowledge Base</a></li>
-            <li class="nav-item"><a href="checklists.html" class="nav-link">Checklists</a></li>
-            <li class="nav-item"><a href="settings.html" class="nav-link">Settings</a></li>
-            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-        </ul>
-
-        <div class="nav-right" id="navbar-auth-section">
-            <div class="status-pill" id="system-status-pill">
-                <span class="status-dot"></span> System Operational
-            </div>
-        </div>
-    </header>
-
-    <!-- MAIN PAGE CONTAINER -->
-    <main class="page-container">
-        
-        <!-- HERO / HEADER -->
-        <div class="page-header">
-            <div class="badge-tag">
-                <span>SCADA TELEMETRY & DIAGNOSTICS PLATFORM</span>
-            </div>
-            <h1 class="page-title">VoltSage AI Operations Center</h1>
-            <p class="page-subtitle">
-                Real-time 3-phase fault diagnosis using trained ensemble machine learning combined with retrieval-augmented generative AI for substation maintenance and protection compliance.
-            </p>
-        </div>
-
-        <!-- REAL-TIME TELEMETRY STAT GRID -->
-        <div class="stat-grid">
-            <div class="stat-card">
-                <span class="stat-label">Model Accuracy</span>
-                <div class="stat-value cyan" id="metric-accuracy">86.9%</div>
-                <span class="stat-sub" id="metric-test-acc">Test Split: 85.3%</span>
             </div>
 
-            <div class="stat-card">
-                <span class="stat-label">Document Chunks</span>
-                <div class="stat-value" id="metric-chunks">884</div>
-                <span class="stat-sub" id="metric-docs">3 Technical Manuals</span>
-            </div>
+            <!-- Navigation Links -->
+            <nav class="app-sidebar-nav">
+                <a href="index.html" class="app-nav-item active">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="maintenance.html" class="app-nav-item">
+                    <span class="nav-icon">💬</span>
+                    <span>Maintenance AI</span>
+                </a>
+                <a href="fault-analysis.html" class="app-nav-item">
+                    <span class="nav-icon">⚡</span>
+                    <span>Fault Analysis</span>
+                </a>
+                <a href="knowledge-base.html" class="app-nav-item">
+                    <span class="nav-icon">📚</span>
+                    <span>Knowledge Base</span>
+                </a>
+                <a href="checklists.html" class="app-nav-item">
+                    <span class="nav-icon">📋</span>
+                    <span>Checklists</span>
+                </a>
+                <a href="settings.html" class="app-nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+                <a href="about.html" class="app-nav-item">
+                    <span class="nav-icon">ℹ️</span>
+                    <span>About</span>
+                </a>
+            </nav>
 
-            <div class="stat-card">
-                <span class="stat-label">Equipment Monitored</span>
-                <div class="stat-value green" id="metric-equipment">4</div>
-                <span class="stat-sub">Active Bays & Subsystems</span>
+            <!-- User Profile Footer -->
+            <div class="app-sidebar-footer" id="sidebar-user-footer">
+                <div class="user-profile-row">
+                    <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
+                        <div class="user-avatar" id="sidebar-avatar-fallback">BJ</div>
+                        <div class="user-info">
+                            <div class="user-name" id="sidebar-user-name">User</div>
+                            <div class="user-role">User</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline" style="padding: 4px 9px; font-size: 11px; border-radius: var(--radius-sm); border-color: rgba(255,255,255,0.15);" title="Sign Out" onclick="VoltSageAuth.logout()">
+                        Sign Out
+                    </button>
+                </div>
             </div>
+        </aside>
 
-            <div class="stat-card">
-                <span class="stat-label">Fault Classes</span>
-                <div class="stat-value amber" id="metric-faults">6</div>
-                <span class="stat-sub">LG, LL, LLG, LLL, LLLG, Normal</span>
-            </div>
-        </div>
-
-        <!-- QUICK ACCESS MODULES GRID -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 34px;">
+        <!-- MAIN VIEWPORT -->
+        <main class="app-main-viewport">
             
-            <!-- Module 1: AI Chatbot -->
-            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title">VoltSage Maintenance AI</div>
-                            <div class="card-subtitle">RAG-Assisted Engineering Copilot</div>
-                        </div>
-                        <div class="card-icon">💬</div>
+            <!-- CINEMATIC HORIZON HEADER BANNER -->
+            <header class="cinematic-header-banner">
+                <div class="cinematic-banner-meta">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                        <button type="button" class="menu-button" id="sidebar-mobile-toggle" onclick="document.getElementById('app-sidebar').classList.toggle('mobile-open')">
+                            ☰
+                        </button>
+                        <h1 class="cinematic-banner-title">Operations Dashboard</h1>
                     </div>
-                    <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 20px;">
-                        Query technical substation guidelines, transformer inspection steps, SF6 breaker gas pressures, and IS 10028 maintenance protocols with cited documentation.
+                    <p class="cinematic-banner-subtitle">
+                        Real-time electrical telemetry, AI diagnostics, and asset health
                     </p>
                 </div>
-                <a href="maintenance.html" class="btn btn-primary" style="width: 100%; justify-content: center;">
-                    Launch VoltSage AI Copilot →
-                </a>
+
+                <div class="cinematic-banner-badges">
+                    <div class="date-time-pill" id="dashboard-clock">
+                        <span>🗓️</span>
+                        <span id="live-datetime">Loading date...</span>
+                    </div>
+                    <div class="status-pill" id="system-status-pill" style="margin: 0;">
+                        <span class="status-dot"></span> System Operational
+                    </div>
+                </div>
+            </header>
+
+            <!-- SCROLLABLE PAGE BODY CONTENT -->
+            <div class="app-page-content">
+
+                <!-- 4 KPI CARDS -->
+                <div class="dashboard-kpi-grid">
+                    
+                    <!-- KPI 1: Accuracy -->
+                    <div class="dashboard-kpi-card">
+                        <div>
+                            <div class="kpi-label">Model Accuracy</div>
+                            <div class="kpi-value" id="metric-accuracy" style="color: var(--teal-status);">86.9%</div>
+                            <div class="kpi-sub" id="metric-test-acc">Test Split: 85.3%</div>
+                        </div>
+                        <div class="kpi-icon-box kpi-icon-teal">⚡</div>
+                    </div>
+
+                    <!-- KPI 2: Document Chunks -->
+                    <div class="dashboard-kpi-card">
+                        <div>
+                            <div class="kpi-label">Document Chunks</div>
+                            <div class="kpi-value" id="metric-chunks" style="color: var(--copper-hover);">885</div>
+                            <div class="kpi-sub" id="metric-docs">3 Technical Manuals</div>
+                        </div>
+                        <div class="kpi-icon-box kpi-icon-copper">📚</div>
+                    </div>
+
+                    <!-- KPI 3: Equipment Monitored -->
+                    <div class="dashboard-kpi-card">
+                        <div>
+                            <div class="kpi-label">Equipment Monitored</div>
+                            <div class="kpi-value" id="metric-equipment" style="color: #60A5FA;">4</div>
+                            <div class="kpi-sub">Bays & Subsystems</div>
+                        </div>
+                        <div class="kpi-icon-box" style="background: rgba(96, 165, 250, 0.15); border: 1px solid rgba(96, 165, 250, 0.35); color: #60A5FA;">🛡️</div>
+                    </div>
+
+                    <!-- KPI 4: Fault Classes -->
+                    <div class="dashboard-kpi-card">
+                        <div>
+                            <div class="kpi-label">Fault Classes</div>
+                            <div class="kpi-value" id="metric-faults" style="color: #F87171;">6</div>
+                            <div class="kpi-sub">LG, LL, LLG, LLL, LLLG, Normal</div>
+                        </div>
+                        <div class="kpi-icon-box" style="background: rgba(248, 113, 113, 0.15); border: 1px solid rgba(248, 113, 113, 0.35); color: #F87171;">⚠️</div>
+                    </div>
+
+                </div>
+
+                <!-- 3-COLUMN MIDDLE SECTION -->
+                <div class="dashboard-middle-grid">
+                    
+                    <!-- COLUMN 1: System Overview & Telemetry Curve -->
+                    <div class="dashboard-widget-card">
+                        <div class="widget-header-row">
+                            <div class="widget-title">
+                                <span>📈</span>
+                                <span>System Overview</span>
+                            </div>
+                            <span style="font-size: 11px; font-weight: 700; color: var(--teal-status); background: rgba(25, 199, 165, 0.12); padding: 3px 8px; border-radius: var(--radius-pill); border: 1px solid rgba(25, 199, 165, 0.3);">
+                                LIVE 24H SCADA
+                            </span>
+                        </div>
+
+                        <div style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 16px;">
+                            3-Phase Substation Load Profile & Primary Busbar Line Stability
+                        </div>
+
+                        <!-- SVG Telemetry Graph -->
+                        <div style="background: rgba(8, 11, 16, 0.7); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 16px 12px; position: relative;">
+                            <svg viewBox="0 0 600 200" style="width: 100%; height: 180px; overflow: visible;">
+                                <defs>
+                                    <linearGradient id="curveCopper" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#F59E36" stop-opacity="0.35"/>
+                                        <stop offset="100%" stop-color="#F59E36" stop-opacity="0.0"/>
+                                    </linearGradient>
+                                    <linearGradient id="curveTeal" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#19C7A5" stop-opacity="0.25"/>
+                                        <stop offset="100%" stop-color="#19C7A5" stop-opacity="0.0"/>
+                                    </linearGradient>
+                                </defs>
+                                
+                                <!-- Horizontal Grid Lines -->
+                                <line x1="40" y1="30" x2="580" y2="30" stroke="#1E293B" stroke-dasharray="3,3" stroke-width="1"/>
+                                <line x1="40" y1="75" x2="580" y2="75" stroke="#1E293B" stroke-dasharray="3,3" stroke-width="1"/>
+                                <line x1="40" y1="120" x2="580" y2="120" stroke="#1E293B" stroke-dasharray="3,3" stroke-width="1"/>
+                                <line x1="40" y1="165" x2="580" y2="165" stroke="#1E293B" stroke-width="1"/>
+
+                                <!-- Y-Axis Labels -->
+                                <text x="10" y="34" fill="#64748B" font-size="10" font-family="monospace">100%</text>
+                                <text x="14" y="79" fill="#64748B" font-size="10" font-family="monospace">75%</text>
+                                <text x="14" y="124" fill="#64748B" font-size="10" font-family="monospace">50%</text>
+                                <text x="14" y="169" fill="#64748B" font-size="10" font-family="monospace">25%</text>
+
+                                <!-- Area Fills -->
+                                <path d="M 50,165 Q 120,130 190,140 T 330,85 T 470,95 T 570,70 L 570,165 L 50,165 Z" fill="url(#curveCopper)" />
+                                <path d="M 50,165 Q 120,150 190,155 T 330,110 T 470,115 T 570,95 L 570,165 L 50,165 Z" fill="url(#curveTeal)" />
+
+                                <!-- Curve Lines -->
+                                <path d="M 50,165 Q 120,130 190,140 T 330,85 T 470,95 T 570,70" fill="none" stroke="#F59E36" stroke-width="2.5" />
+                                <path d="M 50,165 Q 120,150 190,155 T 330,110 T 470,115 T 570,95" fill="none" stroke="#19C7A5" stroke-width="2" />
+
+                                <!-- Data point dots on latest time -->
+                                <circle cx="570" cy="70" r="4.5" fill="#F59E36" stroke="#080B10" stroke-width="2"/>
+                                <circle cx="570" cy="95" r="4.5" fill="#19C7A5" stroke="#080B10" stroke-width="2"/>
+
+                                <!-- X-Axis Time Markers -->
+                                <text x="50" y="185" fill="#64748B" font-size="10" font-family="monospace">00:00</text>
+                                <text x="150" y="185" fill="#64748B" font-size="10" font-family="monospace">04:00</text>
+                                <text x="250" y="185" fill="#64748B" font-size="10" font-family="monospace">08:00</text>
+                                <text x="350" y="185" fill="#64748B" font-size="10" font-family="monospace">12:00</text>
+                                <text x="450" y="185" fill="#64748B" font-size="10" font-family="monospace">16:00</text>
+                                <text x="545" y="185" fill="#FFB454" font-weight="700" font-size="10" font-family="monospace">NOW</text>
+                            </svg>
+                        </div>
+
+                        <!-- Real-time Metrics Pill Row -->
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px;">
+                            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 10px; text-align: center;">
+                                <div style="font-size: 10.5px; color: var(--text-muted); text-transform: uppercase;">Active Load</div>
+                                <div style="font-size: 15px; font-weight: 800; color: #ffffff; margin-top: 2px;">84.2%</div>
+                                <div style="font-size: 10px; color: var(--teal-status);">Normal Range</div>
+                            </div>
+                            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 10px; text-align: center;">
+                                <div style="font-size: 10.5px; color: var(--text-muted); text-transform: uppercase;">Grid Frequency</div>
+                                <div style="font-size: 15px; font-weight: 800; color: #ffffff; margin-top: 2px;">50.02 Hz</div>
+                                <div style="font-size: 10px; color: var(--teal-status);">Synchronized</div>
+                            </div>
+                            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 10px; text-align: center;">
+                                <div style="font-size: 10.5px; color: var(--text-muted); text-transform: uppercase;">Substation Health</div>
+                                <div style="font-size: 15px; font-weight: 800; color: var(--teal-status); margin-top: 2px;">99.4%</div>
+                                <div style="font-size: 10px; color: var(--teal-status);">Optimal</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COLUMN 2: Substation Assets List -->
+                    <div class="dashboard-widget-card">
+                        <div class="widget-header-row">
+                            <div class="widget-title">
+                                <span>⚡</span>
+                                <span>Substation Assets</span>
+                            </div>
+                            <span class="badge-tag" style="margin: 0; font-size: 10px; padding: 2px 8px;">
+                                5 TYPES
+                            </span>
+                        </div>
+
+                        <div style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 14px;">
+                            Critical High-Voltage Bay Infrastructure
+                        </div>
+
+                        <div style="display: flex; flex-direction: column;">
+                            <div class="asset-list-row">
+                                <div class="asset-name">
+                                    <span>🔋</span>
+                                    <div>
+                                        <div style="color: #fff; font-weight: 600;">Transformers</div>
+                                        <div style="font-size: 11px; color: var(--teal-status);">Normal • 42°C</div>
+                                    </div>
+                                </div>
+                                <span class="asset-count-badge">2 Units</span>
+                            </div>
+
+                            <div class="asset-list-row">
+                                <div class="asset-name">
+                                    <span>⚡</span>
+                                    <div>
+                                        <div style="color: #fff; font-weight: 600;">Circuit Breakers</div>
+                                        <div style="font-size: 11px; color: var(--teal-status);">SF6 0.65 MPa • Normal</div>
+                                    </div>
+                                </div>
+                                <span class="asset-count-badge">6 Units</span>
+                            </div>
+
+                            <div class="asset-list-row">
+                                <div class="asset-name">
+                                    <span>🎛️</span>
+                                    <div>
+                                        <div style="color: #fff; font-weight: 600;">Busbars</div>
+                                        <div style="font-size: 11px; color: var(--teal-status);">33 kV • Normal • 38°C</div>
+                                    </div>
+                                </div>
+                                <span class="asset-count-badge">3 Sections</span>
+                            </div>
+
+                            <div class="asset-list-row">
+                                <div class="asset-name">
+                                    <span>🛡️</span>
+                                    <div>
+                                        <div style="color: #fff; font-weight: 600;">Relays</div>
+                                        <div style="font-size: 11px; color: var(--teal-status);">Armed & Synchronized</div>
+                                    </div>
+                                </div>
+                                <span class="asset-count-badge">12 Units</span>
+                            </div>
+
+                            <div class="asset-list-row">
+                                <div class="asset-name">
+                                    <span>📡</span>
+                                    <div>
+                                        <div style="color: #fff; font-weight: 600;">Monitoring Devices</div>
+                                        <div style="font-size: 11px; color: var(--teal-status);">SCADA Online</div>
+                                    </div>
+                                </div>
+                                <span class="asset-count-badge">4 Units</span>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border-subtle);">
+                            <a href="checklists.html" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 12.5px;">
+                                Asset Maintenance Schedules →
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- COLUMN 3: Recent Activity Feed -->
+                    <div class="dashboard-widget-card">
+                        <div class="widget-header-row">
+                            <div class="widget-title">
+                                <span>📋</span>
+                                <span>Recent Activity</span>
+                            </div>
+                            <span style="font-size: 11px; color: var(--text-muted);">AUDIT LOG</span>
+                        </div>
+
+                        <div style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 14px;">
+                            Real-time copilot & telemetry events
+                        </div>
+
+                        <div style="display: flex; flex-direction: column;">
+                            <div class="activity-item">
+                                <div class="activity-icon" style="background: rgba(25, 199, 165, 0.15); color: var(--teal-status);">⚡</div>
+                                <div class="activity-meta">
+                                    <div class="activity-title">Fault Classification Performed</div>
+                                    <div style="font-size: 11.5px; color: var(--text-secondary);">Normal State (92.1% probability)</div>
+                                    <div class="activity-time">2m ago</div>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon" style="background: rgba(245, 158, 54, 0.15); color: var(--copper-primary);">💬</div>
+                                <div class="activity-meta">
+                                    <div class="activity-title">Maintenance AI Query</div>
+                                    <div style="font-size: 11.5px; color: var(--text-secondary);">"Transformer oil testing procedure"</div>
+                                    <div class="activity-time">14m ago</div>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon" style="background: rgba(96, 165, 250, 0.15); color: #60A5FA;">📚</div>
+                                <div class="activity-meta">
+                                    <div class="activity-title">Technical Document Retrieved</div>
+                                    <div style="font-size: 11.5px; color: var(--text-secondary);">IS 10028 Part 2 (Transformer Maintenance)</div>
+                                    <div class="activity-time">1h ago</div>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon" style="background: rgba(168, 85, 247, 0.15); color: #C084FC;">📋</div>
+                                <div class="activity-meta">
+                                    <div class="activity-title">Checklist Completed</div>
+                                    <div style="font-size: 11.5px; color: var(--text-secondary);">Daily Bay Walkthrough & Gauge Check</div>
+                                    <div class="activity-time">3h ago</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border-subtle);">
+                            <a href="maintenance.html" class="btn btn-copper" style="width: 100%; justify-content: center; font-size: 12.5px;">
+                                Open VoltSage Copilot →
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- MINIMAL ONE-LINE FOOTER -->
+                <div style="text-align: center; padding: 24px 0 12px; font-size: 11.5px; color: var(--text-muted); border-top: 1px solid var(--border-subtle); margin-top: 20px;">
+                    VoltSage AI — PRJ_232 Electrical Substation Intelligence • Final-Year B.Tech Major Project
+                </div>
+
             </div>
 
-            <!-- Module 2: Fault Analysis -->
-            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title">Fault Classification</div>
-                            <div class="card-subtitle">Trained Random Forest Classifier</div>
-                        </div>
-                        <div class="card-icon">⚡</div>
-                    </div>
-                    <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 20px;">
-                        Evaluate 3-phase instantaneous currents (Ia, Ib, Ic) and voltages (Va, Vb, Vc). Instantly detect single-line, double-line, symmetrical 3-phase faults, or normal conditions.
-                    </p>
-                </div>
-                <a href="fault-analysis.html" class="btn btn-primary" style="width: 100%; justify-content: center;">
-                    Open Fault Analyzer →
-                </a>
-            </div>
+        </main>
 
-            <!-- Module 3: Knowledge Base -->
-            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title">Knowledge Base</div>
-                            <div class="card-subtitle">Vector-Indexed Document Corpus</div>
-                        </div>
-                        <div class="card-icon">📚</div>
-                    </div>
-                    <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 20px;">
-                        Explore 884 indexed technical chunks from Indian Standards (IS), IEEE and manufacturer manuals. Upload new engineering PDFs with automated chunking and vector indexing.
-                    </p>
-                </div>
-                <a href="knowledge-base.html" class="btn btn-secondary" style="width: 100%; justify-content: center;">
-                    Explore Documents →
-                </a>
-            </div>
+    </div>
 
-            <!-- Module 4: Checklists -->
-            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title">Maintenance Checklists</div>
-                            <div class="card-subtitle">Standardized Verification Procedures</div>
-                        </div>
-                        <div class="card-icon">📋</div>
-                    </div>
-                    <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 20px;">
-                        Interactive maintenance routines for power transformers (IS 10028), circuit breakers (NEMA AB 4), busbars (IEEE 605), and relays (IEC 60255) with progress tracking.
-                    </p>
-                </div>
-                <a href="checklists.html" class="btn btn-secondary" style="width: 100%; justify-content: center;">
-                    View Checklists →
-                </a>
-            </div>
-
-        </div>
-
-        <!-- TWO-COLUMN SECTION: EQUIPMENT STATUS & ARCHITECTURE SUMMARY -->
-        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: start;">
-            
-            <!-- Left: Monitored Substation Equipment -->
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">Substation Bay Equipment Telemetry</div>
-                        <div class="card-subtitle">Active assets configured in monitoring grid</div>
-                    </div>
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-cyan); background: rgba(0, 210, 255, 0.1); padding: 4px 10px; border-radius: var(--radius-pill); border: 1px solid rgba(0,210,255,0.2);">LIVE FEED</span>
-                </div>
-
-                <div id="equipment-status-list">
-                    <!-- Populated dynamically by dashboard.js from /api/stats -->
-                    <div style="text-align: center; padding: 20px; color: var(--text-muted);">
-                        Loading monitored equipment data...
-                    </div>
-                </div>
-
-                <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted);">
-                    <span>Telemetry Protocol: Modbus-TCP / IEC 61850</span>
-                    <a href="checklists.html" style="color: var(--accent-cyan); font-weight: 600;">Conduct Inspection →</a>
-                </div>
-            </div>
-
-            <!-- Right: Industrial AI System Architecture -->
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">AI System Pipeline Architecture</div>
-                        <div class="card-subtitle">Validated final-year engineering pipeline</div>
-                    </div>
-                    <div class="card-icon">⚙️</div>
-                </div>
-
-                <div style="display: flex; flex-direction: column; gap: 14px;">
-                    <div style="display: flex; gap: 12px; align-items: flex-start; padding: 12px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                        <div style="font-size: 18px; color: var(--accent-cyan);">01</div>
-                        <div>
-                            <strong style="color: #fff; font-size: 13px; display: block;">Feature Extraction & Normalization</strong>
-                            <span style="color: var(--text-muted); font-size: 12px;">3-phase currents and voltages processed and passed through scikit-learn standard scaling pipeline.</span>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; gap: 12px; align-items: flex-start; padding: 12px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                        <div style="font-size: 18px; color: var(--accent-cyan);">02</div>
-                        <div>
-                            <strong style="color: #fff; font-size: 13px; display: block;">Random Forest Ensemble Classification</strong>
-                            <span style="color: var(--text-muted); font-size: 12px;">100 estimators delivering 86.94% validation accuracy across 6 distinct electrical operational states.</span>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; gap: 12px; align-items: flex-start; padding: 12px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                        <div style="font-size: 18px; color: var(--accent-cyan);">03</div>
-                        <div>
-                            <strong style="color: #fff; font-size: 13px; display: block;">RAG Substation Knowledge Grounding</strong>
-                            <span style="color: var(--text-muted); font-size: 12px;">TF-IDF cosine similarity search retrieving relevant technical manual excerpts fed into Gemini Flash with strict engineering prompt boundaries.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-top: 18px; display: flex; gap: 10px;">
-                    <a href="about.html" class="btn btn-outline" style="flex: 1; justify-content: center; font-size: 12.5px;">
-                        Full Model Benchmarks →
-                    </a>
-                </div>
-            </div>
-
-        </div>
-
-    </main>
-
-    <!-- COMPACT FOOTER -->
-    <footer class="footer-minimal">
-        <div class="footer-minimal-container">
-            <span>VoltSage AI • PRJ_232 Substation Intelligence</span>
-            <span>Final-Year B.Tech Major Project</span>
-        </div>
-    </footer>
-
-    <!-- CONTROLLER SCRIPTS -->
+    <!-- SCRIPTS -->
     <script src="js/auth.js"></script>
     <script src="js/dashboard.js"></script>
+    <script>
+        // Dynamic Live Clock
+        function updateClock() {
+            const clockEl = document.getElementById("live-datetime");
+            if (!clockEl) return;
+            const now = new Date();
+            const options = { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            };
+            clockEl.textContent = now.toLocaleDateString('en-US', options).replace(/,/g, '');
+        }
+        updateClock();
+        setInterval(updateClock, 30000);
+    </script>
 </body>
 </html>

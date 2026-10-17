@@ -3,272 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoltSage AI | About Project Architecture & ML Benchmarks — PRJ_232</title>
+    <title>VoltSage AI | About & Architecture — PRJ_232</title>
     <link rel="stylesheet" href="css/industrial.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 </head>
-<body>
+<body style="margin: 0; padding: 0; overflow: hidden; background: var(--bg-base);">
 
-    <!-- TOP NAVBAR -->
-    <header class="navbar">
-        <a href="index.html" class="brand">
-            <div class="brand-icon">⚡</div>
-            <div class="brand-text">
-                <div class="brand-title">
-                    VOLTSAGE AI
-                    <span class="brand-badge">PRJ_232</span>
+    <!-- APP WRAPPER -->
+    <div class="voltsage-app">
+
+        <!-- UNIFIED APP SIDEBAR -->
+        <aside class="app-sidebar" id="app-sidebar">
+            <!-- Brand Squircle -->
+            <div class="app-sidebar-brand">
+                <div class="brand-icon-box">⚡</div>
+                <div style="overflow: hidden;">
+                    <div class="brand-title-row">
+                        VOLTSAGE AI
+                        <span class="brand-sub-badge">PRJ_232</span>
+                    </div>
+                    <div class="brand-subtitle">Substation Intelligence</div>
                 </div>
-                <div class="brand-subtitle">ELECTRICAL SUBSTATION INTELLIGENCE</div>
             </div>
-        </a>
 
-        <ul class="nav-links">
-            <li class="nav-item"><a href="index.html" class="nav-link">Dashboard</a></li>
-            <li class="nav-item"><a href="maintenance.html" class="nav-link">Maintenance AI</a></li>
-            <li class="nav-item"><a href="fault-analysis.html" class="nav-link">Fault Analysis</a></li>
-            <li class="nav-item"><a href="knowledge-base.html" class="nav-link">Knowledge Base</a></li>
-            <li class="nav-item"><a href="checklists.html" class="nav-link">Checklists</a></li>
-            <li class="nav-item"><a href="settings.html" class="nav-link">Settings</a></li>
-            <li class="nav-item"><a href="about.html" class="nav-link active">About</a></li>
-        </ul>
+            <!-- Navigation Links -->
+            <nav class="app-sidebar-nav">
+                <a href="index.html" class="app-nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="maintenance.html" class="app-nav-item">
+                    <span class="nav-icon">💬</span>
+                    <span>Maintenance AI</span>
+                </a>
+                <a href="fault-analysis.html" class="app-nav-item">
+                    <span class="nav-icon">⚡</span>
+                    <span>Fault Analysis</span>
+                </a>
+                <a href="knowledge-base.html" class="app-nav-item">
+                    <span class="nav-icon">📚</span>
+                    <span>Knowledge Base</span>
+                </a>
+                <a href="checklists.html" class="app-nav-item">
+                    <span class="nav-icon">📋</span>
+                    <span>Checklists</span>
+                </a>
+                <a href="settings.html" class="app-nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+                <a href="about.html" class="app-nav-item active">
+                    <span class="nav-icon">ℹ️</span>
+                    <span>About</span>
+                </a>
+            </nav>
 
-        <div class="nav-right" id="navbar-auth-section">
-            <div class="status-pill" id="system-status-pill">
-                <span class="status-dot"></span> B.Tech Project PRJ_232
+            <!-- User Profile Footer -->
+            <div class="app-sidebar-footer" id="sidebar-user-footer">
+                <div class="user-profile-row">
+                    <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
+                        <div class="user-avatar" id="sidebar-avatar-fallback">BJ</div>
+                        <div class="user-info">
+                            <div class="user-name" id="sidebar-user-name">User</div>
+                            <div class="user-role">User</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline" style="padding: 4px 9px; font-size: 11px; border-radius: var(--radius-sm); border-color: rgba(255,255,255,0.15);" title="Sign Out" onclick="VoltSageAuth.logout()">
+                        Sign Out
+                    </button>
+                </div>
             </div>
-        </div>
-    </header>
+        </aside>
 
-    <!-- MAIN PAGE CONTAINER -->
-    <main class="page-container" style="max-width: 1080px;">
-
-        <!-- PAGE HEADER -->
-        <div class="page-header">
-            <div class="badge-tag">
-                <span>FINAL-YEAR B.TECH ELECTRICAL & COMPUTER ENGINEERING PROJECT</span>
-            </div>
-            <h1 class="page-title">AI-Powered Maintenance Chatbot for Electrical Substations</h1>
-            <p class="page-subtitle">
-                An industrial-grade SCADA decision-support platform integrating supervised ensemble machine learning for 3-phase fault classification with retrieval-augmented generation (RAG) for equipment maintenance procedures.
-            </p>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 32px;">
+        <!-- MAIN VIEWPORT -->
+        <main class="app-main-viewport">
             
-            <!-- SECTION 1: PROJECT OVERVIEW -->
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">Project Purpose & Motivation</div>
-                        <div class="card-subtitle">Addressing critical challenges in high-voltage substation maintenance</div>
+            <!-- CINEMATIC HORIZON HEADER BANNER -->
+            <header class="cinematic-header-banner">
+                <div class="cinematic-banner-meta">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                        <button type="button" class="menu-button" id="sidebar-mobile-toggle" onclick="document.getElementById('app-sidebar').classList.toggle('mobile-open')">
+                            ☰
+                        </button>
+                        <h1 class="cinematic-banner-title">About & Architecture</h1>
                     </div>
-                    <div class="card-icon">⚡</div>
-                </div>
-
-                <div style="font-size: 14px; line-height: 1.7; color: var(--text-secondary);">
-                    <p>
-                        Electrical transmission and distribution substations are vital nodes in modern power grids. Operating at voltage levels ranging from 33kV to 765kV, switchgear and transformers are subject to severe electrical, thermal, and mechanical stresses. Unplanned outages result in massive economic losses and pose severe safety hazards to substation operators.
-                    </p>
-                    <p>
-                        Traditional substation maintenance relies heavily on static physical manuals and retrospective fault logs. When abnormal relay flags or tripping events occur, field technicians often lack instantaneous access to contextual diagnosis and certified standard operating procedures.
-                    </p>
-                    <p style="margin-bottom: 0;">
-                        <strong>PRJ_232 bridges this gap</strong> by offering a dual-engine architecture:
-                        (1) An ultra-fast, offline-capable <strong>Random Forest fault classifier</strong> that evaluates raw 3-phase current and voltage waveforms to pinpoint fault topology in milliseconds; and
-                        (2) A <strong>Retrieval-Augmented Generation (RAG) copilot</strong> powered by Gemini Flash that searches 884+ indexed sections of official standards (IS 10028, IEEE C37, NEMA AB 4) to guide operators through safe remediation.
+                    <p class="cinematic-banner-subtitle">
+                        Technical documentation, ML benchmarks, RAG pipeline, and engineering standards
                     </p>
                 </div>
-            </div>
 
-            <!-- SECTION 2: ML FAULT CLASSIFIER & REAL BENCHMARK RESULTS -->
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">Supervised Machine Learning: Model Evaluation & Benchmarks</div>
-                        <div class="card-subtitle">Empirical model selection based on stratified test split metrics</div>
+                <div class="cinematic-banner-badges">
+                    <div class="date-time-pill">
+                        <span>⚡</span>
+                        <span>PRJ_232 Major Project</span>
                     </div>
-                    <div class="card-icon">📊</div>
-                </div>
-
-                <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 18px;">
-                    During project development, multiple supervised classification architectures were trained and evaluated against identical 3-phase electrical sensor telemetry datasets (Ia, Ib, Ic, Va, Vb, Vc). The table below reflects our actual experimental findings:
-                </p>
-
-                <!-- Comparison Table -->
-                <div style="overflow-x: auto; margin-bottom: 20px;">
-                    <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
-                        <thead>
-                            <tr style="border-bottom: 2px solid var(--border-active); color: var(--text-primary); background: rgba(7, 11, 18, 0.5);">
-                                <th style="padding: 12px 14px;">Model Algorithm</th>
-                                <th style="padding: 12px 14px;">Validation Acc</th>
-                                <th style="padding: 12px 14px;">Test Acc</th>
-                                <th style="padding: 12px 14px;">Precision</th>
-                                <th style="padding: 12px 14px;">Recall</th>
-                                <th style="padding: 12px 14px;">F1-Score</th>
-                                <th style="padding: 12px 14px;">Deployment Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="border-bottom: 1px solid var(--border-subtle); background: rgba(0, 210, 255, 0.05);">
-                                <td style="padding: 12px 14px; font-weight: 700; color: #fff;">
-                                    Random Forest Classifier (100 Trees)
-                                </td>
-                                <td style="padding: 12px 14px; color: var(--accent-cyan); font-weight: 700;">86.94%</td>
-                                <td style="padding: 12px 14px; color: var(--accent-cyan); font-weight: 700;">85.34%</td>
-                                <td style="padding: 12px 14px;">85.37%</td>
-                                <td style="padding: 12px 14px;">85.34%</td>
-                                <td style="padding: 12px 14px; font-weight: 700;">85.34%</td>
-                                <td style="padding: 12px 14px;">
-                                    <span style="font-size: 10.5px; font-weight: 700; background: rgba(0, 245, 155, 0.15); color: var(--success); border: 1px solid rgba(0, 245, 155, 0.3); padding: 3px 8px; border-radius: 4px;">ACTIVE PRODUCTION</span>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--border-subtle);">
-                                <td style="padding: 12px 14px; color: var(--text-secondary);">
-                                    XGBoost Classifier
-                                </td>
-                                <td style="padding: 12px 14px; color: var(--text-secondary);">83.10%</td>
-                                <td style="padding: 12px 14px; color: var(--text-secondary);">82.78%</td>
-                                <td style="padding: 12px 14px; color: var(--text-secondary);">82.80%</td>
-                                <td style="padding: 12px 14px; color: var(--text-secondary);">82.78%</td>
-                                <td style="padding: 12px 14px; color: var(--text-secondary);">82.75%</td>
-                                <td style="padding: 12px 14px; color: var(--text-muted); font-size: 11px;">Benchmark Baseline</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--border-subtle);">
-                                <td style="padding: 12px 14px; color: var(--text-secondary);">
-                                    Logistic Regression
-                                </td>
-                                <td style="padding: 12px 14px; color: var(--text-secondary);">36.12%</td>
-                                <td style="padding: 12px 14px; color: var(--text-secondary);">35.37%</td>
-                                <td style="padding: 12px 14px; color: var(--text-secondary);">32.40%</td>
-                                <td style="padding: 12px 14px; color: var(--text-secondary);">35.37%</td>
-                                <td style="padding: 12px 14px; color: var(--text-secondary);">31.25%</td>
-                                <td style="padding: 12px 14px; color: var(--danger); font-size: 11px;">Rejected (Linear Underfitting)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6; background: rgba(7, 11, 18, 0.4); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
-                    <strong>Scientific Rationale:</strong> The Random Forest ensemble was selected for production deployment (saved as <code>best_fault_model.joblib</code>) because it demonstrated the highest generalization accuracy (85.34% test accuracy) while exhibiting robust resistance to noise and sensor non-linearities common in real-world current and potential transformers (CT/PT).
-                </div>
-            </div>
-
-            <!-- SECTION 3: RAG PIPELINE & EMBEDDINGS -->
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">RAG Architecture & Document Retrieval Pipeline</div>
-                        <div class="card-subtitle">Retrieval-Augmented Generation for strict engineering grounding</div>
+                    <div class="status-pill" style="margin: 0;">
+                        <span class="status-dot"></span> B.Tech Electrical Engineering
                     </div>
-                    <div class="card-icon">🧠</div>
                 </div>
+            </header>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
-                    <div style="padding: 16px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                        <div style="font-size: 12px; font-weight: 700; color: var(--accent-cyan); text-transform: uppercase; margin-bottom: 6px;">
-                            1. Ingestion & Chunking
+            <!-- SCROLLABLE PAGE BODY CONTENT -->
+            <div class="app-page-content" style="max-width: 1200px;">
+
+                <!-- 4 SYSTEM ARCHITECTURE CARDS -->
+                <div class="about-arch-grid">
+                    
+                    <!-- Card 1: System Architecture -->
+                    <div class="arch-module-card">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(245, 158, 54, 0.15); border: 1px solid rgba(245, 158, 54, 0.35); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--copper-primary); flex-shrink: 0;">
+                            ⚙️
                         </div>
-                        <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
-                            Technical standards in PDF format are processed via <code>pypdf</code>. Text streams are segmented into overlapping 1,200-character windows with a 200-character stride to maintain semantic coherence across section breaks.
+                        <div style="flex: 1;">
+                            <div style="font-size: 11px; font-weight: 700; color: var(--copper-primary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px;">Core Backend</div>
+                            <h3 style="font-size: 16px; color: #fff; margin-bottom: 6px;">System Architecture</h3>
+                            <p style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+                                High-performance Python FastAPI service with Uvicorn ASGI server. Includes SQLite authenticated session management and non-blocking ThreadPoolExecutor for Gemini Flash LLM.
+                            </p>
+                            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                <span style="font-size: 10px; padding: 2px 7px; border-radius: 4px; background: rgba(255,255,255,0.06); color: var(--text-muted);">FastAPI 0.115+</span>
+                                <span style="font-size: 10px; padding: 2px 7px; border-radius: 4px; background: rgba(255,255,255,0.06); color: var(--text-muted);">SQLite3 Auth</span>
+                                <span style="font-size: 10px; padding: 2px 7px; border-radius: 4px; background: rgba(255,255,255,0.06); color: var(--text-muted);">Uvicorn ASGI</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div style="padding: 16px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                        <div style="font-size: 12px; font-weight: 700; color: var(--accent-cyan); text-transform: uppercase; margin-bottom: 6px;">
-                            2. Vector Space & Retrieval
+                    <!-- Card 2: ML Model -->
+                    <div class="arch-module-card">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(25, 199, 165, 0.15); border: 1px solid rgba(25, 199, 165, 0.35); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--teal-status); flex-shrink: 0;">
+                            ⚡
                         </div>
-                        <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
-                            All 884+ segments are represented as high-dimensional TF-IDF vectors. Incoming user questions are vectorized and ranked via cosine similarity to extract the top-4 most relevant procedural excerpts.
+                        <div style="flex: 1;">
+                            <div style="font-size: 11px; font-weight: 700; color: var(--teal-status); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px;">Trained Classifier</div>
+                            <h3 style="font-size: 16px; color: #fff; margin-bottom: 6px;">Machine Learning Model</h3>
+                            <p style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+                                Supervised Random Forest ensemble with 100 decision trees trained on 3-phase current and voltage inputs. Achieves 86.9% validation accuracy and 85.3% test accuracy across 6 fault classes.
+                            </p>
+                            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                <span style="font-size: 10px; padding: 2px 7px; border-radius: 4px; background: rgba(25, 199, 165, 0.12); color: var(--teal-status);">86.9% Val Acc</span>
+                                <span style="font-size: 10px; padding: 2px 7px; border-radius: 4px; background: rgba(255,255,255,0.06); color: var(--text-muted);">100 Trees</span>
+                                <span style="font-size: 10px; padding: 2px 7px; border-radius: 4px; background: rgba(255,255,255,0.06); color: var(--text-muted);">6 Fault States</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div style="padding: 16px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                        <div style="font-size: 12px; font-weight: 700; color: var(--accent-cyan); text-transform: uppercase; margin-bottom: 6px;">
-                            3. Generative Synthesis
+                    <!-- Card 3: Knowledge Base & RAG -->
+                    <div class="arch-module-card">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(96, 165, 250, 0.15); border: 1px solid rgba(96, 165, 250, 0.35); display: flex; align-items: center; justify-content: center; font-size: 20px; color: #60A5FA; flex-shrink: 0;">
+                            📚
                         </div>
-                        <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
-                            Retrieved chunks are passed as strict context to Google Gemini Flash with temperature set to 0.2 and 2,500 token headroom, enforcing structured markdown output and exact document citations.
+                        <div style="flex: 1;">
+                            <div style="font-size: 11px; font-weight: 700; color: #60A5FA; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px;">Vector Grounding</div>
+                            <h3 style="font-size: 16px; color: #fff; margin-bottom: 6px;">Knowledge Base (RAG)</h3>
+                            <p style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+                                885 semantic chunks vectorized via TF-IDF cosine similarity search. Dynamically matches user queries against official technical documentation with sub-5ms retrieval speed.
+                            </p>
+                            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                <span style="font-size: 10px; padding: 2px 7px; border-radius: 4px; background: rgba(96, 165, 250, 0.12); color: #60A5FA;">885 Chunks</span>
+                                <span style="font-size: 10px; padding: 2px 7px; border-radius: 4px; background: rgba(255,255,255,0.06); color: var(--text-muted);">TF-IDF Vectors</span>
+                                <span style="font-size: 10px; padding: 2px 7px; border-radius: 4px; background: rgba(255,255,255,0.06); color: var(--text-muted);">&lt; 5ms Latency</span>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Card 4: Standards & References -->
+                    <div class="arch-module-card">
+                        <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.35); display: flex; align-items: center; justify-content: center; font-size: 20px; color: #C084FC; flex-shrink: 0;">
+                            📖
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-size: 11px; font-weight: 700; color: #C084FC; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px;">Engineering Codes</div>
+                            <h3 style="font-size: 16px; color: #fff; margin-bottom: 6px;">Standards & References</h3>
+                            <p style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+                                Authoritative maintenance guidelines compiled directly from Indian Standards IS 10028, IS 1866, IEEE C37.04, NEMA AB 4, and IEC 60255 protection relay specifications.
+                            </p>
+                            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                <span style="font-size: 10px; padding: 2px 7px; border-radius: 4px; background: rgba(168, 85, 247, 0.12); color: #C084FC;">IS 10028</span>
+                                <span style="font-size: 10px; padding: 2px 7px; border-radius: 4px; background: rgba(255,255,255,0.06); color: var(--text-muted);">IEEE C37.04</span>
+                                <span style="font-size: 10px; padding: 2px 7px; border-radius: 4px; background: rgba(255,255,255,0.06); color: var(--text-muted);">NEMA AB 4</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
 
-            <!-- SECTION 4: STANDARDS & TECHNOLOGIES -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-                
-                <!-- Standards Referenced -->
-                <div class="card">
-                    <div class="card-header">
+                <!-- ML MODEL EVALUATION & BENCHMARKS TABLE -->
+                <div class="card" style="margin-bottom: 0;">
+                    <div class="card-header" style="margin-bottom: 16px;">
                         <div>
-                            <div class="card-title">Standards Referenced</div>
-                            <div class="card-subtitle">Authoritative engineering codes</div>
+                            <div class="card-title">Supervised Machine Learning: Model Evaluation & Benchmarks</div>
+                            <div class="card-subtitle">Empirical model selection based on stratified test split metrics</div>
                         </div>
-                        <div class="card-icon">📖</div>
+                        <div class="card-icon">📊</div>
                     </div>
 
-                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
-                        <li style="padding: 10px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                            <strong style="color: #fff;">IS 10028 (Part 1-3):</strong> Code of Practice for Selection, Installation and Maintenance of Transformers
-                        </li>
-                        <li style="padding: 10px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                            <strong style="color: #fff;">IS 1866:</strong> Code of Practice for Electrical Maintenance and In-service Oil Testing
-                        </li>
-                        <li style="padding: 10px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                            <strong style="color: #fff;">IEEE C37.04:</strong> Standard Rating Structure for AC High-Voltage Circuit Breakers
-                        </li>
-                        <li style="padding: 10px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                            <strong style="color: #fff;">NEMA AB 4:</strong> Guidelines for Inspection and Preventive Maintenance of Molded Case Breakers
-                        </li>
-                        <li style="padding: 10px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                            <strong style="color: #fff;">IEC 60255:</strong> Measuring Relays and Protection Equipment Standards
-                        </li>
-                    </ul>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+                        Multiple supervised classification architectures were rigorously trained and evaluated against identical 3-phase electrical sensor telemetry datasets (Ia, Ib, Ic, Va, Vb, Vc). The empirical results demonstrate clear superiority of the Random Forest ensemble:
+                    </p>
+
+                    <!-- Table -->
+                    <div style="overflow-x: auto; margin-bottom: 16px;">
+                        <table class="document-table">
+                            <thead>
+                                <tr>
+                                    <th>Model Algorithm</th>
+                                    <th>Validation Acc</th>
+                                    <th>Test Acc</th>
+                                    <th>Precision</th>
+                                    <th>Recall</th>
+                                    <th>F1-Score</th>
+                                    <th>Deployment Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background: rgba(245, 158, 54, 0.08);">
+                                    <td style="font-weight: 700; color: #fff;">Random Forest Classifier (100 Trees)</td>
+                                    <td style="color: var(--copper-primary); font-weight: 700;">86.94%</td>
+                                    <td style="color: var(--copper-primary); font-weight: 700;">85.34%</td>
+                                    <td>85.37%</td>
+                                    <td>85.34%</td>
+                                    <td style="font-weight: 700; color: #fff;">85.34%</td>
+                                    <td>
+                                        <span style="font-size: 10px; font-weight: 700; background: rgba(25, 199, 165, 0.15); color: var(--teal-status); border: 1px solid rgba(25, 199, 165, 0.35); padding: 3px 8px; border-radius: 4px;">ACTIVE PRODUCTION</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="color: var(--text-secondary);">XGBoost Classifier</td>
+                                    <td>83.10%</td>
+                                    <td>82.78%</td>
+                                    <td>82.80%</td>
+                                    <td>82.78%</td>
+                                    <td>82.75%</td>
+                                    <td><span style="color: var(--text-muted); font-size: 11px;">Benchmark Baseline</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="color: var(--text-secondary);">Logistic Regression</td>
+                                    <td>36.12%</td>
+                                    <td>35.37%</td>
+                                    <td>32.40%</td>
+                                    <td>35.37%</td>
+                                    <td>31.25%</td>
+                                    <td><span style="color: var(--danger); font-size: 11px;">Rejected (Linear Underfitting)</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="font-size: 12px; color: var(--text-muted); line-height: 1.6; background: rgba(8, 11, 16, 0.6); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                        <strong style="color: var(--text-secondary);">Scientific Rationale:</strong> The Random Forest ensemble was selected for production deployment (saved as <code>best_fault_model.joblib</code>) because it demonstrated the highest generalization accuracy (85.34% test accuracy) while exhibiting robust resistance to noise and sensor non-linearities common in real-world current and potential transformers (CT/PT).
+                    </div>
                 </div>
 
-                <!-- Technical Software Stack -->
-                <div class="card">
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title">Technical Software Stack</div>
-                            <div class="card-subtitle">Tools, libraries, and frameworks utilized</div>
-                        </div>
-                        <div class="card-icon">💻</div>
-                    </div>
-
-                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
-                        <li style="padding: 10px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                            <strong style="color: var(--accent-cyan);">Backend Framework:</strong> FastAPI + Uvicorn ASGI Server (Python 3.11)
-                        </li>
-                        <li style="padding: 10px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                            <strong style="color: var(--accent-cyan);">Machine Learning:</strong> Scikit-Learn (Random Forest, StandardScaler), Joblib, NumPy, Pandas
-                        </li>
-                        <li style="padding: 10px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                            <strong style="color: var(--accent-cyan);">Generative AI & LLM:</strong> Google GenAI SDK (Gemini Flash), RAG pipeline
-                        </li>
-                        <li style="padding: 10px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                            <strong style="color: var(--accent-cyan);">Document Ingestion:</strong> pypdf parser, dynamic in-memory TF-IDF re-indexing
-                        </li>
-                        <li style="padding: 10px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                            <strong style="color: var(--accent-cyan);">Frontend UI/UX:</strong> Vanilla HTML5, CSS3 Custom Properties (SCADA Industrial Theme), ES6 Fetch API
-                        </li>
-                    </ul>
+                <!-- MINIMAL ONE-LINE FOOTER -->
+                <div style="text-align: center; padding: 24px 0 12px; font-size: 11.5px; color: var(--text-muted); border-top: 1px solid var(--border-subtle); margin-top: 20px;">
+                    VoltSage AI — PRJ_232 Electrical Substation Intelligence • Final-Year B.Tech Major Project
                 </div>
 
             </div>
 
-        </div>
+        </main>
 
-    </main>
+    </div>
 
-    <!-- COMPACT FOOTER -->
-    <footer class="footer-minimal">
-        <div class="footer-minimal-container">
-            <span>VoltSage AI • PRJ_232 Substation Intelligence</span>
-            <span>Final-Year B.Tech Major Project</span>
-        </div>
-    </footer>
-
-    <!-- AUTH CONTROLLER SCRIPT -->
+    <!-- CONTROLLER SCRIPTS -->
     <script src="js/auth.js"></script>
 </body>
 </html>

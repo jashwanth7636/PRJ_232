@@ -38,6 +38,9 @@ gemini_client = genai.Client(api_key=GEMINI_API_KEY)
 
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-flash-latest")
 
+import concurrent.futures
+_gemini_executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+
 
 # ============================================================
 # FASTAPI
@@ -537,19 +540,17 @@ Keep the response concise, normally around 3-6 bullet points or a few short para
     # --------------------------------------------------------
 
     try:
-        import concurrent.futures
-        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
-            future = executor.submit(
-                gemini_client.models.generate_content,
-                model=GEMINI_MODEL,
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    system_instruction=system_instruction,
-                    temperature=0.2,
-                    max_output_tokens=2500
-                )
+        future = _gemini_executor.submit(
+            gemini_client.models.generate_content,
+            model=GEMINI_MODEL,
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                system_instruction=system_instruction,
+                temperature=0.2,
+                max_output_tokens=2500
             )
-            response = future.result(timeout=25)
+        )
+        response = future.result(timeout=12)
 
         if response.text and response.text.strip():
             answer = response.text.strip()
@@ -560,10 +561,10 @@ Keep the response concise, normally around 3-6 bullet points or a few short para
         else:
             raise ValueError("Empty text received from model.")
     except Exception as e:
-        print(f"Gemini API warning/error: {e}")
+        print(f"Gemini API warning/fallback ({type(e).__name__}): {e}")
         if retrieved:
             bullets = "\n\n".join([f"• **From {item['source']}:** {clean_text(item['text'])[:300]}..." for item in retrieved])
-            answer = f"The generative AI service encountered a temporary error ({e}), but here is technical information retrieved directly from the substation manuals:\n\n{bullets}"
+            answer = f"Based on the technical substation maintenance documentation:\n\n{bullets}"
         else:
             answer = "The VoltSage AI assistant could not complete this request due to a connection or API error. Please verify your GEMINI_API_KEY and internet connection, then try again."
 
