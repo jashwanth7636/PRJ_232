@@ -201,6 +201,8 @@ function showCopiedFeedback(btn) {
     }, 2000);
 }
 
+let currentStreamAbort = null;
+
 function addLoadingMessage() {
     if (!chatMessages) return null;
     const message = document.createElement("div");
@@ -210,7 +212,7 @@ function addLoadingMessage() {
         <div style="display: flex; flex-direction: column; align-items: flex-start;">
             <div class="message-sender">VoltSage AI</div>
             <div class="message-bubble" style="color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
-                <span class="status-dot"></span> Consulting substation engineering manuals...
+                <span class="status-dot"></span> VoltSage AI is thinking...
             </div>
         </div>
     `;
@@ -224,13 +226,29 @@ async function sendMessage() {
     const message = input.value.trim();
     if (!message) return;
 
+    // Abort any ongoing stream if user sends repeated message
+    if (currentStreamAbort) {
+        currentStreamAbort.abort();
+        currentStreamAbort = null;
+    }
+
+    const abortController = new AbortController();
+    currentStreamAbort = abortController;
+
     // Show user message
     addMessage(message, "user");
     input.value = "";
     input.disabled = true;
     if (sendButton) sendButton.disabled = true;
 
-    const loadingEl = addLoadingMessage();
+    const thinkingEl = addLoadingMessage();
+
+    let assistantMessageEl = null;
+    let bubbleEl = null;
+    let copyBtnEl = null;
+    let streamedText = "";
+    let finalSources = [];
+    let newConvId = null;
 
     try {
         const payload = {
@@ -239,42 +257,163 @@ async function sendMessage() {
             conversation_id: currentConversationId
         };
 
-        const res = await fetch(API_URL, {
+        const res = await fetch("/chat/stream", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
-            credentials: "include"
+            credentials: "include",
+            signal: abortController.signal
         });
 
         if (!res.ok) {
             throw new Error(`Server returned HTTP ${res.status}`);
         }
 
-        const data = await res.json();
-        if (loadingEl) loadingEl.remove();
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
 
-        // Display AI response
-        addMessage(data.answer, "assistant", data.sources, data.answer);
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const events = buffer.split("\n\n");
+            buffer = events.pop(); // keep trailing incomplete chunk
+
+            for (const eventBlock of events) {
+                if (!eventBlock.trim()) continue;
+
+                let eventName = "message";
+                let dataStr = "";
+
+                for (const line of eventBlock.split("\n")) {
+                    if (line.startsWith("event:")) {
+                        eventName = line.substring(6).trim();
+                    } else if (line.startsWith("data:")) {
+                        dataStr = line.substring(5).trim();
+                    }
+                }
+
+                if (!dataStr) continue;
+
+                let data;
+                try {
+                    data = JSON.parse(dataStr);
+                } catch (e) {
+                    continue;
+                }
+
+                if (eventName === "start") {
+                    if (data.conversation_id) {
+                        newConvId = data.conversation_id;
+                    }
+                } else if (eventName === "chunk") {
+                    // First chunk: immediately remove thinking message
+                    if (thinkingEl && thinkingEl.parentNode) {
+                        thinkingEl.remove();
+                    }
+
+                    if (!assistantMessageEl) {
+                        assistantMessageEl = document.createElement("div");
+                        assistantMessageEl.className = "chat-message assistant";
+                        const copyId = "copy-" + Math.random().toString(36).substring(2, 9);
+                        assistantMessageEl.innerHTML = `
+                            <div class="message-avatar">AI</div>
+                            <div style="display: flex; flex-direction: column; align-items: flex-start; max-width: 100%; width: 100%;">
+                                <div class="message-sender">VoltSage AI</div>
+                                <div class="message-bubble"></div>
+                                <button type="button" class="copy-btn" id="${copyId}" style="display: none;">
+                                    📋 Copy Response
+                                </button>
+                            </div>
+                        `;
+                        chatMessages.appendChild(assistantMessageEl);
+                        bubbleEl = assistantMessageEl.querySelector(".message-bubble");
+                        copyBtnEl = assistantMessageEl.querySelector(".copy-btn");
+                    }
+
+                    streamedText += data.text || "";
+                    bubbleEl.innerHTML = formatMessage(streamedText);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                } else if (eventName === "done") {
+                    if (data.sources) {
+                        finalSources = data.sources;
+                    }
+                    if (data.conversation_id) {
+                        newConvId = data.conversation_id;
+                    }
+                    if (data.full_text && !streamedText) {
+                        streamedText = data.full_text;
+                        if (bubbleEl) {
+                            bubbleEl.innerHTML = formatMessage(streamedText);
+                        }
+                    }
+                } else if (eventName === "error") {
+                    throw new Error(data.error || "Generation error");
+                }
+            }
+        }
+
+        // Remove thinking element if it wasn't removed yet
+        if (thinkingEl && thinkingEl.parentNode) {
+            thinkingEl.remove();
+        }
+
+        if (!assistantMessageEl && streamedText) {
+            addMessage(streamedText, "assistant", finalSources, streamedText);
+        } else if (bubbleEl) {
+            // Append sources to the bubble
+            if (finalSources && finalSources.length > 0) {
+                const sourcesHTML = `<div class="sources-container">
+                    <span style="font-weight: 700; color: var(--accent-cyan); font-size: 11px;">Knowledge Sources:</span>` +
+                    finalSources.map(s => {
+                        const title = typeof s === "string" ? s : (s.source || "");
+                        const pageNum = (typeof s === "object" && s.page) ? s.page : null;
+                        const pageLabel = pageNum ? ` (Page ${escapeHtml(String(pageNum))})` : "";
+                        return `<span class="source-badge">📄 ${escapeHtml(title)}${pageLabel}</span>`;
+                    }).join("") +
+                `</div>`;
+                bubbleEl.insertAdjacentHTML("beforeend", sourcesHTML);
+            }
+
+            if (copyBtnEl) {
+                copyBtnEl.style.display = "inline-flex";
+                copyBtnEl.addEventListener("click", () => copyToClipboard(streamedText, copyBtnEl));
+            }
+        }
 
         // Update active conversation
-        if (data.conversation_id) {
-            currentConversationId = data.conversation_id;
+        if (newConvId) {
+            currentConversationId = newConvId;
             localStorage.setItem("voltsage_active_conv", currentConversationId);
             await loadUserConversations();
             updateActiveConversationTitle();
         }
 
-        conversationHistory.push({ role: "user", content: message });
-        conversationHistory.push({ role: "assistant", content: data.answer });
+        if (streamedText) {
+            conversationHistory.push({ role: "user", content: message });
+            conversationHistory.push({ role: "assistant", content: streamedText });
+        }
 
     } catch (err) {
+        if (err.name === "AbortError") {
+            console.log("Chat stream aborted");
+            return;
+        }
         console.error("Chat error:", err);
-        if (loadingEl) loadingEl.remove();
-        addMessage(
-            "Sorry, could not connect to the VoltSage AI service. Please ensure the backend server is running on http://127.0.0.1:8000.",
-            "assistant"
-        );
+        if (thinkingEl && thinkingEl.parentNode) {
+            thinkingEl.remove();
+        }
+        if (!assistantMessageEl) {
+            addMessage(
+                "Sorry, could not connect to the VoltSage AI service. Please ensure the backend server is running on http://127.0.0.1:8000.",
+                "assistant"
+            );
+        }
     } finally {
+        currentStreamAbort = null;
         input.disabled = false;
         if (sendButton) sendButton.disabled = false;
         input.focus();

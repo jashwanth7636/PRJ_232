@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 from typing import Optional, List, Dict, Any
 from fastapi import FastAPI, HTTPException, UploadFile, File, Request, Response, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.responses import FileResponse, RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, EmailStr
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -708,7 +708,280 @@ Please generate a clear, readable answer based strictly on the instructions."""
 
 
 # ============================================================
-# FAULT PREDICTION
+# REAL-TIME STREAMING CHAT (SSE)
+# ============================================================
+
+@app.post("/chat/stream")
+def chat_stream(request: ChatRequest, http_request: Request):
+    user_message = request.message.strip()
+
+    if not user_message:
+        def empty_gen():
+            yield f"event: error\ndata: {json.dumps({'error': 'Please enter a question.'})}\n\n"
+        return StreamingResponse(empty_gen(), media_type="text/event-stream")
+
+    # Enforce authentication: Logged-out users cannot access the chatbot
+    current_user = get_current_user_optional(http_request)
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authentication required. Please sign in to access the VoltSage AI copilot."
+        )
+
+    conv_id = request.conversation_id
+    if not conv_id:
+        title = user_message[:45].strip()
+        new_conv = database.create_conversation(current_user["id"], title)
+        conv_id = new_conv["id"]
+    else:
+        existing = database.get_conversation(conv_id, current_user["id"])
+        if not existing:
+            title = user_message[:45].strip()
+            new_conv = database.create_conversation(current_user["id"], title)
+            conv_id = new_conv["id"]
+
+    database.add_message_to_conversation(conv_id, "user", user_message)
+
+    # Check casual messages
+    casual_messages = {
+        "hi", "hello", "hey", "hi there", "hello there",
+        "good morning", "good afternoon", "good evening"
+    }
+    is_casual = user_message.lower() in casual_messages
+
+    # Retrieve technical information only when appropriate
+    retrieved = []
+    if not is_casual:
+        retrieved = search_documents(user_message, top_k=3)
+
+    # Build conversation history
+    history_text = ""
+    if request.history:
+        recent_history = request.history[-6:]
+        for item in recent_history:
+            r = item.get("role", "user")
+            c = item.get("content", "")
+            history_text += f"{r}: {c}\n"
+
+    # Build document context with clean titles and verified pages
+    document_context = ""
+    if retrieved:
+        context_blocks = []
+        for idx, item in enumerate(retrieved, 1):
+            doc_title = item.get("clean_title") or format_document_title(item["source"])
+            page_num = item.get("page")
+            page_str = f"Page {page_num}" if page_num else "Unavailable"
+            context_blocks.append(
+                f"[Excerpt {idx}]\n"
+                f"Document Title: {doc_title}\n"
+                f"Verified Page: {page_str}\n"
+                f"Excerpt Content:\n{item['text']}"
+            )
+        document_context = "\n\n".join(context_blocks)
+
+    system_instruction = """You are VoltSage AI, an assistant for electrical substation maintenance.
+
+Answer the user's question using only the supplied excerpts from the uploaded technical manuals.
+
+Rules:
+- Directly answer the exact question.
+- Use simple, clear technical English suitable for an engineering student.
+- Organize explanations into short paragraphs or bullet points where appropriate.
+- Combine relevant information from multiple excerpts when they support the same answer.
+- Preserve the technical meaning and terminology of the manuals.
+- In your answer, refer directly to the actual document title (e.g. 'According to the *ETC Manual for Flat wall & Corrugated Transformer*...' or 'According to the *Circuit Breaker Maintenance Guide*...') rather than generic phrases like 'the uploaded manual' or 'the document'.
+- If a verified page number is provided on an excerpt that supports the answer, you may cite that page number alongside the document title (e.g. 'page 117'). If no page number is verified, cite only the document title alone without any page number. Do not refer to pages as 'unverified' or 'unavailable' in the user response. Never invent or guess a page number.
+- Do not invent maintenance procedures, measurements, safety precautions, test limits, manufacturer recommendations, page numbers, or citations.
+- If a requested detail is not supported by the supplied excerpts, explicitly state that the available manual excerpts do not establish or contain that information.
+- If the retrieved excerpts are irrelevant or insufficient, explain the limitation instead of guessing.
+- Distinguish information explicitly stated in the manual from any uncertainty.
+- Do not expose internal retrieval metadata, chunk IDs, raw JSON, or debugging information.
+- Do not claim that a procedure is safe or approved unless the supplied source supports that claim.
+
+Return a readable answer, not a list of unprocessed document chunks.
+
+CRITICAL CITATION RULES:
+At the very end of your response, on a new line, add:
+SOURCES_USED: <comma-separated list of document titles that provided factual information or procedures included in your answer, or NONE if no relevant factual information was found in the excerpts>
+- If the retrieved excerpts do not contain any relevant factual answers or procedures for the question, write:
+SOURCES_USED: NONE
+- If you explain factual procedures, steps, or precautions from a manual in your response, include that document's title in SOURCES_USED.
+- Never cite a document if no factual information from it was used to answer the question."""
+
+    prompt = f"""Conversation history:
+{history_text if history_text else "No previous conversation history."}
+
+User Question:
+{user_message}
+
+Supplied Excerpts from Uploaded Manuals:
+{document_context if document_context else "No document excerpts retrieved from the uploaded manuals."}
+
+Please generate a clear, readable answer based strictly on the instructions."""
+
+    def event_stream():
+        # Yield start event immediately
+        yield f"event: start\ndata: {json.dumps({'conversation_id': conv_id})}\n\n"
+
+        candidate_models = [
+            GEMINI_MODEL,
+            "gemini-3.5-flash",
+            "gemini-3.8-flash",
+            "gemini-flash-latest",
+            "gemini-3.1-flash-lite"
+        ]
+        seen_m = set()
+        models_to_try = [m for m in candidate_models if m and not (m in seen_m or seen_m.add(m))]
+
+        response_stream = None
+        last_error = None
+
+        for m in models_to_try:
+            try:
+                response_stream = gemini_client.models.generate_content_stream(
+                    model=m,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        system_instruction=system_instruction,
+                        temperature=0.2,
+                        max_output_tokens=2500
+                    )
+                )
+                break
+            except Exception as e:
+                last_error = e
+                print(f"Gemini stream model {m} attempt failed ({type(e).__name__}): {e}")
+
+        full_answer = ""
+        sources = []
+
+        if response_stream:
+            try:
+                buffer = ""
+                sources_line = ""
+                tail_len = 16
+
+                for chunk in response_stream:
+                    text_chunk = getattr(chunk, "text", "") or ""
+                    if not text_chunk:
+                        continue
+
+                    if sources_line:
+                        sources_line += text_chunk
+                        continue
+
+                    buffer += text_chunk
+
+                    if "SOURCES_USED:" in buffer:
+                        parts = buffer.split("SOURCES_USED:", 1)
+                        to_emit = parts[0]
+                        sources_line = "SOURCES_USED:" + parts[1]
+                        if to_emit:
+                            full_answer += to_emit
+                            yield f"event: chunk\ndata: {json.dumps({'text': to_emit})}\n\n"
+                        buffer = ""
+                    elif any(buffer.endswith(prefix) for prefix in ['\n', '\nS', '\nSO', '\nSOU', '\nSOUR', '\nSOURC', '\nSOURCE', '\nSOURCES', '\nSOURCES_']):
+                        # Buffer potential marker
+                        pass
+                    else:
+                        if len(buffer) > tail_len:
+                            safe = buffer[:-tail_len]
+                            full_answer += safe
+                            yield f"event: chunk\ndata: {json.dumps({'text': safe})}\n\n"
+                            buffer = buffer[-tail_len:]
+
+                if buffer and not sources_line:
+                    full_answer += buffer
+                    yield f"event: chunk\ndata: {json.dumps({'text': buffer})}\n\n"
+
+                sources_used = []
+                if sources_line:
+                    src_str = sources_line.replace("SOURCES_USED:", "").strip()
+                    if src_str.upper() != "NONE":
+                        sources_used = [s.strip() for s in src_str.split(",") if s.strip()]
+
+                if sources_used and retrieved:
+                    seen_titles = set()
+                    for src_title in sources_used:
+                        src_norm = re.sub(r'\(.*?\)', '', src_title).strip().lower()
+                        src_norm = html.unescape(src_norm).replace(".txt", "").replace(".pdf", "").strip()
+                        for item in retrieved:
+                            clean_title = item.get("clean_title") or format_document_title(item["source"])
+                            clean_norm = clean_title.lower()
+                            if (src_norm in clean_norm or clean_norm in src_norm) and clean_title not in seen_titles:
+                                best_page = next((it["page"] for it in retrieved if (it.get("clean_title") == clean_title or it.get("source") == item["source"]) and it.get("page")), None)
+                                source_obj = {
+                                    "source": clean_title,
+                                    "score": item["score"]
+                                }
+                                if best_page:
+                                    source_obj["page"] = best_page
+                                sources.append(source_obj)
+                                seen_titles.add(clean_title)
+
+            except Exception as stream_err:
+                print(f"Error during streaming iterator: {stream_err}")
+                last_error = stream_err
+
+        # Fallback if streaming failed or produced no content
+        if not full_answer.strip():
+            print(f"Streaming fallback triggered due to: {last_error}")
+            if retrieved:
+                top_item = retrieved[0]
+                clean_title = top_item.get("clean_title") or format_document_title(top_item["source"])
+                best_page = top_item.get("page")
+                page_ref = f" (page {best_page})" if best_page else ""
+                fallback_header = f"According to the *{clean_title}*{page_ref}, the following maintenance procedures and technical specifications are established:\n\n"
+
+                excerpts = []
+                for item in retrieved[:3]:
+                    txt = item.get("text", "").strip()
+                    if txt and len(txt) > 30:
+                        clean_snip = re.sub(r'\s+', ' ', txt)
+                        excerpts.append(clean_snip[:280] + ("..." if len(clean_snip) > 280 else ""))
+
+                # Stream fallback in natural chunks
+                for piece in [fallback_header] + [f"• {ex}\n\n" for ex in excerpts]:
+                    full_answer += piece
+                    yield f"event: chunk\ndata: {json.dumps({'text': piece})}\n\n"
+
+                source_obj = {"source": clean_title, "score": top_item["score"]}
+                if best_page:
+                    source_obj["page"] = best_page
+                sources.append(source_obj)
+
+                seen_titles = {clean_title}
+                for item in retrieved[1:3]:
+                    other_title = item.get("clean_title") or format_document_title(item["source"])
+                    if other_title not in seen_titles:
+                        s_obj = {"source": other_title, "score": item["score"]}
+                        if item.get("page"):
+                            s_obj["page"] = item["page"]
+                        sources.append(s_obj)
+                        seen_titles.add(other_title)
+            else:
+                err_msg = "The available manual excerpts do not contain factual procedures or information to answer this question."
+                full_answer = err_msg
+                yield f"event: chunk\ndata: {json.dumps({'text': err_msg})}\n\n"
+
+        clean_final = full_answer.strip()
+        # Persist assistant response to DB
+        if current_user and conv_id and clean_final:
+            sources_json = json.dumps(sources) if sources else None
+            database.add_message_to_conversation(conv_id, "assistant", clean_final, sources_json)
+
+        # Emit done event with complete metadata
+        yield f"event: done\ndata: {json.dumps({'conversation_id': conv_id, 'sources': sources, 'full_text': clean_final})}\n\n"
+
+    return StreamingResponse(
+        event_stream(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no"
+        }
+    )
 # ============================================================
 
 @app.post("/predict-fault")
