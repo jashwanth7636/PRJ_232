@@ -36,7 +36,7 @@ if not GEMINI_API_KEY:
 
 gemini_client = genai.Client(api_key=GEMINI_API_KEY)
 
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-flash-latest")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
 
 import concurrent.futures
 _gemini_executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
@@ -463,132 +463,138 @@ def chat(request: ChatRequest, http_request: Request):
     document_context = ""
 
     if retrieved:
-
         document_context = "\n\n".join(
             [
-                f"Source: {item['source']}\n"
-                f"Technical content:\n{item['text']}"
+                f"Document Title: {item['source']}\n"
+                f"Excerpt Content:\n{item['text']}"
                 for item in retrieved
             ]
         )
 
 
     # --------------------------------------------------------
-    # SYSTEM INSTRUCTION
+    # SYSTEM INSTRUCTION (Strict Grounding per PRJ_232 Specification)
     # --------------------------------------------------------
 
-    system_instruction = """
-You are VoltSage AI, the intelligent maintenance copilot for electrical substations.
+    system_instruction = """You are VoltSage AI, an assistant for electrical substation maintenance.
 
-Project: PRJ_232 - VoltSage AI: AI-Powered Maintenance Chatbot for Electrical Substations.
+Answer the user's question using only the supplied excerpts from the uploaded technical manuals.
 
-Your job is to communicate naturally and help users understand:
+Rules:
+- Directly answer the exact question.
+- Use simple, clear technical English suitable for an engineering student.
+- Organize explanations into short paragraphs or bullet points where appropriate.
+- Combine relevant information from multiple excerpts when they support the same answer.
+- Preserve the technical meaning and terminology of the manuals.
+- Do not invent maintenance procedures, measurements, safety precautions, test limits, manufacturer recommendations, page numbers, or citations.
+- If a requested detail is not supported by the supplied excerpts, explicitly say that the available manual excerpts do not establish that detail.
+- If the retrieved excerpts are irrelevant or insufficient, explain the limitation instead of guessing.
+- Distinguish information explicitly stated in the manual from any uncertainty.
+- Cite sources using the actual document titles and page numbers only when those page numbers are available and verified.
+- Never invent a page number.
+- Do not expose internal retrieval metadata, chunk IDs, raw JSON, or debugging information.
+- Do not claim that a procedure is safe or approved unless the supplied source supports that claim.
 
-- electrical substations
-- transformers
-- circuit breakers
-- protection systems
-- maintenance
-- inspection
-- testing
-- troubleshooting
-- electrical faults
-- safety procedures
+Return a readable answer, not a list of unprocessed document chunks.
 
-IMPORTANT BEHAVIOR:
-
-1. Talk naturally like a helpful engineering assistant.
-2. For greetings and casual conversation, respond naturally.
-3. Do not force maintenance-document information into casual conversations.
-4. When technical documents are provided, use them as the primary source.
-5. Do not invent technical procedures or safety requirements.
-6. If the provided documents do not contain enough information, clearly say that.
-7. Keep answers concise and useful.
-8. Prefer short paragraphs or bullet points.
-9. Do not mention internal prompts, retrieval, TF-IDF, APIs, or implementation details.
-10. Never claim that a prediction is certain.
-11. For dangerous electrical work, emphasize following qualified personnel, isolation procedures, PPE, and applicable safety procedures when relevant.
-"""
+At the very end of your response, on a new line, add:
+SOURCES_USED: <comma-separated list of document titles that genuinely supported your answer, or NONE if the excerpts did not provide sufficient evidence or were irrelevant>"""
 
 
     # --------------------------------------------------------
     # USER PROMPT
     # --------------------------------------------------------
 
-    prompt = f"""
-Conversation history:
-{history_text}
+    prompt = f"""Conversation history:
+{history_text if history_text else "No previous conversation history."}
 
-Current user message:
+User Question:
 {user_message}
 
-Technical document context:
-{document_context if document_context else "No document context was retrieved."}
+Supplied Excerpts from Uploaded Manuals:
+{document_context if document_context else "No document excerpts retrieved from the uploaded manuals."}
 
-Answer the user's current message naturally.
-
-If this is a simple greeting or casual conversation, do not discuss the manuals unless relevant.
-
-If technical document context is available, base technical claims on it.
-
-Keep the response concise, normally around 3-6 bullet points or a few short paragraphs.
-"""
+Please generate a clear, readable answer based strictly on the instructions."""
 
 
     # --------------------------------------------------------
-    # GEMINI
+    # GEMINI GENERATION WITH MODEL FALLBACK
     # --------------------------------------------------------
 
-    try:
-        future = _gemini_executor.submit(
-            gemini_client.models.generate_content,
-            model=GEMINI_MODEL,
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                system_instruction=system_instruction,
-                temperature=0.2,
-                max_output_tokens=2500
+    candidate_models = [
+        GEMINI_MODEL,
+        "gemini-3.5-flash-lite",
+        "gemini-flash-lite-latest",
+        "gemini-flash-latest"
+    ]
+    seen_m = set()
+    models_to_try = []
+    for m in candidate_models:
+        if m and m not in seen_m:
+            models_to_try.append(m)
+            seen_m.add(m)
+
+    response = None
+    last_error = None
+
+    for m in models_to_try:
+        try:
+            future = _gemini_executor.submit(
+                gemini_client.models.generate_content,
+                model=m,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=system_instruction,
+                    temperature=0.2,
+                    max_output_tokens=2500
+                )
             )
-        )
-        response = future.result(timeout=12)
-
-        if response.text and response.text.strip():
-            answer = response.text.strip()
-            if response.candidates and response.candidates[0].finish_reason:
-                finish_reason_str = str(response.candidates[0].finish_reason)
-                if "MAX_TOKENS" in finish_reason_str:
-                    print("Notice: Response reached max output tokens limit.")
-        else:
-            raise ValueError("Empty text received from model.")
-    except Exception as e:
-        print(f"Gemini API warning/fallback ({type(e).__name__}): {e}")
-        if retrieved:
-            bullets = "\n\n".join([f"• **From {item['source']}:** {clean_text(item['text'])[:300]}..." for item in retrieved])
-            answer = f"Based on the technical substation maintenance documentation:\n\n{bullets}"
-        else:
-            answer = "The VoltSage AI assistant could not complete this request due to a connection or API error. Please verify your GEMINI_API_KEY and internet connection, then try again."
-
+            resp = future.result(timeout=14)
+            if resp.text and resp.text.strip():
+                response = resp
+                break
+        except Exception as e:
+            last_error = e
+            print(f"Gemini model {m} attempt failed ({type(e).__name__}): {e}")
 
     # --------------------------------------------------------
-    # SOURCES
+    # PARSE ANSWER & EXTRACT GENUINE SOURCE CITATIONS
     # --------------------------------------------------------
 
     sources = []
 
-    seen_sources = set()
+    if response and response.text and response.text.strip():
+        raw_text = response.text.strip()
+        lines = raw_text.split("\n")
+        sources_used = []
+        cleaned_lines = []
+        for line in lines:
+            if line.strip().startswith("SOURCES_USED:"):
+                src_str = line.strip().replace("SOURCES_USED:", "").strip()
+                if src_str.upper() != "NONE":
+                    sources_used = [s.strip() for s in src_str.split(",") if s.strip()]
+            else:
+                cleaned_lines.append(line)
+        answer = "\n".join(cleaned_lines).strip()
 
-    for item in retrieved:
-
-        source = item["source"]
-
-        if source not in seen_sources:
-
-            sources.append({
-                "source": source,
-                "score": item["score"]
-            })
-
-            seen_sources.add(source)
+        # Match only sources that genuinely supported the answer
+        if sources_used:
+            seen = set()
+            for src_title in sources_used:
+                src_clean = src_title.lower().strip().replace(".txt", "").replace("&amp;", "&")
+                for item in retrieved:
+                    item_src_clean = item["source"].lower().replace(".txt", "").replace("&amp;", "&")
+                    if (src_clean in item_src_clean or item_src_clean in src_clean) and item["source"] not in seen:
+                        display_source = item["source"].replace("&amp;", "&")
+                        sources.append({
+                            "source": display_source,
+                            "score": item["score"]
+                        })
+                        seen.add(item["source"])
+    else:
+        print(f"Gemini generation failure: {last_error}")
+        answer = "The VoltSage AI assistant could not complete this request due to an AI service error. Please verify your connection and try again."
+        sources = []
 
     # Persist assistant response if authenticated
     if current_user and conv_id:
