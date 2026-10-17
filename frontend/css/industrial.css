@@ -5,14 +5,26 @@
    ============================================================ */
 
 :root {
-    /* Color Palette - Luxury Graphite & Copper */
-    --bg-base: #080B10;           /* Deep luxury graphite / obsidian */
-    --bg-surface: #101720;        /* Primary dark navy surface for cards and panels */
-    --bg-card: #121A24;           /* Slightly lighter surface for nested cards */
-    --bg-card-hover: #172230;     /* Card hover elevation */
-    --bg-input: #151E29;          /* Input fields background */
-    --bg-sidebar: #0B0F17;        /* Left sidebar background */
-    --bg-glass: rgba(16, 23, 32, 0.85);
+    /* Base Surfaces - Translucent Floating Dark Glass */
+    --bg-base: transparent;
+    --bg-surface: rgba(14, 18, 26, 0.76);        /* Translucent dark glass for primary panels */
+    --bg-card: rgba(16, 21, 30, 0.72);           /* Translucent dark glass for cards */
+    --bg-card-hover: rgba(22, 28, 40, 0.84);     /* Hover state card elevation */
+    --bg-input: rgba(10, 14, 22, 0.78);          /* High-contrast dark input fields */
+    --bg-sidebar: rgba(10, 13, 19, 0.82);        /* Translucent left navigation sidebar */
+    --bg-glass: rgba(14, 18, 26, 0.76);
+
+    /* Glassmorphism Surface Tokens */
+    --glass-bg: rgba(14, 18, 26, 0.76);
+    --glass-bg-strong: rgba(11, 15, 22, 0.88);
+    --glass-bg-subtle: rgba(18, 23, 33, 0.58);
+    --glass-card: rgba(16, 21, 30, 0.72);
+    --glass-card-hover: rgba(22, 28, 40, 0.84);
+    --glass-border: rgba(226, 156, 75, 0.22);
+    --glass-border-subtle: rgba(226, 156, 75, 0.14);
+    --glass-border-hover: rgba(226, 156, 75, 0.45);
+    --glass-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+    --glass-blur: blur(16px);
     
     /* Luxury Copper & Warm Amber Primary Accents */
     --copper-primary: #F59E36;    /* Core industrial copper */
@@ -37,11 +49,11 @@
     --danger-bg: rgba(239, 68, 68, 0.12);
     
     /* Borders & Dividers */
-    --border-subtle: #1E293B;     /* Refined dark slate border */
-    --border-card: #243042;       /* Default card border */
-    --border-copper: rgba(245, 158, 54, 0.35); /* Subtle copper edge */
-    --border-active: rgba(245, 158, 54, 0.65); /* Active highlight border */
-    --border-focus: #F59E36;      /* Focused input border */
+    --border-subtle: rgba(255, 255, 255, 0.08);     /* Subtle translucent divider */
+    --border-card: rgba(226, 156, 75, 0.20);       /* Subtle copper edge default card border */
+    --border-copper: rgba(245, 158, 54, 0.35);     /* Hairline copper edge */
+    --border-active: rgba(245, 158, 54, 0.65);     /* Active highlight border */
+    --border-focus: #F59E36;                       /* Focused input border */
     
     /* Typography */
     --text-primary: #F8FAFC;      /* High-contrast crisp white */
@@ -59,9 +71,10 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     
     /* Shadows */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.55);
-    --shadow-copper: 0 4px 20px rgba(245, 158, 54, 0.28);
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.55);
+    --shadow-copper: 0 6px 24px rgba(245, 158, 54, 0.28);
     --shadow-glow: 0 0 25px rgba(245, 158, 54, 0.2);
     
     /* Transitions */
@@ -80,12 +93,19 @@
 html {
     font-size: 15px;
     scroll-behavior: smooth;
-    background-color: var(--bg-base);
+    background-color: #090b10;
 }
 
 body {
     font-family: var(--font-sans);
-    background-color: var(--bg-base);
+    background-color: #090b10;
+    background-image:
+        linear-gradient(rgba(5, 7, 12, 0.42), rgba(5, 7, 12, 0.62)),
+        url("../img/substation-sunset.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     color: var(--text-secondary);
     line-height: 1.6;
     min-height: 100vh;
@@ -97,16 +117,16 @@ body {
 
 /* Background Gradients */
 body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 600px;
-    background: radial-gradient(circle 800px at 50% -100px, rgba(0, 102, 255, 0.15), transparent 70%),
-                radial-gradient(circle 600px at 85% 150px, rgba(0, 210, 255, 0.08), transparent 60%);
-    pointer-events: none;
-    z-index: 0;
+    display: none;
+}
+
+/* Reusable Glass Panel Class */
+.glass-panel {
+    background: var(--glass-card);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
 }
 
 /* Typography Helpers */
@@ -346,11 +366,13 @@ code, pre, .font-mono {
 
 .card {
     background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-lg);
     padding: 26px;
-    box-shadow: var(--shadow-sm);
-    transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal), background var(--transition-normal);
     position: relative;
     overflow: hidden;
 }
@@ -358,6 +380,7 @@ code, pre, .font-mono {
 .card:hover {
     border-color: var(--border-active);
     box-shadow: var(--shadow-glow);
+    background: var(--bg-card-hover);
 }
 
 .card-header {
@@ -404,6 +427,8 @@ code, pre, .font-mono {
 
 .stat-card {
     background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-md);
     padding: 20px 22px;
@@ -411,6 +436,14 @@ code, pre, .font-mono {
     flex-direction: column;
     gap: 6px;
     position: relative;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.stat-card:hover {
+    border-color: var(--border-copper);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-copper);
 }
 
 .stat-label {
@@ -670,18 +703,22 @@ code, pre, .font-mono {
     font-size: 14.5px;
     line-height: 1.65;
     word-break: break-word;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .chat-message.assistant .message-bubble {
-    background: rgba(22, 34, 59, 0.6);
-    border: 1px solid var(--border-subtle);
+    background: rgba(16, 22, 34, 0.78);
+    border: 1px solid var(--border-card);
     color: #e2e8f0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
 .chat-message.user .message-bubble {
-    background: linear-gradient(135deg, rgba(0, 102, 255, 0.25), rgba(0, 210, 255, 0.15));
-    border: 1px solid rgba(0, 210, 255, 0.28);
+    background: linear-gradient(135deg, rgba(245, 158, 54, 0.24) 0%, rgba(217, 119, 6, 0.3) 100%);
+    border: 1px solid rgba(245, 158, 54, 0.45);
     color: #ffffff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
 .message-sender {
@@ -966,6 +1003,8 @@ code, pre, .font-mono {
     gap: 0;
     height: 720px;
     background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
@@ -973,7 +1012,9 @@ code, pre, .font-mono {
 }
 
 .voltsage-sidebar {
-    background: rgba(8, 12, 20, 0.95);
+    background: rgba(8, 12, 20, 0.78);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-right: 1px solid var(--border-subtle);
     display: flex;
     flex-direction: column;
@@ -1116,7 +1157,9 @@ code, pre, .font-mono {
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    background: radial-gradient(circle at 50% 0%, rgba(0, 102, 255, 0.04), transparent 70%);
+    background: rgba(8, 11, 17, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .copy-btn {
@@ -1249,13 +1292,14 @@ code, pre, .font-mono {
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;
     min-height: 100vh;
-    background: var(--bg-base);
+    background: transparent;
     overflow-x: hidden;
 }
 
 .split-auth-left {
-    background: linear-gradient(135deg, rgba(8, 11, 16, 0.9) 0%, rgba(8, 11, 16, 0.65) 55%, rgba(245, 158, 54, 0.14) 100%),
-                url('../img/substation-sunset.jpg') center center / cover no-repeat;
+    background: linear-gradient(135deg, rgba(8, 11, 16, 0.82) 0%, rgba(8, 11, 16, 0.52) 55%, rgba(245, 158, 54, 0.12) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-right: 1px solid var(--border-subtle);
     padding: 56px 64px;
     display: flex;
@@ -1299,7 +1343,9 @@ code, pre, .font-mono {
 }
 
 .split-feature-card {
-    background: rgba(17, 26, 46, 0.65);
+    background: rgba(14, 20, 32, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-md);
     padding: 16px;
@@ -1309,7 +1355,8 @@ code, pre, .font-mono {
 .split-feature-card:hover {
     border-color: var(--border-active);
     transform: translateY(-2px);
-    background: rgba(17, 26, 46, 0.85);
+    background: rgba(18, 26, 42, 0.82);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 .split-feature-icon {
@@ -1336,17 +1383,21 @@ code, pre, .font-mono {
     align-items: center;
     justify-content: center;
     padding: 48px 36px;
-    background: var(--bg-surface);
+    background: rgba(8, 11, 17, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 }
 
 .auth-form-card {
     width: 100%;
     max-width: 440px;
     background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-lg);
     padding: 36px 32px;
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
 }
 
 .auth-tab-group {
@@ -1406,7 +1457,14 @@ body.chat-app-body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: #060911;
+    background-color: #090b10;
+    background-image:
+        linear-gradient(rgba(5, 7, 12, 0.42), rgba(5, 7, 12, 0.62)),
+        url("../img/substation-sunset.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     display: flex;
 }
 
@@ -1416,6 +1474,7 @@ body.chat-app-body {
     height: 100%;
     overflow: hidden;
     position: relative;
+    background: transparent;
 }
 
 /* PANEL A: MAIN APPLICATION NAVIGATION SIDEBAR */
@@ -1426,7 +1485,9 @@ body.chat-app-body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    background: #070c16;
+    background: rgba(10, 14, 20, 0.82);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-right: 1px solid var(--border-subtle);
     z-index: 20;
     user-select: none;
@@ -1558,7 +1619,9 @@ body.chat-app-body {
     margin-top: auto;
     border-top: 1px solid var(--border-subtle);
     padding: 12px 14px;
-    background: rgba(6, 10, 18, 0.75);
+    background: rgba(6, 10, 18, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 /* PANEL B: CONVERSATION HISTORY SIDEBAR */
@@ -1569,7 +1632,9 @@ body.chat-app-body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    background: #0b111e;
+    background: rgba(12, 17, 26, 0.74);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-right: 1px solid var(--border-subtle);
     z-index: 10;
 }
@@ -1633,7 +1698,9 @@ body.chat-app-body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    background: #060911;
+    background: rgba(7, 10, 16, 0.42);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     position: relative;
     overflow: hidden;
 }
@@ -1646,8 +1713,9 @@ body.chat-app-body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(8, 13, 22, 0.85);
-    backdrop-filter: blur(10px);
+    background: rgba(10, 14, 22, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     z-index: 5;
 }
 
@@ -1761,7 +1829,9 @@ body.chat-app-body {
 }
 
 .welcome-prompt-card {
-    background: rgba(16, 23, 32, 0.75);
+    background: rgba(14, 19, 28, 0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-sm);
     padding: 13px 15px;
@@ -1796,9 +1866,10 @@ body.chat-app-body {
 .chat-composer-pinned {
     flex-shrink: 0;
     padding: 14px 28px 12px;
-    background: rgba(8, 13, 22, 0.95);
+    background: rgba(9, 13, 20, 0.78);
     border-top: 1px solid var(--border-subtle);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     z-index: 5;
 }
 
@@ -1814,7 +1885,9 @@ body.chat-app-body {
     display: flex;
     gap: 10px;
     align-items: flex-end;
-    background: rgba(12, 18, 30, 0.85);
+    background: rgba(12, 17, 26, 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-md);
     padding: 8px 12px;
@@ -1959,7 +2032,7 @@ body.chat-app-body {
     display: flex;
     min-height: 100vh;
     width: 100%;
-    background: var(--bg-base);
+    background: transparent;
     overflow-x: hidden;
     position: relative;
 }
@@ -1971,7 +2044,9 @@ body.chat-app-body {
     height: 100vh;
     position: sticky;
     top: 0;
-    background: var(--bg-sidebar);
+    background: rgba(10, 13, 19, 0.82);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-right: 1px solid var(--border-subtle);
     display: flex;
     flex-direction: column;
@@ -2089,7 +2164,9 @@ body.chat-app-body {
     margin-top: auto;
     border-top: 1px solid var(--border-subtle);
     padding: 14px 16px;
-    background: rgba(8, 11, 16, 0.9);
+    background: rgba(8, 11, 16, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .app-sidebar-footer .user-profile-row {
@@ -2142,7 +2219,7 @@ body.chat-app-body {
     min-width: 0;
     display: flex;
     flex-direction: column;
-    background: var(--bg-base);
+    background: transparent;
     position: relative;
     overflow-y: auto;
     height: 100vh;
@@ -2151,8 +2228,9 @@ body.chat-app-body {
 /* Cinematic Horizon Banner Header */
 .cinematic-header-banner {
     position: relative;
-    background: linear-gradient(180deg, rgba(8, 11, 16, 0.55) 0%, rgba(8, 11, 16, 0.95) 100%),
-                url('../img/substation-banner.jpg') center top / cover no-repeat;
+    background: rgba(12, 16, 24, 0.68);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border-subtle);
     padding: 24px 32px 20px;
     display: flex;
@@ -2233,7 +2311,9 @@ body.chat-app-body {
 }
 
 .dashboard-kpi-card {
-    background: var(--bg-surface);
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-md);
     padding: 20px 22px;
@@ -2243,6 +2323,7 @@ body.chat-app-body {
     transition: all var(--transition-fast);
     position: relative;
     overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .dashboard-kpi-card:hover {
@@ -2311,14 +2392,16 @@ body.chat-app-body {
 }
 
 .dashboard-widget-card {
-    background: var(--bg-surface);
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-md);
     padding: 22px 24px;
     display: flex;
     flex-direction: column;
     position: relative;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
 .widget-header-row {
@@ -2428,7 +2511,9 @@ body.chat-app-body {
     font-size: 12.5px;
     font-weight: 600;
     border: 1px solid var(--border-card);
-    background: var(--bg-card);
+    background: rgba(14, 19, 28, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     color: var(--text-secondary);
     cursor: pointer;
     transition: all var(--transition-fast);
@@ -2450,6 +2535,8 @@ body.chat-app-body {
 
 .fault-input-card {
     background: var(--bg-input);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-sm);
     padding: 12px 14px;
@@ -2489,7 +2576,9 @@ body.chat-app-body {
     align-items: center;
     text-align: center;
     padding: 24px 16px;
-    background: rgba(18, 26, 36, 0.6);
+    background: rgba(12, 17, 26, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
     margin-bottom: 24px;
@@ -2540,7 +2629,9 @@ body.chat-app-body {
 
 /* Knowledge Base Styles */
 .kb-upload-card {
-    background: var(--bg-surface);
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px dashed rgba(245, 158, 54, 0.35);
     border-radius: var(--radius-md);
     padding: 32px 24px;
@@ -2551,11 +2642,12 @@ body.chat-app-body {
     justify-content: center;
     gap: 12px;
     transition: all var(--transition-fast);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
 .kb-upload-card:hover {
     border-color: var(--copper-primary);
-    background: rgba(245, 158, 54, 0.03);
+    background: rgba(245, 158, 54, 0.08);
 }
 
 .kb-stats-grid {
@@ -2566,12 +2658,15 @@ body.chat-app-body {
 
 .kb-stat-pill {
     background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-sm);
     padding: 14px 16px;
     display: flex;
     align-items: center;
     gap: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
 .document-table {
@@ -2599,7 +2694,9 @@ body.chat-app-body {
 
 /* Checklists Styles */
 .checklist-card {
-    background: var(--bg-surface);
+    background: var(--bg-card);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-md);
     padding: 20px 24px;
@@ -2607,6 +2704,7 @@ body.chat-app-body {
     align-items: center;
     justify-content: space-between;
     transition: all var(--transition-fast);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .checklist-card:hover {
@@ -2630,7 +2728,9 @@ body.chat-app-body {
 }
 
 .arch-module-card {
-    background: var(--bg-surface);
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-md);
     padding: 24px;
@@ -2638,6 +2738,7 @@ body.chat-app-body {
     align-items: flex-start;
     gap: 16px;
     transition: all var(--transition-fast);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
 .arch-module-card:hover {
@@ -2698,6 +2799,12 @@ body.chat-app-body {
     }
     .app-page-content {
         padding: 20px 18px 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    body, body.chat-app-body {
+        background-attachment: scroll;
     }
 }
 

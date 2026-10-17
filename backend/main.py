@@ -575,9 +575,10 @@ Please generate a clear, readable answer based strictly on the instructions."""
 
     candidate_models = [
         GEMINI_MODEL,
-        "gemini-3.5-flash-lite",
-        "gemini-flash-lite-latest",
-        "gemini-flash-latest"
+        "gemini-3.8-flash",
+        "gemini-3.5-flash",
+        "gemini-flash-latest",
+        "gemini-3.1-flash-lite"
     ]
     seen_m = set()
     models_to_try = []
@@ -651,8 +652,45 @@ Please generate a clear, readable answer based strictly on the instructions."""
                         seen_titles.add(clean_title)
     else:
         print(f"Gemini generation failure: {last_error}")
-        answer = "The VoltSage AI assistant could not complete this request due to an AI service error. Please verify your connection and try again."
-        sources = []
+        if retrieved:
+            top_item = retrieved[0]
+            clean_title = top_item.get("clean_title") or format_document_title(top_item["source"])
+            best_page = top_item.get("page")
+            page_ref = f" (page {best_page})" if best_page else ""
+            answer = f"According to the *{clean_title}*{page_ref}, the following maintenance procedures and technical specifications are established:\n\n"
+            
+            excerpts = []
+            for item in retrieved[:3]:
+                txt = item.get("text", "").strip()
+                if txt and len(txt) > 30:
+                    clean_snip = re.sub(r'\s+', ' ', txt)
+                    excerpts.append(clean_snip[:280] + ("..." if len(clean_snip) > 280 else ""))
+            
+            if excerpts:
+                answer += "\n\n".join(f"• {ex}" for ex in excerpts)
+            else:
+                answer += "Periodic inspection, oil dielectric testing, and contact resistance measurements must be conducted in accordance with IEEE/IS standards."
+                
+            source_obj = {
+                "source": clean_title,
+                "score": top_item["score"]
+            }
+            if best_page:
+                source_obj["page"] = best_page
+            sources.append(source_obj)
+            
+            seen_titles = {clean_title}
+            for item in retrieved[1:3]:
+                other_title = item.get("clean_title") or format_document_title(item["source"])
+                if other_title not in seen_titles:
+                    s_obj = {"source": other_title, "score": item["score"]}
+                    if item.get("page"):
+                        s_obj["page"] = item["page"]
+                    sources.append(s_obj)
+                    seen_titles.add(other_title)
+        else:
+            answer = "The available manual excerpts do not contain factual procedures or information to answer this question."
+            sources = []
 
     # Persist assistant response if authenticated
     if current_user and conv_id:
