@@ -537,15 +537,20 @@ Keep the response concise, normally around 3-6 bullet points or a few short para
     # --------------------------------------------------------
 
     try:
-        response = gemini_client.models.generate_content(
-            model=GEMINI_MODEL,
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                system_instruction=system_instruction,
-                temperature=0.2,
-                max_output_tokens=2500
+        import concurrent.futures
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(
+                gemini_client.models.generate_content,
+                model=GEMINI_MODEL,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=system_instruction,
+                    temperature=0.2,
+                    max_output_tokens=2500
+                )
             )
-        )
+            response = future.result(timeout=25)
+
         if response.text and response.text.strip():
             answer = response.text.strip()
             if response.candidates and response.candidates[0].finish_reason:

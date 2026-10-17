@@ -451,36 +451,44 @@ window.startNewChat = function() {
 function renderWelcomeMessage() {
     if (!chatMessages) return;
     chatMessages.innerHTML = `
-        <div style="text-align: center; max-width: 680px; margin: 30px auto; padding: 20px;">
-            <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: var(--radius-md); background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(0, 102, 255, 0.25)); border: 1px solid var(--border-active); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--accent-cyan); box-shadow: 0 0 25px rgba(0, 210, 255, 0.25);">
-                ⚡
-            </div>
-            <h1 style="font-size: 26px; font-weight: 800; color: #ffffff; margin-bottom: 10px; letter-spacing: -0.01em;">
-                Let’s solve substation maintenance challenges
-            </h1>
-            <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 28px;">
-                Ask technical questions about high-voltage transformers, circuit breakers, busbar clearances, or protective relays. Technical responses are directly grounded in the connected maintenance knowledge base (IS 10028, IEEE C37, NEMA AB 4).
+        <div class="chat-welcome-container">
+            <div class="welcome-icon-glow">⚡</div>
+            <h1 class="welcome-title">Let’s solve substation maintenance challenges</h1>
+            <p class="welcome-subtitle">
+                Ask technical questions about high-voltage transformers, circuit breakers, busbar clearances, or protective relays. Technical responses are directly grounded in indexed maintenance standards (IS 10028, IEEE C37, NEMA AB 4).
             </p>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; text-align: left;">
-                <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='What are the safety precautions for circuit breaker maintenance?'; sendMessage();">
-                    <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">🛡️ Circuit Breaker Maintenance</div>
-                    <div style="font-size: 11.5px; color: var(--text-muted);">Essential LOTO precautions and contact resistance procedures</div>
+            <div class="welcome-prompt-grid">
+                <div class="welcome-prompt-card" onclick="document.getElementById('maintenance-input').value='What are the safety precautions for circuit breaker maintenance?'; sendMessage();">
+                    <div class="prompt-card-header">
+                        <span>🛡️</span>
+                        <span>Circuit Breaker Maintenance</span>
+                    </div>
+                    <p class="prompt-desc">Essential LOTO precautions, grounding procedures, and contact resistance limits.</p>
                 </div>
 
-                <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='What causes Buchholz relay trips in power transformers?'; sendMessage();">
-                    <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">⚡ Transformer DGA & Buchholz</div>
-                    <div style="font-size: 11.5px; color: var(--text-muted);">Causes of gas accumulation and oil BDV breakdown limits</div>
+                <div class="welcome-prompt-card" onclick="document.getElementById('maintenance-input').value='What causes Buchholz relay trips in power transformers?'; sendMessage();">
+                    <div class="prompt-card-header">
+                        <span>⚡</span>
+                        <span>Transformer DGA & Buchholz</span>
+                    </div>
+                    <p class="prompt-desc">Internal arc gas accumulation, oil BDV dielectric breakdown, and moisture ingress.</p>
                 </div>
 
-                <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='Explain the difference between LG, LL, LLG, and LLL symmetrical substation faults.'; sendMessage();">
-                    <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">🔍 3-Phase Fault Diagnosis</div>
-                    <div style="font-size: 11.5px; color: var(--text-muted);">Understanding symmetrical vs asymmetrical transmission faults</div>
+                <div class="welcome-prompt-card" onclick="document.getElementById('maintenance-input').value='Explain the difference between LG, LL, LLG, and LLL symmetrical substation faults.'; sendMessage();">
+                    <div class="prompt-card-header">
+                        <span>🔍</span>
+                        <span>3-Phase Fault Diagnosis</span>
+                    </div>
+                    <p class="prompt-desc">Symmetrical 3-phase faults vs asymmetrical line-to-ground characteristics.</p>
                 </div>
 
-                <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='What are the inspection steps for SF6 gas circuit breakers?'; sendMessage();">
-                    <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">📋 SF6 Breaker Inspection</div>
-                    <div style="font-size: 11.5px; color: var(--text-muted);">Pressure gauge threshold checks and moisture verification</div>
+                <div class="welcome-prompt-card" onclick="document.getElementById('maintenance-input').value='What are the inspection steps for SF6 gas circuit breakers?'; sendMessage();">
+                    <div class="prompt-card-header">
+                        <span>📋</span>
+                        <span>SF6 Breaker Inspection</span>
+                    </div>
+                    <p class="prompt-desc">Density monitor pressure thresholds, gas moisture dew point, and leak detection.</p>
                 </div>
             </div>
         </div>

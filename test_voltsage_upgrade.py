@@ -154,7 +154,7 @@ def test_auth_and_isolation():
     r = session_a.post(f"{BASE_URL}/chat", json={
         "message": "What is the procedure for transformer oil sampling according to IS 10028?",
         "conversation_id": conv_id
-    }, timeout=30)
+    }, timeout=60)
     assert r.status_code == 200, f"Expected 200 from chat, got {r.status_code}"
     chat_resp = r.json()
     answer_text = chat_resp.get("answer") or chat_resp.get("response", "")

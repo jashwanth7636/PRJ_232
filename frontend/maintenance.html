@@ -5,65 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VoltSage AI | Maintenance Copilot — Electrical Substations</title>
     <link rel="stylesheet" href="css/industrial.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 </head>
-<body>
+<body class="chat-app-body">
 
-    <!-- TOP NAVBAR -->
-    <header class="navbar">
-        <a href="index.html" class="brand">
-            <div class="brand-icon">⚡</div>
-            <div class="brand-text">
-                <div class="brand-title">
-                    VOLTSAGE AI
-                    <span class="brand-badge">PRJ_232</span>
-                </div>
-                <div class="brand-subtitle">ELECTRICAL SUBSTATION INTELLIGENCE</div>
-            </div>
-        </a>
+    <!-- THREE-PANEL CHATGPT-STYLE WORKSPACE (100% Viewport Height) -->
+    <div class="chat-app-layout">
 
-        <ul class="nav-links">
-            <li class="nav-item"><a href="index.html" class="nav-link">Dashboard</a></li>
-            <li class="nav-item"><a href="maintenance.html" class="nav-link active">Maintenance AI</a></li>
-            <li class="nav-item"><a href="fault-analysis.html" class="nav-link">Fault Analysis</a></li>
-            <li class="nav-item"><a href="knowledge-base.html" class="nav-link">Knowledge Base</a></li>
-            <li class="nav-item"><a href="checklists.html" class="nav-link">Checklists</a></li>
-            <li class="nav-item"><a href="settings.html" class="nav-link">Settings</a></li>
-            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-        </ul>
-
-        <div class="nav-right" id="navbar-auth-section">
-            <div class="status-pill">
-                <span class="status-dot"></span> Copilot Online
-            </div>
-        </div>
-    </header>
-
-    <!-- MAIN PAGE CONTAINER -->
-    <main class="page-container" style="max-width: 1240px; padding: 24px 0 60px;">
-
-        <!-- PAGE HEADER -->
-        <div class="page-header" style="margin-bottom: 20px;">
-            <div class="badge-tag">
-                <span>RAG COPILOT & PERSISTENT CONVERSATION HISTORY</span>
-            </div>
-            <h1 class="page-title">VoltSage AI Substation Copilot</h1>
-            <p class="page-subtitle">
-                Grounded conversational decision-support for electrical engineers, technicians, and operators. Powered by Google Gemini Flash and indexed standards (IS 10028, IEEE C37, NEMA AB 4).
-            </p>
-        </div>
-
-        <!-- TWO-PANEL CHAT APPLICATION -->
-        <div class="voltsage-chat-layout">
+        <!-- PANEL A: MAIN APPLICATION NAVIGATION SIDEBAR -->
+        <aside class="panel-a-nav" id="panel-a-nav">
             
-            <!-- LEFT PANEL: RECENT CONVERSATIONS SIDEBAR -->
-            <aside class="voltsage-sidebar">
-                
-                <div class="sidebar-header">
-                    <button type="button" class="new-chat-btn" id="new-chat-btn">
-                        <span>+</span>
-                        <span>New Chat</span>
+            <!-- Brand Header -->
+            <a href="index.html" class="panel-a-brand" title="VoltSage AI Operations Dashboard">
+                <div class="brand-icon">⚡</div>
+                <div class="brand-text">
+                    <div class="brand-title">
+                        VOLTSAGE AI
+                        <span class="brand-badge">PRJ_232</span>
+                    </div>
+                    <div class="brand-subtitle">SUBSTATION INTELLIGENCE</div>
+                </div>
+            </a>
+
+            <!-- Prominent Orange New Chat Button -->
+            <div class="panel-a-action">
+                <button type="button" class="panel-a-new-chat-btn" id="new-chat-btn" onclick="startNewChat()">
+                    <span style="font-size: 16px; line-height: 1;">+</span>
+                    <span>New Chat</span>
+                </button>
+            </div>
+
+            <!-- Workspace Application Navigation Links -->
+            <nav class="panel-a-nav-menu">
+                <a href="index.html" class="panel-a-nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-label">Dashboard</span>
+                </a>
+                <a href="maintenance.html" class="panel-a-nav-item active">
+                    <span class="nav-icon">💬</span>
+                    <span class="nav-label">Maintenance AI</span>
+                </a>
+                <a href="fault-analysis.html" class="panel-a-nav-item">
+                    <span class="nav-icon">⚡</span>
+                    <span class="nav-label">Fault Analysis</span>
+                </a>
+                <a href="knowledge-base.html" class="panel-a-nav-item">
+                    <span class="nav-icon">📚</span>
+                    <span class="nav-label">Knowledge Base</span>
+                </a>
+                <a href="checklists.html" class="panel-a-nav-item">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-label">Checklists</span>
+                </a>
+                <a href="settings.html" class="panel-a-nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">Settings</span>
+                </a>
+                <a href="about.html" class="panel-a-nav-item">
+                    <span class="nav-icon">ℹ️</span>
+                    <span class="nav-label">About</span>
+                </a>
+            </nav>
+
+            <!-- User Profile & Sign Out at Bottom -->
+            <div class="panel-a-footer" id="sidebar-user-footer">
+                <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 10px;">
+                    <div style="display: flex; align-items: center; gap: 8px; overflow: hidden;">
+                        <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--accent-gradient); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0;">
+                            US
+                        </div>
+                        <div style="overflow: hidden; line-height: 1.25;">
+                            <div style="font-size: 12px; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                User
+                            </div>
+                            <div style="font-size: 10px; color: var(--accent-cyan); font-weight: 700;">
+                                Role: User
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline" style="padding: 3px 8px; font-size: 11px;" onclick="VoltSageAuth.logout()">
+                        Sign Out
                     </button>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- PANEL B: CONVERSATION HISTORY SIDEBAR -->
+        <aside class="panel-b-history" id="panel-b-history">
+            
+            <!-- History Header & Search -->
+            <div class="panel-b-header">
+                <div class="panel-b-title-row">
+                    <span class="panel-b-title">Chat History</span>
+                    <span class="status-pill" style="padding: 2px 8px; font-size: 10px;">
+                        <span class="status-dot"></span> Saved
+                    </span>
+                </div>
+                <div class="panel-b-search">
+                    <span class="search-icon">🔍</span>
                     <input 
                         type="text" 
                         id="conv-search-input" 
@@ -71,214 +111,137 @@
                         placeholder="Search conversations..."
                     >
                 </div>
+            </div>
 
-                <!-- Primary Workspace Navigation Links in Sidebar -->
-                <div class="sidebar-nav-section">
-                    <a href="maintenance.html" class="sidebar-nav-link active">
-                        <span>💬</span> <span>Chat Copilot</span>
-                    </a>
-                    <a href="fault-analysis.html" class="sidebar-nav-link">
-                        <span>⚡</span> <span>Fault Analysis</span>
-                    </a>
-                    <a href="knowledge-base.html" class="sidebar-nav-link">
-                        <span>📚</span> <span>Knowledge Base</span>
-                    </a>
-                    <a href="checklists.html" class="sidebar-nav-link">
-                        <span>📋</span> <span>Maintenance Checklists</span>
-                    </a>
-                    <a href="index.html" class="sidebar-nav-link">
-                        <span>📊</span> <span>Operations Dashboard</span>
-                    </a>
-                    <a href="settings.html" class="sidebar-nav-link">
-                        <span>⚙️</span> <span>Diagnostics & Settings</span>
-                    </a>
-                    <a href="about.html" class="sidebar-nav-link">
-                        <span>ℹ️</span> <span>About Architecture</span>
-                    </a>
+            <!-- Scrollable Grouped Conversations List -->
+            <div class="conversations-list" id="conversations-list">
+                <div style="padding: 24px 12px; text-align: center; color: var(--text-muted); font-size: 12px;">
+                    Loading conversations...
                 </div>
+            </div>
 
-                <div class="conversations-list" id="conversations-list">
-                    <div style="padding: 20px 10px; text-align: center; color: var(--text-muted); font-size: 12px;">
-                        Loading conversations...
+        </aside>
+
+        <!-- PANEL C: MAIN CONVERSATION WORKSPACE -->
+        <main class="panel-c-workspace">
+            
+            <!-- Compact Viewport Topbar -->
+            <header class="chat-topbar">
+                <div class="topbar-left">
+                    <button type="button" class="mobile-chat-toggle" id="mobile-toggle-btn" title="Toggle Sidebars" onclick="toggleMobilePanels()">
+                        ☰
+                    </button>
+                    <div class="chat-topic-icon">💬</div>
+                    <div class="topbar-meta">
+                        <h2 class="active-title" id="active-conversation-title">
+                            New Substation Discussion
+                        </h2>
+                        <div class="active-status">
+                            <span class="status-dot"></span>
+                            <span>884 Chunks Grounded • Gemini Flash RAG</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="sidebar-user-footer" id="sidebar-user-footer">
-                    <div style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--text-secondary);">
-                        <span style="font-size: 14px;">⚡</span>
-                        <span>User Session</span>
-                    </div>
-                    <button type="button" class="btn btn-outline" style="padding: 4px 8px; font-size: 11px;" onclick="VoltSageAuth.logout()">Sign Out</button>
+                <div class="topbar-actions">
+                    <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px;" onclick="startNewChat()">
+                        <span>+</span> <span>New Chat</span>
+                    </button>
+                    <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px;" onclick="if(confirm('Clear screen view?')){document.querySelector('.chat-messages').innerHTML=''; renderWelcomeMessage();}">
+                        <span>Clear</span>
+                    </button>
                 </div>
+            </header>
 
-            </aside>
-
-            <!-- RIGHT PANEL: ACTIVE CHAT WINDOW -->
-            <div class="chat-panel-main">
+            <!-- Scrollable Chat Messages Area -->
+            <div class="chat-messages" id="chat-messages">
                 
-                <!-- Chat Window Header -->
-                <div style="padding: 14px 24px; background: rgba(7, 11, 18, 0.75); border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <div style="width: 32px; height: 32px; border-radius: var(--radius-sm); background: rgba(0, 210, 255, 0.12); border: 1px solid rgba(0, 210, 255, 0.25); display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--accent-cyan);">
-                            💬
-                        </div>
-                        <div>
-                            <div id="active-conversation-title" style="font-size: 14px; font-weight: 700; color: #ffffff;">
-                                New Substation Discussion
-                            </div>
-                            <div style="font-size: 11px; color: var(--text-muted);">
-                                884 Technical Chunks • TF-IDF Vector Retrieval Active
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px;" onclick="startNewChat()">
-                            + New Chat
-                        </button>
-                        <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px;" onclick="if(confirm('Clear screen?')){document.querySelector('.chat-messages').innerHTML='';}">
-                            Clear Screen
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Chat Message Stream -->
-                <div class="chat-messages" style="flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 18px;">
-                    
-                    <!-- Default Initial Welcome Card -->
-                    <div style="text-align: center; max-width: 680px; margin: 30px auto; padding: 20px;">
-                        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: var(--radius-md); background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(0, 102, 255, 0.25)); border: 1px solid var(--border-active); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--accent-cyan); box-shadow: 0 0 25px rgba(0, 210, 255, 0.25);">
-                            ⚡
-                        </div>
-                        <h1 style="font-size: 26px; font-weight: 800; color: #ffffff; margin-bottom: 10px; letter-spacing: -0.01em;">
-                            Let’s solve substation maintenance challenges
-                        </h1>
-                        <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 28px;">
-                            Ask technical questions about high-voltage transformers, circuit breakers, busbar clearances, or protective relays. Technical responses are directly grounded in the connected maintenance knowledge base (IS 10028, IEEE C37, NEMA AB 4).
-                        </p>
-
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; text-align: left;">
-                            <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='What are the safety precautions for circuit breaker maintenance?'; sendMessage();">
-                                <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">🛡️ Circuit Breaker Maintenance</div>
-                                <div style="font-size: 11.5px; color: var(--text-muted);">Essential LOTO precautions and contact resistance procedures</div>
-                            </div>
-
-                            <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='What causes Buchholz relay trips in power transformers?'; sendMessage();">
-                                <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">⚡ Transformer DGA & Buchholz</div>
-                                <div style="font-size: 11.5px; color: var(--text-muted);">Causes of gas accumulation and oil BDV breakdown limits</div>
-                            </div>
-
-                            <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='Explain the difference between LG, LL, LLG, and LLL symmetrical substation faults.'; sendMessage();">
-                                <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">🔍 3-Phase Fault Diagnosis</div>
-                                <div style="font-size: 11.5px; color: var(--text-muted);">Understanding symmetrical vs asymmetrical transmission faults</div>
-                            </div>
-
-                            <div class="split-feature-card" style="cursor: pointer;" onclick="document.getElementById('maintenance-input').value='What are the inspection steps for SF6 gas circuit breakers?'; sendMessage();">
-                                <div style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">📋 SF6 Breaker Inspection</div>
-                                <div style="font-size: 11.5px; color: var(--text-muted);">Pressure gauge threshold checks and moisture verification</div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Suggested Prompt Pills -->
-                <div class="suggested-prompts">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center;">RECOMMENDED:</span>
-                    
-                    <button type="button" class="prompt-pill" data-question="What are the safety precautions for circuit breaker maintenance?">
-                        Circuit breaker safety precautions
-                    </button>
-                    
-                    <button type="button" class="prompt-pill" data-question="How often should power transformer oil undergo DGA testing?">
-                        Transformer oil DGA testing intervals
-                    </button>
-                    
-                    <button type="button" class="prompt-pill" data-question="What causes Buchholz relay trips in power transformers?">
-                        Buchholz relay trip causes
-                    </button>
-
-                    <button type="button" class="prompt-pill" data-question="What are the inspection steps for SF6 gas circuit breakers?">
-                        SF6 breaker inspection steps
-                    </button>
-                </div>
-
-                <!-- Bottom Message Composer -->
-                <div style="padding: 16px 24px; background: rgba(7, 11, 18, 0.9); border-top: 1px solid var(--border-subtle);">
-                    <div style="display: flex; gap: 12px; align-items: flex-end;">
-                        <div style="flex: 1; position: relative;">
-                            <textarea 
-                                id="maintenance-input" 
-                                class="form-input" 
-                                placeholder="Ask a substation maintenance, testing, or safety question..." 
-                                rows="2" 
-                                style="resize: none; font-size: 13.5px; padding-right: 14px; line-height: 1.5;"
-                            ></textarea>
-                        </div>
-                        <button id="send-message" class="btn btn-primary" style="height: 52px; min-width: 105px; justify-content: center; font-size: 14px;">
-                            <span>Send</span>
-                            <span>↵</span>
-                        </button>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 11px; color: var(--text-muted);">
-                        <span>Press <strong>Enter</strong> to send • <strong>Shift + Enter</strong> for a new line</span>
-                        <span>Safety Mandate: LOTO & NFPA 70E Applicable</span>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </main>
-
-    <!-- SHARED INDUSTRIAL FOOTER -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-title">VoltSage AI • PRJ_232</div>
-                    <p class="footer-desc">
-                        AI-powered electrical substation fault classification and maintenance guidance system. Designed for final-year B.Tech engineering evaluation with zero mock data and real ML inference.
+                <!-- Default Centered Welcome Card (Screenshot Matching) -->
+                <div class="chat-welcome-container">
+                    <div class="welcome-icon-glow">⚡</div>
+                    <h1 class="welcome-title">Let’s solve substation maintenance challenges</h1>
+                    <p class="welcome-subtitle">
+                        Ask technical questions about high-voltage transformers, circuit breakers, busbar clearances, or protective relays. Technical responses are directly grounded in indexed maintenance standards (IS 10028, IEEE C37, NEMA AB 4).
                     </p>
-                </div>
-                <div class="footer-col">
-                    <div class="footer-heading">NAVIGATION</div>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Operations Dashboard</a></li>
-                        <li><a href="maintenance.html">Maintenance Copilot</a></li>
-                        <li><a href="fault-analysis.html">3-Phase Fault Classifier</a></li>
-                        <li><a href="knowledge-base.html">Technical Knowledge Base</a></li>
-                        <li><a href="checklists.html">Maintenance Checklists</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <div class="footer-heading">STANDARDS & REFS</div>
-                    <ul class="footer-links">
-                        <li><a href="https://standards.ieee.org" target="_blank" rel="noopener">IEEE C37.04 Breakers</a></li>
-                        <li><a href="https://standardsbis.bsbedge.com" target="_blank" rel="noopener">IS 10028 Power Transformers</a></li>
-                        <li><a href="https://www.iec.ch" target="_blank" rel="noopener">IEC 60255 Protection Relays</a></li>
-                        <li><a href="https://www.nema.org" target="_blank" rel="noopener">NEMA AB 4 Molded Breakers</a></li>
-                        <li><a href="settings.html">System Diagnostics</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <div class="footer-heading">SYSTEM TELEMETRY</div>
-                    <div style="font-size: 12px; color: var(--text-muted); line-height: 1.8;">
-                        <div>Identity: <span style="color: #fff;">VoltSage AI (PRJ_232)</span></div>
-                        <div>Model: <span style="color: #fff;">Random Forest (100 Trees)</span></div>
-                        <div>Validation Acc: <span style="color: var(--accent-cyan);">86.94%</span></div>
-                        <div>RAG Index: <span style="color: #fff;">884 Chunks (TF-IDF)</span></div>
-                        <div>Backend: <span style="color: var(--success);">FastAPI / SQLite</span></div>
+
+                    <div class="welcome-prompt-grid">
+                        <div class="welcome-prompt-card" onclick="document.getElementById('maintenance-input').value='What are the safety precautions for circuit breaker maintenance?'; sendMessage();">
+                            <div class="prompt-card-header">
+                                <span>🛡️</span>
+                                <span>Circuit Breaker Maintenance</span>
+                            </div>
+                            <p class="prompt-desc">Essential LOTO precautions, grounding procedures, and contact resistance limits.</p>
+                        </div>
+
+                        <div class="welcome-prompt-card" onclick="document.getElementById('maintenance-input').value='What causes Buchholz relay trips in power transformers?'; sendMessage();">
+                            <div class="prompt-card-header">
+                                <span>⚡</span>
+                                <span>Transformer DGA & Buchholz</span>
+                            </div>
+                            <p class="prompt-desc">Internal arc gas accumulation, oil BDV dielectric breakdown, and moisture ingress.</p>
+                        </div>
+
+                        <div class="welcome-prompt-card" onclick="document.getElementById('maintenance-input').value='Explain the difference between LG, LL, LLG, and LLL symmetrical substation faults.'; sendMessage();">
+                            <div class="prompt-card-header">
+                                <span>🔍</span>
+                                <span>3-Phase Fault Diagnosis</span>
+                            </div>
+                            <p class="prompt-desc">Symmetrical 3-phase faults vs asymmetrical line-to-ground characteristics.</p>
+                        </div>
+
+                        <div class="welcome-prompt-card" onclick="document.getElementById('maintenance-input').value='What are the inspection steps for SF6 gas circuit breakers?'; sendMessage();">
+                            <div class="prompt-card-header">
+                                <span>📋</span>
+                                <span>SF6 Breaker Inspection</span>
+                            </div>
+                            <p class="prompt-desc">Density monitor pressure thresholds, gas moisture dew point, and leak detection.</p>
+                        </div>
                     </div>
                 </div>
+
             </div>
-            <div class="footer-bottom">
-                <span>© 2026 VoltSage AI • PRJ_232 — Final-Year B.Tech Major Project. All Rights Reserved.</span>
-                <span>Industrial Engineering SCADA Interface v2.5</span>
-            </div>
-        </div>
-    </footer>
+
+            <!-- Fixed Bottom Composer Pinned to Viewport Bottom -->
+            <footer class="chat-composer-pinned">
+                <div class="composer-container">
+                    <div class="composer-input-wrapper">
+                        <textarea 
+                            id="maintenance-input" 
+                            class="composer-textarea" 
+                            placeholder="Ask a substation maintenance, testing, or safety question..." 
+                            rows="2"
+                        ></textarea>
+                        <button type="button" id="send-message" class="composer-send-btn" title="Send Question (Enter)">
+                            <span>Send</span>
+                            <span style="font-size: 14px;">↵</span>
+                        </button>
+                    </div>
+                    <div class="composer-footer-note">
+                        <span>Press <strong>Enter</strong> to send • <strong>Shift + Enter</strong> for a new line</span>
+                        <span>VoltSage AI may provide engineering guidance. Verify with standard operating procedures.</span>
+                    </div>
+                </div>
+            </footer>
+
+        </main>
+
+    </div>
+
+    <!-- MOBILE DRAWER TOGGLE SCRIPT -->
+    <script>
+        function toggleMobilePanels() {
+            const panelA = document.getElementById('panel-a-nav');
+            const panelB = document.getElementById('panel-b-history');
+            if (!panelA.classList.contains('mobile-open') && !panelB.classList.contains('mobile-open')) {
+                panelB.classList.add('mobile-open');
+            } else if (panelB.classList.contains('mobile-open')) {
+                panelB.classList.remove('mobile-open');
+                panelA.classList.add('mobile-open');
+            } else {
+                panelA.classList.remove('mobile-open');
+            }
+        }
+    </script>
 
     <!-- CONTROLLER SCRIPTS -->
     <script src="js/auth.js"></script>
