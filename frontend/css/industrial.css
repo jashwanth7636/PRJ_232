@@ -1493,16 +1493,6 @@ body.chat-app-body {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    background: linear-gradient(135deg, #ff6b35 0%, #f97316 100%);
-    border: 1px solid rgba(255, 120, 73, 0.6);
-    color: #ffffff;
-    padding: 10px 14px;
-.panel-a-new-chat-btn {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
     padding: 10px 16px;
     background: var(--copper-gradient);
     color: #080B10;
@@ -1869,11 +1859,6 @@ body.chat-app-body {
     box-shadow: 0 6px 20px var(--copper-glow-strong);
     transform: translateY(-1px);
     color: #080B10;
-}
-
-.composer-send-btn:hover {
-    box-shadow: 0 0 16px rgba(0, 210, 255, 0.4);
-    transform: translateY(-1px);
 }
 
 .composer-send-btn:disabled {
