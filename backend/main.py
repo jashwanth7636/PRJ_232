@@ -6,16 +6,19 @@ import joblib
 import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, UploadFile, File
+from typing import Optional, List, Dict, Any
+from fastapi import FastAPI, HTTPException, UploadFile, File, Request, Response, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from pypdf import PdfReader
 from google import genai
 from google.genai import types
+
+from backend import database
 
 
 # ============================================================
@@ -41,27 +44,36 @@ GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-flash-latest")
 # ============================================================
 
 app = FastAPI(
-    title="PRJ_232 Substation AI",
+    title="VoltSage AI — PRJ_232",
     description="AI-Powered Maintenance Chatbot for Electrical Substations",
-    version="1.0"
+    version="2.0"
 )
+
+# CORS setup with support for local session cookies
+ALLOWED_ORIGINS = [
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+    "http://127.0.0.1:3000",
+    "http://localhost:3000",
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
 # ============================================================
-# REQUEST MODELS
+# REQUEST & RESPONSE MODELS
 # ============================================================
 
 class ChatRequest(BaseModel):
     message: str
     history: list = []
+    conversation_id: Optional[str] = None
 
 
 class FaultPredictionRequest(BaseModel):
@@ -71,6 +83,57 @@ class FaultPredictionRequest(BaseModel):
     Va: float
     Vb: float
     Vc: float
+
+
+class RegisterRequest(BaseModel):
+    email: str
+    full_name: str
+    password: str
+
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+class ConversationCreateRequest(BaseModel):
+    title: Optional[str] = "New Conversation"
+
+
+class ConversationRenameRequest(BaseModel):
+    title: str
+
+
+# ============================================================
+# AUTHENTICATION DEPENDENCY
+# ============================================================
+
+def get_current_user_optional(request: Request) -> Optional[Dict[str, Any]]:
+    # 1. Check HttpOnly cookie
+    token = request.cookies.get("voltsage_session")
+
+    # 2. Check Authorization header
+    if not token:
+        auth_header = request.headers.get("Authorization")
+        if auth_header and auth_header.startswith("Bearer "):
+            token = auth_header[7:].strip()
+
+    if token:
+        user = database.validate_session(token)
+        if user:
+            return user
+    return None
+
+
+def get_current_user(request: Request) -> Dict[str, Any]:
+    user = get_current_user_optional(request)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authentication required. Please sign in to access this resource."
+        )
+    return user
+
 
 
 # ============================================================
@@ -192,20 +255,148 @@ def health():
 
 
 # ============================================================
+# AUTHENTICATION ENDPOINTS
+# ============================================================
+
+@app.post("/api/auth/register", status_code=status.HTTP_201_CREATED)
+def register(req: RegisterRequest, response: Response):
+    try:
+        user = database.create_user(req.email, req.full_name, req.password)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    token = database.create_session(user["id"])
+    response.set_cookie(
+        key="voltsage_session",
+        value=token,
+        httponly=True,
+        max_age=7 * 86400,
+        samesite="lax",
+        secure=False
+    )
+    return {
+        "status": "success",
+        "message": "Registration successful",
+        "user": user,
+        "token": token
+    }
+
+
+@app.post("/api/auth/login")
+def login(req: LoginRequest, response: Response):
+    user = database.authenticate_user(req.email, req.password)
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid email address or password.")
+
+    token = database.create_session(user["id"])
+    response.set_cookie(
+        key="voltsage_session",
+        value=token,
+        httponly=True,
+        max_age=7 * 86400,
+        samesite="lax",
+        secure=False
+    )
+    return {
+        "status": "success",
+        "message": "Login successful",
+        "user": user,
+        "token": token
+    }
+
+
+@app.post("/api/auth/logout")
+def logout(request: Request, response: Response):
+    token = request.cookies.get("voltsage_session")
+    if not token:
+        auth_header = request.headers.get("Authorization")
+        if auth_header and auth_header.startswith("Bearer "):
+            token = auth_header[7:].strip()
+
+    if token:
+        database.invalidate_session(token)
+
+    response.delete_cookie(key="voltsage_session")
+    return {"status": "success", "message": "Successfully logged out."}
+
+
+@app.get("/api/auth/me")
+def get_me(current_user: Dict[str, Any] = Depends(get_current_user)):
+    return {"user": current_user}
+
+
+# ============================================================
+# CONVERSATION MANAGEMENT ENDPOINTS (PROTECTED)
+# ============================================================
+
+@app.get("/api/conversations")
+def get_conversations(current_user: Dict[str, Any] = Depends(get_current_user)):
+    convs = database.list_conversations(current_user["id"])
+    return {"conversations": convs}
+
+
+@app.post("/api/conversations", status_code=status.HTTP_201_CREATED)
+def new_conversation(req: ConversationCreateRequest, current_user: Dict[str, Any] = Depends(get_current_user)):
+    conv = database.create_conversation(current_user["id"], req.title or "New Conversation")
+    return {"status": "success", "conversation": conv}
+
+
+@app.get("/api/conversations/{conv_id}")
+def get_conversation_details(conv_id: str, current_user: Dict[str, Any] = Depends(get_current_user)):
+    conv = database.get_conversation(conv_id, current_user["id"])
+    if not conv:
+        raise HTTPException(status_code=404, detail="Conversation not found or access denied.")
+    return {"conversation": conv}
+
+
+@app.put("/api/conversations/{conv_id}")
+def rename_conversation_endpoint(conv_id: str, req: ConversationRenameRequest, current_user: Dict[str, Any] = Depends(get_current_user)):
+    ok = database.rename_conversation(conv_id, current_user["id"], req.title)
+    if not ok:
+        raise HTTPException(status_code=404, detail="Conversation not found or title invalid.")
+    return {"status": "success", "message": "Conversation renamed successfully."}
+
+
+@app.delete("/api/conversations/{conv_id}")
+def delete_conversation_endpoint(conv_id: str, current_user: Dict[str, Any] = Depends(get_current_user)):
+    ok = database.delete_conversation(conv_id, current_user["id"])
+    if not ok:
+        raise HTTPException(status_code=404, detail="Conversation not found or access denied.")
+    return {"status": "success", "message": "Conversation deleted successfully."}
+
+
+# ============================================================
 # CHAT
 # ============================================================
 
 @app.post("/chat")
-def chat(request: ChatRequest):
+def chat(request: ChatRequest, http_request: Request):
 
     user_message = request.message.strip()
 
     if not user_message:
-
         return {
             "answer": "Please enter a question.",
             "sources": []
         }
+
+    # Optional authenticated user check & conversation linking
+    current_user = get_current_user_optional(http_request)
+    conv_id = request.conversation_id
+
+    if current_user:
+        if not conv_id:
+            title = user_message[:45].strip()
+            new_conv = database.create_conversation(current_user["id"], title)
+            conv_id = new_conv["id"]
+        else:
+            existing = database.get_conversation(conv_id, current_user["id"])
+            if not existing:
+                title = user_message[:45].strip()
+                new_conv = database.create_conversation(current_user["id"], title)
+                conv_id = new_conv["id"]
+
+        database.add_message_to_conversation(conv_id, "user", user_message)
 
 
     # --------------------------------------------------------
@@ -280,9 +471,9 @@ def chat(request: ChatRequest):
     # --------------------------------------------------------
 
     system_instruction = """
-You are the AI maintenance assistant for an electrical substation.
+You are VoltSage AI, the intelligent maintenance copilot for electrical substations.
 
-Project: PRJ_232 - AI-Powered Maintenance Chatbot for Electrical Substations.
+Project: PRJ_232 - VoltSage AI: AI-Powered Maintenance Chatbot for Electrical Substations.
 
 Your job is to communicate naturally and help users understand:
 
@@ -365,7 +556,7 @@ Keep the response concise, normally around 3-6 bullet points or a few short para
             bullets = "\n\n".join([f"• **From {item['source']}:** {clean_text(item['text'])[:300]}..." for item in retrieved])
             answer = f"The generative AI service encountered a temporary error ({e}), but here is technical information retrieved directly from the substation manuals:\n\n{bullets}"
         else:
-            answer = "The substation AI assistant could not complete this request due to a connection or API error. Please verify your GEMINI_API_KEY and internet connection, then try again."
+            answer = "The VoltSage AI assistant could not complete this request due to a connection or API error. Please verify your GEMINI_API_KEY and internet connection, then try again."
 
 
     # --------------------------------------------------------
@@ -389,11 +580,19 @@ Keep the response concise, normally around 3-6 bullet points or a few short para
 
             seen_sources.add(source)
 
+    # Persist assistant response if authenticated
+    if current_user and conv_id:
+        sources_json = json.dumps(sources) if sources else None
+        database.add_message_to_conversation(conv_id, "assistant", answer, sources_json)
 
-    return {
+    res = {
         "answer": answer,
         "sources": sources
     }
+    if conv_id:
+        res["conversation_id"] = conv_id
+
+    return res
 
 
 # ============================================================

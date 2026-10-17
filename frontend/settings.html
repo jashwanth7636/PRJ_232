@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRJ_232 | System Settings & Diagnostics</title>
+    <title>VoltSage AI | System Settings & Diagnostics — PRJ_232</title>
     <link rel="stylesheet" href="css/industrial.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 </head>
 <body>
 
@@ -15,10 +15,10 @@
             <div class="brand-icon">⚡</div>
             <div class="brand-text">
                 <div class="brand-title">
-                    SUBSTATION AI
+                    VOLTSAGE AI
                     <span class="brand-badge">PRJ_232</span>
                 </div>
-                <div class="brand-subtitle">ELECTRICAL SCADA INTELLIGENCE</div>
+                <div class="brand-subtitle">ELECTRICAL SUBSTATION INTELLIGENCE</div>
             </div>
         </a>
 
@@ -32,8 +32,8 @@
             <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
         </ul>
 
-        <div class="nav-right">
-            <div class="status-pill">
+        <div class="nav-right" id="navbar-auth-section">
+            <div class="status-pill" id="system-status-pill">
                 <span class="status-dot"></span> System Operational
             </div>
         </div>
@@ -154,8 +154,8 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-title">PRJ_232 • Substation AI</div>
+                <div class="footer-col" style="flex: 2;">
+                    <div class="footer-title">VoltSage AI • PRJ_232</div>
                     <p class="footer-desc">
                         AI-powered electrical substation fault classification and maintenance guidance system. Designed for final-year B.Tech engineering evaluation with zero mock data and real ML inference.
                     </p>
@@ -183,22 +183,24 @@
                 <div class="footer-col">
                     <div class="footer-heading">SYSTEM TELEMETRY</div>
                     <div style="font-size: 12px; color: var(--text-muted); line-height: 1.8;">
+                        <div>Identity: <span style="color: #fff;">VoltSage AI (PRJ_232)</span></div>
                         <div>Model: <span style="color: #fff;">Random Forest (100 Trees)</span></div>
                         <div>Validation Acc: <span style="color: var(--accent-cyan);">86.94%</span></div>
                         <div>Test Split Acc: <span style="color: var(--accent-cyan);">85.34%</span></div>
                         <div>RAG Index: <span style="color: #fff;">884 Chunks (TF-IDF)</span></div>
-                        <div>Backend: <span style="color: var(--success);">FastAPI / Uvicorn</span></div>
+                        <div>Backend: <span style="color: var(--success);">FastAPI / SQLite</span></div>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <span>© 2026 PRJ_232 — Final-Year B.Tech Major Project. All Rights Reserved.</span>
-                <span>Industrial Engineering SCADA Interface v2.4</span>
+                <span>© 2026 VoltSage AI • PRJ_232 — Final-Year B.Tech Major Project. All Rights Reserved.</span>
+                <span>Industrial Engineering SCADA Interface v2.5</span>
             </div>
         </div>
     </footer>
 
     <!-- CONTROLLER SCRIPT -->
+    <script src="js/auth.js"></script>
     <script src="js/settings.js"></script>
 </body>
 </html>

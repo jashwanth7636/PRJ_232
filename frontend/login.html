@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoltSage AI | Sign In — Substation Operations</title>
+    <link rel="stylesheet" href="css/industrial.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+
+    <!-- TOP NAVBAR -->
+    <header class="navbar">
+        <a href="index.html" class="brand">
+            <div class="brand-icon">⚡</div>
+            <div class="brand-text">
+                <div class="brand-title">
+                    VOLTSAGE AI
+                    <span class="brand-badge">PRJ_232</span>
+                </div>
+                <div class="brand-subtitle">ELECTRICAL SUBSTATION INTELLIGENCE</div>
+            </div>
+        </a>
+
+        <ul class="nav-links">
+            <li class="nav-item"><a href="index.html" class="nav-link">Dashboard</a></li>
+            <li class="nav-item"><a href="maintenance.html" class="nav-link">Maintenance AI</a></li>
+            <li class="nav-item"><a href="fault-analysis.html" class="nav-link">Fault Analysis</a></li>
+            <li class="nav-item"><a href="knowledge-base.html" class="nav-link">Knowledge Base</a></li>
+            <li class="nav-item"><a href="checklists.html" class="nav-link">Checklists</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        </ul>
+
+        <div class="nav-right" id="navbar-auth-section">
+            <a href="register.html" class="btn btn-primary" style="padding: 5px 14px; font-size: 12px;">Create Account</a>
+        </div>
+    </header>
+
+    <!-- MAIN PAGE CONTAINER -->
+    <main class="page-container" style="max-width: 480px; padding: 60px 0 100px;">
+
+        <div class="card" style="padding: 34px 28px; box-shadow: var(--shadow-md);">
+            
+            <div style="text-align: center; margin-bottom: 24px;">
+                <div style="width: 48px; height: 48px; margin: 0 auto 12px; border-radius: var(--radius-md); background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(0, 102, 255, 0.2)); border: 1px solid var(--border-card); display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--accent-cyan); box-shadow: 0 0 20px rgba(0, 210, 255, 0.15);">
+                    ⚡
+                </div>
+                <h1 style="font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 6px;">Sign In to VoltSage AI</h1>
+                <p style="font-size: 13px; color: var(--text-muted);">
+                    Access your personalized substation copilot and saved technical conversations
+                </p>
+            </div>
+
+            <!-- Error Banner -->
+            <div id="login-error" style="display: none; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--danger-bg); border: 1px solid rgba(255, 51, 102, 0.3); color: #ff6b8b; font-size: 13px; margin-bottom: 18px;"></div>
+
+            <form id="login-form">
+                
+                <div class="form-group">
+                    <label class="form-label" for="login-email">Engineering Email Address</label>
+                    <input 
+                        type="email" 
+                        id="login-email" 
+                        class="form-input" 
+                        placeholder="user@voltsage.internal" 
+                        required 
+                        autocomplete="email"
+                    >
+                </div>
+
+                <div class="form-group" style="position: relative;">
+                    <label class="form-label" for="login-password">Account Password</label>
+                    <div style="position: relative;">
+                        <input 
+                            type="password" 
+                            id="login-password" 
+                            class="form-input" 
+                            placeholder="Enter your password" 
+                            required 
+                            autocomplete="current-password"
+                            style="padding-right: 42px;"
+                        >
+                        <button 
+                            type="button" 
+                            id="toggle-password-btn" 
+                            style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 16px; padding: 4px;"
+                            title="Toggle password visibility"
+                        >
+                            👁️
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" id="login-submit-btn" class="btn btn-primary" style="width: 100%; height: 46px; font-size: 14px; justify-content: center; margin-top: 10px;">
+                    <span>Sign In to Dashboard →</span>
+                </button>
+
+            </form>
+
+            <div style="margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border-subtle); text-align: center; font-size: 13px; color: var(--text-muted);">
+                Don't have an engineering account? 
+                <a href="register.html" style="color: var(--accent-cyan); font-weight: 700;">Register here</a>
+            </div>
+
+            <!-- Limitation Note -->
+            <div style="margin-top: 16px; padding: 10px 12px; background: rgba(7, 11, 18, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); font-size: 11px; color: var(--text-muted); line-height: 1.5;">
+                <strong style="color: var(--text-secondary);">Demo Mode Specification:</strong> Local SQLite authentication with PBKDF2-SHA256 password hashing and secure sessions. Password-reset email delivery is not configured for local demonstration.
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- SHARED INDUSTRIAL FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-bottom">
+                <span>© 2026 VoltSage AI • PRJ_232 — Final-Year B.Tech Major Project.</span>
+                <span>Industrial Engineering SCADA Interface v2.5</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/auth.js"></script>
+    <script>
+        // Password toggle
+        const toggleBtn = document.getElementById("toggle-password-btn");
+        const passwordInput = document.getElementById("login-password");
+        toggleBtn.addEventListener("click", () => {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleBtn.textContent = "🙈";
+            } else {
+                passwordInput.type = "password";
+                toggleBtn.textContent = "👁️";
+            }
+        });
+
+        // Form submit
+        const form = document.getElementById("login-form");
+        const errorBox = document.getElementById("login-error");
+        const submitBtn = document.getElementById("login-submit-btn");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            errorBox.style.display = "none";
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = "<span>Authenticating...</span>";
+
+            const email = document.getElementById("login-email").value.trim();
+            const password = document.getElementById("login-password").value;
+
+            try {
+                const res = await fetch("/api/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password }),
+                    credentials: "include"
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(data.detail || "Authentication failed. Please verify your credentials.");
+                }
+
+                // Redirect to maintenance chat or redirect target
+                const params = new URLSearchParams(window.location.search);
+                const redirect = params.get("redirect") || "maintenance.html";
+                window.location.href = redirect;
+
+            } catch (err) {
+                errorBox.textContent = err.message;
+                errorBox.style.display = "block";
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = "<span>Sign In to Dashboard →</span>";
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 @echo off
 setlocal
-title PRJ_232 - Electrical Substation AI
+title VoltSage AI (PRJ_232) - Electrical Substation Intelligence
 
 :: Switch safely to project directory (dot prevents trailing slash quote escaping bug)
 cd /d "%~dp0."
@@ -9,7 +9,7 @@ set "PROJECT_DIR=%CD%"
 set "PYTHON_EXE=%PROJECT_DIR%\.venv\Scripts\python.exe"
 
 echo ============================================================
-echo   PRJ_232: AI-Powered Maintenance Chatbot for Substations
+echo   VOLTSAGE AI (PRJ_232): Substation Maintenance & Diagnostics
 echo ============================================================
 echo.
 echo Project Directory: %PROJECT_DIR%

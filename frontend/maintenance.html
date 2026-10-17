@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRJ_232 | AI Maintenance Chatbot — Electrical Substations</title>
+    <title>VoltSage AI | Maintenance Copilot — Electrical Substations</title>
     <link rel="stylesheet" href="css/industrial.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 </head>
@@ -15,10 +15,10 @@
             <div class="brand-icon">⚡</div>
             <div class="brand-text">
                 <div class="brand-title">
-                    SUBSTATION AI
+                    VOLTSAGE AI
                     <span class="brand-badge">PRJ_232</span>
                 </div>
-                <div class="brand-subtitle">ELECTRICAL SCADA INTELLIGENCE</div>
+                <div class="brand-subtitle">ELECTRICAL SUBSTATION INTELLIGENCE</div>
             </div>
         </a>
 
@@ -32,135 +32,157 @@
             <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
         </ul>
 
-        <div class="nav-right">
+        <div class="nav-right" id="navbar-auth-section">
             <div class="status-pill">
-                <span class="status-dot"></span> Knowledge Base Online
+                <span class="status-dot"></span> Copilot Online
             </div>
         </div>
     </header>
 
     <!-- MAIN PAGE CONTAINER -->
-    <main class="page-container" style="max-width: 1080px;">
+    <main class="page-container" style="max-width: 1240px; padding: 24px 0 60px;">
 
         <!-- PAGE HEADER -->
-        <div class="page-header" style="margin-bottom: 24px;">
+        <div class="page-header" style="margin-bottom: 20px;">
             <div class="badge-tag">
-                <span>RAG-ASSISTED GENERATIVE AI</span>
+                <span>RAG COPILOT & PERSISTENT CONVERSATION HISTORY</span>
             </div>
-            <h1 class="page-title">Substation Maintenance Copilot</h1>
+            <h1 class="page-title">VoltSage AI Substation Copilot</h1>
             <p class="page-subtitle">
-                Grounded conversational assistance for electrical engineers, technicians, and operators. All responses are synthesized from indexed IS/IEEE substation standards and equipment manuals.
+                Grounded conversational decision-support for electrical engineers, technicians, and operators. Powered by Google Gemini Flash and indexed standards (IS 10028, IEEE C37, NEMA AB 4).
             </p>
         </div>
 
-        <!-- CHAT APPLICATION CARD -->
-        <div class="card" style="padding: 0; display: flex; flex-direction: column; height: 680px; box-shadow: var(--shadow-md);">
+        <!-- TWO-PANEL CHAT APPLICATION -->
+        <div class="voltsage-chat-layout">
             
-            <!-- Chat Header -->
-            <div style="padding: 16px 24px; background: rgba(7, 11, 18, 0.75); border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between;">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <div style="width: 36px; height: 36px; border-radius: var(--radius-sm); background: rgba(0, 210, 255, 0.12); border: 1px solid rgba(0, 210, 255, 0.25); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--accent-cyan);">
-                        ⚡
-                    </div>
-                    <div>
-                        <div style="font-size: 14px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
-                            Substation Technical Intelligence
-                            <span style="font-size: 10px; font-weight: 700; background: rgba(0, 245, 155, 0.12); color: var(--success); border: 1px solid rgba(0, 245, 155, 0.3); padding: 2px 7px; border-radius: var(--radius-pill);">TF-IDF RAG ACTIVE</span>
-                        </div>
-                        <div style="font-size: 11.5px; color: var(--text-muted);">
-                            Indexed corpus: 884 sections • Circuit Breakers, Transformers & Switchgear
-                        </div>
+            <!-- LEFT PANEL: RECENT CONVERSATIONS SIDEBAR -->
+            <aside class="voltsage-sidebar">
+                
+                <div class="sidebar-header">
+                    <button type="button" class="new-chat-btn" id="new-chat-btn">
+                        <span>+</span>
+                        <span>New Chat</span>
+                    </button>
+                    <input 
+                        type="text" 
+                        id="conv-search-input" 
+                        class="conv-search-input" 
+                        placeholder="Search conversations..."
+                    >
+                </div>
+
+                <div class="conversations-list" id="conversations-list">
+                    <div style="padding: 20px 10px; text-align: center; color: var(--text-muted); font-size: 12px;">
+                        Loading conversations...
                     </div>
                 </div>
 
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <button id="clear-chat-btn" class="btn btn-outline" style="padding: 6px 14px; font-size: 12px;" onclick="if(confirm('Clear current chat view?')){document.querySelector('.chat-messages').innerHTML='';}">
-                        Clear Screen
+                <div class="sidebar-user-footer" id="sidebar-user-footer">
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--text-secondary);">
+                        <span style="font-size: 14px;">⚡</span>
+                        <span>VoltSage Session</span>
+                    </div>
+                    <span style="font-size: 10px; font-weight: 700; color: var(--accent-cyan); background: rgba(0, 210, 255, 0.1); padding: 2px 6px; border-radius: 4px;">SECURE</span>
+                </div>
+
+            </aside>
+
+            <!-- RIGHT PANEL: ACTIVE CHAT WINDOW -->
+            <div class="chat-panel-main">
+                
+                <!-- Chat Window Header -->
+                <div style="padding: 14px 24px; background: rgba(7, 11, 18, 0.75); border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 32px; height: 32px; border-radius: var(--radius-sm); background: rgba(0, 210, 255, 0.12); border: 1px solid rgba(0, 210, 255, 0.25); display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--accent-cyan);">
+                            💬
+                        </div>
+                        <div>
+                            <div id="active-conversation-title" style="font-size: 14px; font-weight: 700; color: #ffffff;">
+                                New Substation Discussion
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-muted);">
+                                884 Technical Chunks • TF-IDF Vector Retrieval Active
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 11.5px;" onclick="if(confirm('Clear screen?')){document.querySelector('.chat-messages').innerHTML='';}">
+                            Clear Screen
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Chat Message Stream -->
+                <div class="chat-messages" style="flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 18px;">
+                    
+                    <!-- Default Initial Welcome Card -->
+                    <div class="chat-message assistant">
+                        <div class="message-avatar">AI</div>
+                        <div style="display: flex; flex-direction: column; align-items: flex-start; max-width: 100%;">
+                            <div class="message-sender">VoltSage AI • Technical Copilot</div>
+                            <div class="message-bubble">
+                                <p><strong>Welcome to VoltSage AI — Electrical Substation Copilot.</strong></p>
+                                <p>I assist electrical engineers, technicians, and operators with equipment maintenance, fault diagnostics, and inspection procedures grounded in indexed technical manuals.</p>
+                                <p style="margin-bottom: 0;">You can ask about:</p>
+                                <ul style="margin-top: 6px;">
+                                    <li>Transformer Dissolved Gas Analysis (DGA), oil breakdown voltage testing (BDV), and conservator silica gel breather care</li>
+                                    <li>SF6 gas circuit breaker timing tests, contact resistance measurement, and lock-out/tag-out (LOTO) precautions</li>
+                                    <li>Busbar insulation, disconnect switch clearances, and protective relay testing (IS/IEC standards)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Suggested Prompt Pills -->
+                <div class="suggested-prompts">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center;">RECOMMENDED:</span>
+                    
+                    <button type="button" class="prompt-pill" data-question="What are the safety precautions for circuit breaker maintenance?">
+                        Circuit breaker safety precautions
+                    </button>
+                    
+                    <button type="button" class="prompt-pill" data-question="How often should power transformer oil undergo DGA testing?">
+                        Transformer oil DGA testing intervals
+                    </button>
+                    
+                    <button type="button" class="prompt-pill" data-question="What causes Buchholz relay trips in power transformers?">
+                        Buchholz relay trip causes
+                    </button>
+
+                    <button type="button" class="prompt-pill" data-question="What are the inspection steps for SF6 gas circuit breakers?">
+                        SF6 breaker inspection steps
                     </button>
                 </div>
-            </div>
 
-            <!-- Chat Messages Container -->
-            <div class="chat-messages" style="flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 18px; background: radial-gradient(circle at 50% 0%, rgba(0, 102, 255, 0.04), transparent 70%);">
-                
-                <!-- Initial Welcome Message from Assistant -->
-                <div class="message assistant-message maintenance-message">
-                    <div class="message-avatar maintenance-message-avatar" style="background: rgba(0, 102, 255, 0.2); border: 1px solid rgba(0, 210, 255, 0.3); color: var(--accent-cyan);">
-                        AI
-                    </div>
-                    <div class="message-content maintenance-message-content">
-                        <div class="message-name maintenance-message-name" style="color: var(--text-muted);">
-                            Substation AI • Engineering Guide
+                <!-- Bottom Message Composer -->
+                <div style="padding: 16px 24px; background: rgba(7, 11, 18, 0.9); border-top: 1px solid var(--border-subtle);">
+                    <div style="display: flex; gap: 12px; align-items: flex-end;">
+                        <div style="flex: 1; position: relative;">
+                            <textarea 
+                                id="maintenance-input" 
+                                class="form-input" 
+                                placeholder="Ask a substation maintenance, testing, or safety question..." 
+                                rows="2" 
+                                style="resize: none; font-size: 13.5px; padding-right: 14px; line-height: 1.5;"
+                            ></textarea>
                         </div>
-                        <div class="message-text maintenance-message-text" style="background: var(--bg-card); border: 1px solid var(--border-card); color: var(--text-primary);">
-                            <p><strong>Welcome to the Substation Maintenance Technical Copilot.</strong></p>
-                            <p>I am trained to assist electrical engineers with equipment maintenance routines, safety protocols, inspection guidelines, and troubleshooting procedures grounded in official substation documentation.</p>
-                            <p style="margin-bottom: 0;">You can ask about:</p>
-                            <ul style="margin-top: 6px;">
-                                <li>Transformer Dissolved Gas Analysis (DGA), oil breakdown voltage testing (BDV), and conservator silica gel breather care</li>
-                                <li>SF6 gas circuit breaker timing tests, contact resistance measurement, and safety precautions</li>
-                                <li>Busbar insulation, disconnect switch clearances, and protective relay testing (IS/IEC standards)</li>
-                            </ul>
-                        </div>
+                        <button id="send-message" class="btn btn-primary" style="height: 52px; min-width: 105px; justify-content: center; font-size: 14px;">
+                            <span>Send</span>
+                            <span>↵</span>
+                        </button>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 11px; color: var(--text-muted);">
+                        <span>Press <strong>Enter</strong> to send • <strong>Shift + Enter</strong> for a new line</span>
+                        <span>Safety Mandate: LOTO & NFPA 70E Applicable</span>
                     </div>
                 </div>
 
             </div>
 
-            <!-- Suggested Prompt Pills -->
-            <div style="padding: 10px 24px; background: rgba(7, 11, 18, 0.6); border-top: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 8px; overflow-x: auto; white-space: nowrap;">
-                <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; flex-shrink: 0;">RECOMMENDED:</span>
-                
-                <button type="button" class="btn btn-outline" style="padding: 4px 12px; font-size: 11.5px; border-radius: var(--radius-pill); white-space: nowrap;" data-question="What are the safety precautions for circuit breaker maintenance?">
-                    Safety precautions for circuit breaker maintenance
-                </button>
-                
-                <button type="button" class="btn btn-outline" style="padding: 4px 12px; font-size: 11.5px; border-radius: var(--radius-pill); white-space: nowrap;" data-question="How often should power transformer oil undergo DGA testing?">
-                    Transformer oil DGA testing intervals
-                </button>
-                
-                <button type="button" class="btn btn-outline" style="padding: 4px 12px; font-size: 11.5px; border-radius: var(--radius-pill); white-space: nowrap;" data-question="What causes Buchholz relay trips in power transformers?">
-                    Buchholz relay trip causes
-                </button>
-
-                <button type="button" class="btn btn-outline" style="padding: 4px 12px; font-size: 11.5px; border-radius: var(--radius-pill); white-space: nowrap;" data-question="What are the inspection steps for SF6 gas circuit breakers?">
-                    SF6 gas breaker inspection steps
-                </button>
-            </div>
-
-            <!-- Chat Input Area -->
-            <div style="padding: 18px 24px; background: rgba(7, 11, 18, 0.85); border-top: 1px solid var(--border-subtle);">
-                <div style="display: flex; gap: 12px; align-items: center;">
-                    <div style="position: relative; flex: 1;">
-                        <input 
-                            type="text" 
-                            id="maintenance-input" 
-                            class="form-input" 
-                            placeholder="Ask a substation maintenance, testing, or safety question..." 
-                            autocomplete="off"
-                            style="padding-right: 40px; font-size: 14px;"
-                        >
-                    </div>
-                    <button id="send-message" class="btn btn-primary" style="min-width: 110px;">
-                        <span>Send</span>
-                        <span>↵</span>
-                    </button>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 11px; color: var(--text-muted);">
-                    <span>Press <strong>Enter</strong> to send • Response generated via Google Gemini Flash with TF-IDF RAG context</span>
-                    <span>Safety Standard: LOTO & NFPA 70E Applicable</span>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- QUICK GUIDELINES / COMPLIANCE NOTICE -->
-        <div style="margin-top: 24px; padding: 18px 22px; background: rgba(17, 26, 46, 0.4); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); display: flex; gap: 16px; align-items: flex-start;">
-            <div style="font-size: 20px; color: var(--warning); flex-shrink: 0;">⚠️</div>
-            <div style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.6;">
-                <strong style="color: #ffffff;">Substation Operational Safety Mandate:</strong>
-                All AI technical outputs are advisory decision-support references derived from indexed engineering standards (IS 10028, IEEE C37, NEMA AB 4). Prior to conducting physical interventions on energized switchgear or oil-filled apparatus, operators must verify electrical isolation, discharge residual capacitance, apply temporary earthing, and execute authorized Permit to Work (PTW) procedures.
-            </div>
         </div>
 
     </main>
@@ -170,7 +192,7 @@
         <div class="footer-container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <div class="footer-title">PRJ_232 • Substation AI</div>
+                    <div class="footer-title">VoltSage AI • PRJ_232</div>
                     <p class="footer-desc">
                         AI-powered electrical substation fault classification and maintenance guidance system. Designed for final-year B.Tech engineering evaluation with zero mock data and real ML inference.
                     </p>
@@ -179,7 +201,7 @@
                     <div class="footer-heading">NAVIGATION</div>
                     <ul class="footer-links">
                         <li><a href="index.html">Operations Dashboard</a></li>
-                        <li><a href="maintenance.html">Maintenance RAG Chatbot</a></li>
+                        <li><a href="maintenance.html">Maintenance Copilot</a></li>
                         <li><a href="fault-analysis.html">3-Phase Fault Classifier</a></li>
                         <li><a href="knowledge-base.html">Technical Knowledge Base</a></li>
                         <li><a href="checklists.html">Maintenance Checklists</a></li>
@@ -198,22 +220,23 @@
                 <div class="footer-col">
                     <div class="footer-heading">SYSTEM TELEMETRY</div>
                     <div style="font-size: 12px; color: var(--text-muted); line-height: 1.8;">
+                        <div>Identity: <span style="color: #fff;">VoltSage AI (PRJ_232)</span></div>
                         <div>Model: <span style="color: #fff;">Random Forest (100 Trees)</span></div>
                         <div>Validation Acc: <span style="color: var(--accent-cyan);">86.94%</span></div>
-                        <div>Test Split Acc: <span style="color: var(--accent-cyan);">85.34%</span></div>
                         <div>RAG Index: <span style="color: #fff;">884 Chunks (TF-IDF)</span></div>
-                        <div>Backend: <span style="color: var(--success);">FastAPI / Uvicorn</span></div>
+                        <div>Backend: <span style="color: var(--success);">FastAPI / SQLite</span></div>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <span>© 2026 PRJ_232 — Final-Year B.Tech Major Project. All Rights Reserved.</span>
-                <span>Industrial Engineering SCADA Interface v2.4</span>
+                <span>© 2026 VoltSage AI • PRJ_232 — Final-Year B.Tech Major Project. All Rights Reserved.</span>
+                <span>Industrial Engineering SCADA Interface v2.5</span>
             </div>
         </div>
     </footer>
 
-    <!-- CONTROLLER SCRIPT -->
+    <!-- CONTROLLER SCRIPTS -->
+    <script src="js/auth.js"></script>
     <script src="js/maintenance.js"></script>
 </body>
 </html>
