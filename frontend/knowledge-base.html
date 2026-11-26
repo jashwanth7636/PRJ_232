@@ -1,794 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Knowledge Base | PRJ_232</title>
-
-    <link rel="stylesheet" href="css/style.css">
-
-
-    <style>
-        /* =========================================================
-           KNOWLEDGE BASE PAGE
-           ========================================================= */
-        
-        .knowledge-page {
-            width: min(1200px, calc(100% - 60px));
-            margin: 0 auto;
-            padding: 120px 0 70px;
-            box-sizing: border-box;
-        }
-        /* =========================================================
-           HERO
-           ========================================================= */
-        
-        .knowledge-hero {
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto 60px;
-            text-align: center;
-        }
-        
-        .knowledge-hero .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 25px;
-        }
-        
-        .knowledge-hero h1 {
-            margin: 0;
-            color: #ffffff;
-            font-size: clamp(44px, 6vw, 74px);
-            line-height: 1.03;
-            letter-spacing: -0.045em;
-        }
-        
-        .knowledge-hero p {
-            max-width: 750px;
-            margin: 25px auto 0;
-            color: #9b9ba3;
-            font-size: 15px;
-            line-height: 1.7;
-        }
-        /* =========================================================
-           DOCUMENT GRID
-           ========================================================= */
-        
-        .knowledge-document-grid {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 18px;
-            margin-bottom: 22px;
-        }
-        /* =========================================================
-           DOCUMENT CARD
-           ========================================================= */
-        
-        .knowledge-document-card {
-            min-width: 0;
-            padding: 26px;
-            background: rgba(16, 16, 18, 0.82);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            box-sizing: border-box;
-            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-        }
-        
-        .knowledge-document-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(185, 255, 92, 0.22);
-            background: rgba(22, 22, 24, 0.9);
-        }
-        
-        .knowledge-document-icon {
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 22px;
-            border-radius: 14px;
-            background: rgba(185, 255, 92, 0.08);
-            border: 1px solid rgba(185, 255, 92, 0.12);
-            color: #b9ff5c;
-            font-size: 20px;
-        }
-        
-        .knowledge-document-type {
-            display: block;
-            margin-bottom: 9px;
-            color: #777780;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.14em;
-        }
-        
-        .knowledge-document-content h2 {
-            margin: 0 0 14px;
-            color: #ffffff;
-            font-size: 19px;
-            line-height: 1.35;
-        }
-        
-        .knowledge-document-content p {
-            margin: 0 0 22px;
-            color: #898991;
-            font-size: 13px;
-            line-height: 1.7;
-        }
-        
-        .knowledge-document-status {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            color: #85858d;
-            font-size: 11px;
-        }
-        /* =========================================================
-           RETRIEVAL CARD
-           ========================================================= */
-        
-        .knowledge-retrieval {
-            width: 100%;
-            margin-top: 22px;
-        }
-        
-        .knowledge-retrieval-card {
-            padding: 32px;
-            background: rgba(16, 16, 18, 0.82);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 22px;
-            box-sizing: border-box;
-        }
-        
-        .knowledge-section-label {
-            display: block;
-            margin-bottom: 9px;
-            color: #85858d;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.14em;
-        }
-        
-        .knowledge-retrieval-card h2 {
-            margin: 0 0 15px;
-            color: #ffffff;
-            font-size: 24px;
-            line-height: 1.25;
-        }
-        
-        .knowledge-retrieval-card>p {
-            max-width: 850px;
-            margin: 0;
-            color: #8d8d95;
-            font-size: 14px;
-            line-height: 1.75;
-        }
-        /* =========================================================
-           KNOWLEDGE FLOW
-           ========================================================= */
-        
-        .knowledge-flow {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 12px;
-            margin-top: 28px;
-        }
-        
-        .knowledge-flow-step {
-            padding: 18px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.025);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-        }
-        
-        .knowledge-flow-step strong {
-            display: block;
-            margin-bottom: 8px;
-            color: #b9ff5c;
-            font-size: 13px;
-        }
-        
-        .knowledge-flow-step span {
-            display: block;
-            color: #888890;
-            font-size: 12px;
-            line-height: 1.5;
-        }
-        /* =========================================================
-           ACTION
-           ========================================================= */
-        
-        .knowledge-action {
-            width: 100%;
-            margin-top: 22px;
-            padding: 45px 30px;
-            text-align: center;
-            background: radial-gradient( circle at center, rgba(185, 255, 92, 0.055), transparent 65%);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 22px;
-            box-sizing: border-box;
-        }
-        
-        .knowledge-action h2 {
-            margin: 0 0 10px;
-            color: #ffffff;
-            font-size: 25px;
-        }
-        
-        .knowledge-action p {
-            max-width: 650px;
-            margin: 0 auto 25px;
-            color: #85858d;
-            font-size: 14px;
-            line-height: 1.7;
-        }
-        
-        .knowledge-action-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            min-height: 50px;
-            padding: 0 22px;
-            border-radius: 13px;
-            background: #b9ff5c;
-            color: #080808;
-            font-size: 13px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: transform 0.2s ease, filter 0.2s ease;
-        }
-        
-        .knowledge-action-button:hover {
-            transform: translateY(-1px);
-            filter: brightness(1.05);
-        }
-        /* =========================================================
-           FOOTER
-           ========================================================= */
-        
-        .knowledge-footer {
-            width: min(1200px, calc(100% - 60px));
-            margin: 55px auto 25px;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.07);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 30px;
-        }
-        
-        .knowledge-footer-brand {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        
-        .knowledge-footer-brand strong {
-            color: #ffffff;
-            font-size: 13px;
-        }
-        
-        .knowledge-footer-brand span {
-            color: #606068;
-            font-size: 11px;
-        }
-        
-        .knowledge-footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 18px;
-        }
-        
-        .knowledge-footer-links a {
-            color: #777780;
-            font-size: 12px;
-            text-decoration: none;
-        }
-        
-        .knowledge-footer-links a:hover {
-            color: #b9ff5c;
-        }
-        /* =========================================================
-           RESPONSIVE
-           ========================================================= */
-        
-        @media (max-width: 950px) {
-            .knowledge-document-grid {
-                grid-template-columns: 1fr;
-            }
-            .knowledge-flow {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 700px) {
-            .knowledge-page {
-                width: calc(100% - 36px);
-                padding-top: 100px;
-            }
-            .knowledge-hero h1 {
-                font-size: 43px;
-            }
-            .knowledge-hero p {
-                font-size: 13px;
-            }
-            .knowledge-retrieval-card {
-                padding: 22px;
-            }
-            .knowledge-flow {
-                grid-template-columns: 1fr;
-            }
-            .knowledge-action {
-                padding: 35px 20px;
-            }
-            .knowledge-footer {
-                width: calc(100% - 36px);
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-        
-        @media (max-width: 500px) {
-            .knowledge-document-card {
-                padding: 21px;
-            }
-            .knowledge-hero h1 {
-                font-size: 38px;
-            }
-        }
-    </style>
-
+    <title>VoltSage AI | Technical Knowledge Base — PRJ_232</title>
+    <link rel="stylesheet" href="css/industrial.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 </head>
+<body style="margin: 0; padding: 0; overflow: hidden;">
 
+    <!-- APP WRAPPER -->
+    <div class="voltsage-app">
 
-<body>
-
-
-    <!-- =========================================================
-     NAVBAR
-     ========================================================= -->
-
-    <header class="navbar">
-
-        <a href="index.html" class="brand">
-
-            <div class="brand-icon">
-                ⚡
-            </div>
-
-            <div class="brand-text">
-
-                <strong>
-                PRJ_232
-            </strong>
-
-                <span>
-                SUBSTATION AI
-            </span>
-
-            </div>
-
-        </a>
-
-
-        <nav class="nav-links">
-
-            <a href="index.html" class="nav-link">
-            Home
-        </a>
-
-            <a href="maintenance.html" class="nav-link">
-            Maintenance
-        </a>
-
-            <a href="fault-analysis.html" class="nav-link">
-            Fault Analysis
-        </a>
-
-            <a href="knowledge-base.html" class="nav-link active">
-            Knowledge Base
-        </a>
-
-            <a href="about.html" class="nav-link">
-            About
-        </a>
-
-        </nav>
-
-
-        <div class="nav-right">
-
-            <div class="status-pill">
-
-                <span class="status-dot"></span>
-
-                <span>
-                Knowledge Base
-            </span>
-
-            </div>
-
-
-            <button class="menu-button" type="button" aria-label="Open navigation menu">
-            ☰
-        </button>
-
-        </div>
-
-    </header>
-
-
-
-    <!-- =========================================================
-     MAIN
-     ========================================================= -->
-
-    <main class="knowledge-page">
-
-
-        <!-- =====================================================
-         HERO
-         ===================================================== -->
-
-        <section class="knowledge-hero">
-
-            <div class="hero-badge">
-
-                <span class="status-dot"></span> TECHNICAL KNOWLEDGE BASE
-
-            </div>
-
-
-            <h1>
-
-                Electrical Maintenance
-                <br> Knowledge Base
-
-            </h1>
-
-
-            <p>
-
-                Technical information used by the PRJ_232 maintenance assistant for document-grounded engineering responses.
-
-            </p>
-
-        </section>
-
-
-
-        <!-- =====================================================
-         DOCUMENTS
-         ===================================================== -->
-
-        <section class="knowledge-document-grid">
-
-
-            <!-- CIRCUIT BREAKER -->
-
-            <div class="knowledge-document-card">
-
-                <div class="knowledge-document-icon">
-                    ⚡
+        <!-- UNIFIED APP SIDEBAR -->
+        <aside class="app-sidebar" id="app-sidebar">
+            <!-- Brand Squircle -->
+            <div class="app-sidebar-brand">
+                <div class="brand-icon-box">⚡</div>
+                <div style="overflow: hidden;">
+                    <div class="brand-title-row">
+                        VOLTSAGE AI
+                        <span class="brand-sub-badge">PRJ_232</span>
+                    </div>
+                    <div class="brand-subtitle">Substation Intelligence</div>
                 </div>
+            </div>
 
+            <!-- Navigation Links -->
+            <nav class="app-sidebar-nav">
+                <a href="index.html" class="app-nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="maintenance.html" class="app-nav-item">
+                    <span class="nav-icon">💬</span>
+                    <span>Maintenance AI</span>
+                </a>
+                <a href="fault-analysis.html" class="app-nav-item">
+                    <span class="nav-icon">⚡</span>
+                    <span>Fault Analysis</span>
+                </a>
+                <a href="knowledge-base.html" class="app-nav-item active">
+                    <span class="nav-icon">📚</span>
+                    <span>Knowledge Base</span>
+                </a>
+                <a href="checklists.html" class="app-nav-item">
+                    <span class="nav-icon">📋</span>
+                    <span>Checklists</span>
+                </a>
+                <a href="settings.html" class="app-nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+                <a href="about.html" class="app-nav-item">
+                    <span class="nav-icon">ℹ️</span>
+                    <span>About</span>
+                </a>
+            </nav>
 
-                <div class="knowledge-document-content">
+            <!-- User Profile Footer -->
+            <div class="app-sidebar-footer" id="sidebar-user-footer">
+                <div class="user-profile-row">
+                    <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
+                        <div class="user-avatar" id="sidebar-avatar-fallback">BJ</div>
+                        <div class="user-info">
+                            <div class="user-name" id="sidebar-user-name">User</div>
+                            <div class="user-role">User</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline" style="padding: 4px 9px; font-size: 11px; border-radius: var(--radius-sm); border-color: rgba(255,255,255,0.15);" title="Sign Out" onclick="VoltSageAuth.logout()">
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+        </aside>
 
-                    <span class="knowledge-document-type">
-                    TECHNICAL MANUAL
-                </span>
-
-
-                    <h2>
-                        Circuit Breaker Maintenance Guide
-                    </h2>
-
-
-                    <p>
-
-                        Technical information covering circuit breaker maintenance, inspection, testing, safety precautions and troubleshooting.
-
+        <!-- MAIN VIEWPORT -->
+        <main class="app-main-viewport">
+            
+            <!-- CINEMATIC HORIZON HEADER BANNER -->
+            <header class="cinematic-header-banner">
+                <div class="cinematic-banner-meta">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                        <button type="button" class="menu-button" id="sidebar-mobile-toggle" onclick="document.getElementById('app-sidebar').classList.toggle('mobile-open')">
+                            ☰
+                        </button>
+                        <h1 class="cinematic-banner-title">Technical Knowledge Base</h1>
+                    </div>
+                    <p class="cinematic-banner-subtitle">
+                        Vector-indexed Indian Standards (IS), IEEE references, and manufacturer documentation
                     </p>
+                </div>
 
+                <div class="cinematic-banner-badges">
+                    <div class="date-time-pill">
+                        <span>📚</span>
+                        <span id="stat-total-chunks">885 Chunks Grounded</span>
+                    </div>
+                    <div class="status-pill" style="margin: 0;">
+                        <span class="status-dot"></span> Corpus Synchronized
+                    </div>
+                </div>
+            </header>
 
-                    <div class="knowledge-document-status">
+            <!-- SCROLLABLE PAGE BODY CONTENT -->
+            <div class="app-page-content">
 
-                        <span class="status-dot"></span> Indexed
-
+                <!-- TOP DRAG & DROP UPLOAD BOX -->
+                <div class="kb-upload-card" id="upload-dropzone" onclick="document.getElementById('pdf-upload-input').click();">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(245, 158, 54, 0.12); border: 1px solid rgba(245, 158, 54, 0.35); display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--copper-primary);">
+                        📤
+                    </div>
+                    <div style="text-align: center;">
+                        <div id="selected-file-label" style="font-size: 15px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">
+                            Drag & drop PDF technical manuals here or click to browse
+                        </div>
+                        <p style="font-size: 12.5px; color: var(--text-muted); margin: 0;">
+                            Automatic text extraction, semantic chunking (1200 chars / 200 overlap), and live TF-IDF vector indexing
+                        </p>
                     </div>
 
+                    <div style="display: flex; gap: 12px; align-items: center; margin-top: 6px;">
+                        <button type="button" class="btn btn-copper" id="upload-submit-btn" onclick="event.stopPropagation(); document.getElementById('pdf-upload-input').click();" style="padding: 8px 22px; font-size: 13px;">
+                            <span>Upload Documents</span>
+                        </button>
+                        <input type="file" id="pdf-upload-input" accept=".pdf" style="display: none;">
+                    </div>
+
+                    <div id="upload-feedback" style="display: none; padding: 10px 16px; border-radius: var(--radius-sm); font-size: 12px; margin-top: 8px;"></div>
+                </div>
+
+                <!-- 4 STAT PILLS -->
+                <div class="kb-stats-grid">
+                    <div class="kb-stat-pill">
+                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(245, 158, 54, 0.15); color: var(--copper-primary); display: flex; align-items: center; justify-content: center; font-size: 16px;">📚</div>
+                        <div>
+                            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Active Manuals</div>
+                            <div style="font-size: 17px; font-weight: 800; color: #fff;" id="stat-total-docs">3 Documents</div>
+                        </div>
+                    </div>
+
+                    <div class="kb-stat-pill">
+                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(25, 199, 165, 0.15); color: var(--teal-status); display: flex; align-items: center; justify-content: center; font-size: 16px;">⚡</div>
+                        <div>
+                            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Indexed Chunks</div>
+                            <div style="font-size: 17px; font-weight: 800; color: var(--teal-status);">885 Chunks</div>
+                        </div>
+                    </div>
+
+                    <div class="kb-stat-pill">
+                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(96, 165, 250, 0.15); color: #60A5FA; display: flex; align-items: center; justify-content: center; font-size: 16px;">🎛️</div>
+                        <div>
+                            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Embedding Engine</div>
+                            <div style="font-size: 17px; font-weight: 800; color: #fff;">TF-IDF Matrix</div>
+                        </div>
+                    </div>
+
+                    <div class="kb-stat-pill">
+                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(168, 85, 247, 0.15); color: #C084FC; display: flex; align-items: center; justify-content: center; font-size: 16px;">⚡</div>
+                        <div>
+                            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Retrieval Latency</div>
+                            <div style="font-size: 17px; font-weight: 800; color: #fff;">&lt; 5 ms</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEARCH & FILTER BAR -->
+                <div class="card" style="padding: 16px 20px; margin-bottom: 0;">
+                    <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 240px; position: relative;">
+                            <input 
+                                type="text" 
+                                id="doc-search-input" 
+                                class="form-input" 
+                                placeholder="Search by title, standard code, equipment, or keyword..."
+                                style="font-size: 13.5px;"
+                            >
+                        </div>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                            <button type="button" class="btn btn-outline active" data-category="All" style="padding: 6px 14px; font-size: 12px; border-radius: var(--radius-pill);">
+                                All Documents
+                            </button>
+                            <button type="button" class="btn btn-outline" data-category="Transformers" style="padding: 6px 14px; font-size: 12px; border-radius: var(--radius-pill);">
+                                Transformers
+                            </button>
+                            <button type="button" class="btn btn-outline" data-category="Circuit Breakers" style="padding: 6px 14px; font-size: 12px; border-radius: var(--radius-pill);">
+                                Circuit Breakers
+                            </button>
+                            <button type="button" class="btn btn-outline" data-category="Switchgear" style="padding: 6px 14px; font-size: 12px; border-radius: var(--radius-pill);">
+                                Switchgear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DOCUMENTS GRID (Populated dynamically by knowledge-base.js) -->
+                <div id="documents-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px;">
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">
+                        Loading indexed technical documents...
+                    </div>
+                </div>
+
+                <!-- MINIMAL ONE-LINE FOOTER -->
+                <div style="text-align: center; padding: 24px 0 12px; font-size: 11.5px; color: var(--text-muted); border-top: 1px solid var(--border-subtle); margin-top: 20px;">
+                    VoltSage AI — PRJ_232 Electrical Substation Intelligence • Final-Year B.Tech Major Project
                 </div>
 
             </div>
 
+        </main>
 
+    </div>
 
-            <!-- SUBSTATION -->
-
-            <div class="knowledge-document-card">
-
-                <div class="knowledge-document-icon">
-                    ◈
-                </div>
-
-
-                <div class="knowledge-document-content">
-
-                    <span class="knowledge-document-type">
-                    TECHNICAL MANUAL
-                </span>
-
-
-                    <h2>
-                        Electrical Substation Maintenance Information
-                    </h2>
-
-
-                    <p>
-
-                        Reference information covering electrical substation maintenance and associated equipment and procedures.
-
-                    </p>
-
-
-                    <div class="knowledge-document-status">
-
-                        <span class="status-dot"></span> Indexed
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- TRANSFORMER -->
-
-            <div class="knowledge-document-card">
-
-                <div class="knowledge-document-icon">
-                    ▣
-                </div>
-
-
-                <div class="knowledge-document-content">
-
-                    <span class="knowledge-document-type">
-                    TECHNICAL MANUAL
-                </span>
-
-
-                    <h2>
-                        Transformer Maintenance Manual
-                    </h2>
-
-
-                    <p>
-
-                        Technical reference covering transformer maintenance, inspection and related equipment information.
-
-                    </p>
-
-
-                    <div class="knowledge-document-status">
-
-                        <span class="status-dot"></span> Indexed
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =====================================================
-         RETRIEVAL
-         ===================================================== -->
-
-        <section class="knowledge-retrieval">
-
-            <div class="knowledge-retrieval-card">
-
-                <span class="knowledge-section-label">
-                DOCUMENT RETRIEVAL
-            </span>
-
-
-                <h2>
-                    How the knowledge base works
-                </h2>
-
-
-                <p>
-
-                    The project extracts text from the technical manuals, divides the content into searchable sections and uses TF-IDF similarity retrieval to identify relevant information for maintenance questions.
-
-                </p>
-
-
-                <div class="knowledge-flow">
-
-
-                    <div class="knowledge-flow-step">
-
-                        <strong>
-                        01
-                    </strong>
-
-                        <span>
-                        Technical PDFs
-                    </span>
-
-                    </div>
-
-
-                    <div class="knowledge-flow-step">
-
-                        <strong>
-                        02
-                    </strong>
-
-                        <span>
-                        Text Extraction
-                    </span>
-
-                    </div>
-
-
-                    <div class="knowledge-flow-step">
-
-                        <strong>
-                        03
-                    </strong>
-
-                        <span>
-                        Document Chunks
-                    </span>
-
-                    </div>
-
-
-                    <div class="knowledge-flow-step">
-
-                        <strong>
-                        04
-                    </strong>
-
-                        <span>
-                        Relevant Context
-                    </span>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =====================================================
-         ACTION
-         ===================================================== -->
-
-        <section class="knowledge-action">
-
-            <h2>
-                Ask the Maintenance Assistant
-            </h2>
-
-
-            <p>
-
-                Use the technical knowledge base through the conversational maintenance assistant.
-
-            </p>
-
-
-            <a href="maintenance.html" class="knowledge-action-button">
-
-            Open Maintenance Assistant
-
-            <span>
-                →
-            </span>
-
-        </a>
-
-        </section>
-
-    </main>
-
-
-
-    <!-- =========================================================
-     FOOTER
-     ========================================================= -->
-
-    <footer class="footer knowledge-footer">
-
-
-        <div class="footer-brand knowledge-footer-brand">
-
-            <strong>
-            PRJ_232
-        </strong>
-
-
-            <span>
-            AI-Powered Maintenance Chatbot for Electrical Substations
-        </span>
-
-        </div>
-
-
-        <div class="footer-links knowledge-footer-links">
-
-            <a href="index.html">
-            Home
-        </a>
-
-            <a href="maintenance.html">
-            Maintenance
-        </a>
-
-            <a href="fault-analysis.html">
-            Fault Analysis
-        </a>
-
-            <a href="knowledge-base.html">
-            Knowledge Base
-        </a>
-
-            <a href="about.html">
-            About
-        </a>
-
-        </div>
-
-    </footer>
-
-
-
-    <!-- =========================================================
-     MOBILE MENU
-     ========================================================= -->
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-
-            const menuButton = document.querySelector(".menu-button");
-            const navLinks = document.querySelector(".nav-links");
-
-            if (menuButton && navLinks) {
-
-                menuButton.addEventListener("click", function() {
-
-                    navLinks.classList.toggle("mobile-open");
-
-                });
-
-            }
-
-        });
-    </script>
-
-
+    <!-- CONTROLLER SCRIPTS -->
+    <script src="js/auth.js"></script>
+    <script src="js/knowledge-base.js"></script>
 </body>
-
 </html>

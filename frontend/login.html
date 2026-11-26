@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoltSage AI | Sign In & Authentication — PRJ_232</title>
+    <link rel="stylesheet" href="css/industrial.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body style="margin: 0; padding: 0;">
+
+    <div class="split-auth-container">
+        
+        <!-- LEFT PANEL: BRANDING, HEADLINE & GENUINE FEATURES -->
+        <div class="split-auth-left">
+            <div>
+                <!-- Brand Badge -->
+                <div class="split-auth-brand">
+                    <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(0, 102, 255, 0.25)); border: 1px solid var(--border-active); display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--accent-cyan); box-shadow: 0 0 20px rgba(0, 210, 255, 0.25);">
+                        ⚡
+                    </div>
+                    <div>
+                        <div style="font-size: 19px; font-weight: 800; letter-spacing: 0.04em; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+                            VOLTSAGE AI
+                            <span style="font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 4px; background: rgba(0, 210, 255, 0.15); border: 1px solid rgba(0, 210, 255, 0.35); color: var(--accent-cyan);">PRJ_232</span>
+                        </div>
+                        <div style="font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; color: var(--accent-cyan); text-transform: uppercase;">
+                            Industrial Substation Intelligence
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Headline & Subtitle matching Reference -->
+                <h1 class="split-auth-headline" style="font-size: 42px; font-weight: 800; line-height: 1.15; color: #ffffff; letter-spacing: -0.02em; margin: 40px 0 16px;">
+                    Smarter<br>
+                    Substations.<br>
+                    Safer Tomorrows.
+                </h1>
+                <p class="split-auth-desc" style="font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); max-width: 480px; margin-bottom: 34px;">
+                    AI-powered fault diagnosis, maintenance guidance and technical knowledge for modern electrical power systems.
+                </p>
+
+                <!-- Project Feature List with Copper Badges -->
+                <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 40px;">
+                    <div style="display: flex; align-items: center; gap: 12px; font-size: 13.5px; font-weight: 600; color: #ffffff;">
+                        <span style="width: 28px; height: 28px; border-radius: 6px; background: rgba(245, 158, 54, 0.15); border: 1px solid rgba(245, 158, 54, 0.4); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--copper-primary);">⚡</span>
+                        <span>Real-Time Fault Diagnosis (Trained ML Classifier)</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 12px; font-size: 13.5px; font-weight: 600; color: #ffffff;">
+                        <span style="width: 28px; height: 28px; border-radius: 6px; background: rgba(245, 158, 54, 0.15); border: 1px solid rgba(245, 158, 54, 0.4); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--copper-primary);">💬</span>
+                        <span>RAG Maintenance Copilot</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 12px; font-size: 13.5px; font-weight: 600; color: #ffffff;">
+                        <span style="width: 28px; height: 28px; border-radius: 6px; background: rgba(245, 158, 54, 0.15); border: 1px solid rgba(245, 158, 54, 0.4); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--copper-primary);">📚</span>
+                        <span>Standards & Technical Manuals</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 12px; font-size: 13.5px; font-weight: 600; color: #ffffff;">
+                        <span style="width: 28px; height: 28px; border-radius: 6px; background: rgba(245, 158, 54, 0.15); border: 1px solid rgba(245, 158, 54, 0.4); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--copper-primary);">🛡️</span>
+                        <span>Designed for Electrical Engineers</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Left Footer Academic Attribution -->
+            <div style="font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <span>PRJ_232 &nbsp;|&nbsp; Electrical Substation Intelligence</span>
+                <span style="color: var(--copper-primary); font-weight: 600;">Final-Year B.Tech</span>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL: AUTHENTICATION FORM CARD -->
+        <div class="split-auth-right">
+            <div class="auth-form-card">
+                
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="width: 44px; height: 44px; margin: 0 auto 10px; border-radius: var(--radius-sm); background: linear-gradient(135deg, rgba(0, 210, 255, 0.15), rgba(0, 102, 255, 0.2)); border: 1px solid var(--border-active); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--accent-cyan);">
+                        ⚡
+                    </div>
+                    <h2 id="auth-header-title" style="font-size: 22px; font-weight: 800; color: #ffffff; margin-bottom: 6px;">
+                        Sign In to VoltSage AI
+                    </h2>
+                    <p id="auth-header-desc" style="font-size: 12.5px; color: var(--text-muted);">
+                        Access the intelligent substation maintenance copilot workspace
+                    </p>
+                </div>
+
+                <!-- Tab Switcher: Sign In vs Register -->
+                <div class="auth-tab-group">
+                    <button type="button" id="tab-login-btn" class="auth-tab-btn active" onclick="switchAuthTab('login')">
+                        Sign In
+                    </button>
+                    <button type="button" id="tab-register-btn" class="auth-tab-btn" onclick="switchAuthTab('register')">
+                        Create Account
+                    </button>
+                </div>
+
+                <!-- Shared Error / Alert Banner -->
+                <div id="auth-error-banner" style="display: none; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--danger-bg); border: 1px solid rgba(255, 51, 102, 0.3); color: #ff6b8b; font-size: 12.5px; margin-bottom: 18px; line-height: 1.4;"></div>
+
+                <!-- ==================== SIGN IN FORM ==================== -->
+                <form id="login-form">
+                    <div class="form-group">
+                        <label class="form-label" for="login-email">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="login-email" 
+                            class="form-input" 
+                            placeholder="name@company.com" 
+                            required 
+                            autocomplete="email"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="login-password">Password</label>
+                        <div style="position: relative;">
+                            <input 
+                                type="password" 
+                                id="login-password" 
+                                class="form-input" 
+                                placeholder="••••••••" 
+                                required 
+                                autocomplete="current-password"
+                                style="padding-right: 42px;"
+                            >
+                            <button 
+                                type="button" 
+                                id="toggle-login-pwd-btn" 
+                                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 16px; padding: 4px;"
+                                title="Toggle password visibility"
+                            >
+                                👁️
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; font-size: 12.5px;">
+                        <label style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); cursor: pointer;">
+                            <input type="checkbox" id="remember-me" checked style="accent-color: var(--copper-primary); cursor: pointer;">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" onclick="alert('Please contact your substation system administrator to reset credentials.'); return false;" style="color: var(--copper-hover); text-decoration: none; font-weight: 600;">
+                            Forgot password?
+                        </a>
+                    </div>
+
+                    <button type="submit" id="login-submit-btn" class="btn btn-copper" style="width: 100%; height: 46px; font-size: 14.5px; font-weight: 700; justify-content: center; margin-top: 6px;">
+                        <span>Sign In →</span>
+                    </button>
+                </form>
+
+                <!-- ==================== REGISTRATION FORM ==================== -->
+                <form id="register-form" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label" for="reg-name">Full Engineering Name</label>
+                        <input 
+                            type="text" 
+                            id="reg-name" 
+                            class="form-input" 
+                            placeholder="e.g. Vikram Sharma" 
+                            required 
+                            autocomplete="name"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="reg-email">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="reg-email" 
+                            class="form-input" 
+                            placeholder="engineer@voltsage.internal" 
+                            required 
+                            autocomplete="email"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="reg-password">Password (Minimum 6 characters)</label>
+                        <div style="position: relative;">
+                            <input 
+                                type="password" 
+                                id="reg-password" 
+                                class="form-input" 
+                                placeholder="Create a strong password" 
+                                minlength="6"
+                                required 
+                                autocomplete="new-password"
+                                style="padding-right: 42px;"
+                            >
+                            <button 
+                                type="button" 
+                                id="toggle-reg-pwd-btn" 
+                                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 16px; padding: 4px;"
+                                title="Toggle password visibility"
+                            >
+                                👁️
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="reg-confirm-password">Confirm Password</label>
+                        <div style="position: relative;">
+                            <input 
+                                type="password" 
+                                id="reg-confirm-password" 
+                                class="form-input" 
+                                placeholder="Re-enter your password" 
+                                minlength="6"
+                                required 
+                                autocomplete="new-password"
+                                style="padding-right: 42px;"
+                            >
+                            <button 
+                                type="button" 
+                                id="toggle-reg-confirm-pwd-btn" 
+                                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 16px; padding: 4px;"
+                                title="Toggle password visibility"
+                            >
+                                👁️
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="register-submit-btn" class="btn btn-copper" style="width: 100%; height: 46px; font-size: 14.5px; font-weight: 700; justify-content: center; margin-top: 14px;">
+                        <span>Create Account →</span>
+                    </button>
+                </form>
+
+                <!-- Evaluation Quick-Fill Control (Credentials hidden from static UI) -->
+                <div style="margin-top: 20px; text-align: center;">
+                    <button type="button" id="quick-fill-btn" class="btn btn-outline" style="font-size: 11.5px; padding: 6px 14px; border-style: dashed; opacity: 0.85; transition: opacity var(--transition-fast);" onclick="fillEvaluationCredentials()" title="Populate demo credentials for local academic evaluation">
+                        ⚡ Fill Evaluation Account
+                    </button>
+                </div>
+
+                <!-- Footer Security Details -->
+                <div style="margin-top: 18px; text-align: center; font-size: 11px; color: var(--text-muted);">
+                    🔒 Secure PBKDF2-HMAC-SHA256 Authentication • HttpOnly Sessions
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- AUTHENTICATION CONTROLLER SCRIPT -->
+    <script>
+        // Tab switching logic
+        function switchAuthTab(tab) {
+            const loginForm = document.getElementById("login-form");
+            const regForm = document.getElementById("register-form");
+            const tabLoginBtn = document.getElementById("tab-login-btn");
+            const tabRegBtn = document.getElementById("tab-register-btn");
+            const titleEl = document.getElementById("auth-header-title");
+            const descEl = document.getElementById("auth-header-desc");
+            const errorBanner = document.getElementById("auth-error-banner");
+
+            errorBanner.style.display = "none";
+
+            if (tab === "register") {
+                loginForm.style.display = "none";
+                regForm.style.display = "block";
+                tabLoginBtn.classList.remove("active");
+                tabRegBtn.classList.add("active");
+                titleEl.textContent = "Create Engineering Account";
+                descEl.textContent = "Register a new profile to access your personal substation copilot";
+            } else {
+                loginForm.style.display = "block";
+                regForm.style.display = "none";
+                tabLoginBtn.classList.add("active");
+                tabRegBtn.classList.remove("active");
+                titleEl.textContent = "Sign In to VoltSage AI";
+                descEl.textContent = "Access the intelligent substation maintenance copilot workspace";
+            }
+        }
+
+        // Support ?tab=register in URL query
+        if (window.location.search.includes("tab=register")) {
+            switchAuthTab("register");
+        }
+
+        // Password visibility toggles helper
+        function setupPasswordToggle(btnId, inputId) {
+            const btn = document.getElementById(btnId);
+            const input = document.getElementById(inputId);
+            if (btn && input) {
+                btn.addEventListener("click", () => {
+                    if (input.type === "password") {
+                        input.type = "text";
+                        btn.textContent = "🙈";
+                    } else {
+                        input.type = "password";
+                        btn.textContent = "👁️";
+                    }
+                });
+            }
+        }
+        setupPasswordToggle("toggle-login-pwd-btn", "login-password");
+        setupPasswordToggle("toggle-reg-pwd-btn", "reg-password");
+        setupPasswordToggle("toggle-reg-confirm-pwd-btn", "reg-confirm-password");
+
+        // Error message helper
+        function showError(msg) {
+            const errorBanner = document.getElementById("auth-error-banner");
+            errorBanner.textContent = msg;
+            errorBanner.style.display = "block";
+        }
+
+        // Quick-fill credentials for local academic evaluation without exposing credentials in static UI
+        function fillEvaluationCredentials() {
+            switchAuthTab("login");
+            const emailInput = document.getElementById("login-email");
+            const pwdInput = document.getElementById("login-password");
+            if (emailInput && pwdInput) {
+                emailInput.value = "engineer@voltsage.internal";
+                pwdInput.value = "VoltSage#2026";
+                emailInput.focus();
+            }
+        }
+
+        // Handle Login Submission
+        document.getElementById("login-form").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const email = document.getElementById("login-email").value.trim();
+            const password = document.getElementById("login-password").value;
+            const submitBtn = document.getElementById("login-submit-btn");
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = "<span>Authenticating...</span>";
+
+            try {
+                const res = await fetch("/api/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password }),
+                    credentials: "include"
+                });
+
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.detail || "Invalid email or password.");
+                }
+
+                // Successful login -> redirect to main workspace
+                window.location.href = "/maintenance.html";
+            } catch (err) {
+                showError(err.message);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = "<span>Sign In →</span>";
+            }
+        });
+
+        // Handle Registration Submission
+        document.getElementById("register-form").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const fullName = document.getElementById("reg-name").value.trim();
+            const email = document.getElementById("reg-email").value.trim();
+            const password = document.getElementById("reg-password").value;
+            const confirmPassword = document.getElementById("reg-confirm-password").value;
+            const submitBtn = document.getElementById("register-submit-btn");
+
+            if (password.length < 6) {
+                showError("Password must be at least 6 characters long.");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showError("Passwords do not match. Please verify and try again.");
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = "<span>Creating Account...</span>";
+
+            try {
+                const res = await fetch("/api/auth/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, full_name: fullName, password }),
+                    credentials: "include"
+                });
+
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.detail || "Registration failed.");
+                }
+
+                // Automatically logs in and sets session cookie -> redirect to main workspace
+                window.location.href = "/maintenance.html";
+            } catch (err) {
+                showError(err.message);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = "<span>Create Account →</span>";
+            }
+        });
+    </script>
+</body>
+</html>

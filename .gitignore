@@ -23,6 +23,7 @@ documents/
 # Temporary files
 *.log
 *.tmp
+*.db
 
 # OS
 .DS_Store
