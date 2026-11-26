@@ -18,12 +18,14 @@
    - Predicts 6 physical transmission states: `Normal`, `LG` (Line-to-Ground), `LL` (Line-to-Line), `LLG` (Double Line-to-Ground), `LLL` (Three-Phase Symmetrical), and `LLLG` (Three-Phase-to-Ground).
    - Achieves **86.9% validation accuracy** and **85.3% test split accuracy** with zero synthetic approximations.
 
-2. **Technical Maintenance Copilot (RAG):**
-   - Grounded retrieval over **884 indexed technical document chunks** from official electrical standards:
-     - **IS 10028:** Code of Practice for Selection, Installation, and Maintenance of Power Transformers.
-     - **IEEE C37.04 & C37.10:** Rating Structure and Testing Guide for AC High-Voltage Circuit Breakers.
-     - **NEMA AB 4 & IEC 60255:** Molded Case Breakers and Protection Relays.
-   - Generative reasoning powered by **Google Gemini Flash** with automatic fallback to direct engineering standard extracts.
+2. **Technical Maintenance Copilot (RAG & Real-Time Streaming):**
+   - **Interactive Technical Assistant:** Answers complex substation engineering queries (e.g., transformer oil dielectric breakdown testing, circuit breaker contact wear thresholds, protection relay trip diagnostics, and safety lockout/tagout procedures).
+   - **Real-Time Streaming Generation:** Employs Server-Sent Events (SSE) via `/chat/stream` powered by **Google Gemini** (`gemini-3.5-flash`), delivering progressive token output with an active thinking status indicator.
+   - **Grounded Engineering Citations:** RAG retrieval over **885 indexed technical document chunks** extracted from manufacturer manuals and standards:
+     - **ABB MV/LV Technical Guide:** Medium-voltage switchgear, substation civil layout, and earthing grid design.
+     - **Schneider Electric Masterpact NT/NW Guide:** Circuit breaker maintenance, field testing, and cluster lubrication.
+     - **ETC Transformer Manual:** Oil-immersed distribution transformers, DGPT2/Buchholz protection, and oil sampling.
+   - **Verified Metadata:** Cites exact document titles and verified page numbers with an automatic fallback mechanism for unsupported questions.
 
 3. **Secure Authentication & Strict User Data Isolation:**
    - Split-screen authentication portal with **PBKDF2-HMAC-SHA256** password hashing (260,000 iterations, 16-byte random salt).
@@ -40,23 +42,48 @@
 
 ---
 
-## 2. One-Click Startup Instructions
+## 2. Local Setup & Execution Instructions
 
-### Method 1: The Windows Batch Launcher (`run_project.bat`)
-Double-click `run_project.bat` from Windows File Explorer or execute from PowerShell:
+### Prerequisites
+- **Python 3.10+ / Python 3.11** installed on your system.
+- **Google Gemini API Key** (required for generative maintenance chatbot reasoning).
+
+### Step 1: Environment Variables Configuration
+Create a `.env` file in the project root directory with your Gemini API key and model selection:
+```env
+GEMINI_API_KEY=your_google_gemini_api_key_here
+GEMINI_MODEL=gemini-3.5-flash
+```
+
+### Step 2: Virtual Environment & Dependencies
+Create and activate an isolated Python virtual environment, then install dependencies:
+```powershell
+# Windows PowerShell
+python -m venv .venv
+.\.venv\Scripts\activate
+pip install -r requirements.txt
+```
+```bash
+# Linux / macOS
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Step 3: Run the Application
+
+#### Option A: Automated Windows Launcher (`run_project.bat`)
+Double-click `run_project.bat` from Windows File Explorer or run in terminal:
 ```cmd
 .\run_project.bat
 ```
-The script will:
-1. Detect and validate `.venv\Scripts\python.exe`.
-2. Automatically launch your default web browser to `http://127.0.0.1:8000`.
-3. Start the FastAPI Uvicorn backend server.
+The script validates your `.venv`, opens your browser to `http://127.0.0.1:8000`, and starts the Uvicorn server.
 
-### Method 2: Direct Command Line
+#### Option B: Direct Command Line
 ```powershell
 & .\.venv\Scripts\python.exe -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
 ```
-Then navigate to `http://127.0.0.1:8000` in Google Chrome or any modern browser.
+Open `http://127.0.0.1:8000` in Google Chrome or any modern browser.
 
 ---
 
